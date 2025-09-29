@@ -2,6 +2,10 @@
 
 Un proyecto web personal y especial, creado con mucho cariño para expresar afecto, recordar momentos importantes. Dedicado a la persona más especial para mi.
 
+## 🌐 Demo en Vivo
+Puedes ver el proyecto funcionando aquí:
+👉 https://adrigm06.github.io/LovePage/index.html
+
 ## ✨ Características Principales
 
 * **Mensajes Personalizados:** Un sistema que muestra frases de amor con un efecto de máquina de escribir.
