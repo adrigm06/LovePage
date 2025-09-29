@@ -133,20 +133,7 @@ const romanticMessages = [
     "Tu hermosa mirada",
     "Tu amor incondicional que me da fuerzas"
 ];
-
-// Inicialización cuando el DOM está cargado
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Verificación de sesión y contador de días
-    const session = JSON.parse(localStorage.getItem('session'));
-    const now = new Date();
-    
-    if (!session || now.getTime() > session.expiry) {
-        localStorage.removeItem('session');
-        window.location.href = 'index.html';
-        return;
-    }
-
-// Contador de días
 // Contador de días (versión corregida)
 const startDate = new Date('2025-07-18');
 startDate.setHours(0, 0, 0, 0); // Fijamos hora a medianoche
