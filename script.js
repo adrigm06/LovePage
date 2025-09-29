@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (!session || now.getTime() > session.expiry) {
         localStorage.removeItem('session');
-        window.location.href = '../index.html';
+        window.location.href = 'index.html';
         return;
     }
 
