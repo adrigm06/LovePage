@@ -1,0 +1,12 @@
+{
+  "name": "lovepage-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.9.5",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2",
+    "express-session": "^1.17.3"
+  }
+}

@@ -1,0 +1,50 @@
+<div class="login-header">
+  <button id="loginBtn" class="login-button">Iniciar sesión</button>
+</div>
+
+<!-- Modal de login -->
+<div id="loginModal" class="login-modal">
+  <div class="login-modal-content">
+    <span id="closeLogin" class="close">&times;</span>
+    <h2>Iniciar sesión en LovePage</h2>
+    <form id="loginForm" autocomplete="off">
+      <label for="username">Usuario</label>
+      <input type="text" id="username" name="username" required />
+
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit" class="login-submit">Entrar</button>
+      <div id="login-message" class="login-message"></div>
+    </form>
+    <hr>
+    <div>
+      <span>¿No tienes cuenta?</span>
+      <button id="showRegister" class="register-toggle">Registrarse</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de registro -->
+<div id="registerModal" class="login-modal">
+  <div class="login-modal-content">
+    <span id="closeRegister" class="close">&times;</span>
+    <h2>Registro en LovePage</h2>
+    <form id="registerForm" autocomplete="off">
+      <label for="regUsername">Usuario</label>
+      <input type="text" id="regUsername" name="regUsername" required />
+
+      <label for="regPassword">Contraseña</label>
+      <input type="password" id="regPassword" name="regPassword" required />
+
+      <button type="submit" class="login-submit">Crear cuenta</button>
+      <div id="register-message" class="login-message"></div>
+    </form>
+  </div>
+</div>
+
+<!-- Área de usuario logueado -->
+<div id="userArea" class="user-area" style="display:none;">
+  <span id="userWelcome"></span>
+  <button id="logoutBtn" class="logout-button">Cerrar sesión</button>
+</div>

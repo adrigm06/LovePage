@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://open.spotify.com">
   <link rel="dns-prefetch" href="https://open.spotify.com">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="Login/login.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Montserrat:wght@300;500;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
@@ -73,6 +74,56 @@
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
       </iframe>
   </div>
+  <div class="login-header">
+      <button id="loginBtn" class="login-button" aria-label="Iniciar sesión">Iniciar sesión</button>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="login-modal" aria-hidden="true">
+    <div class="login-modal-content" role="dialog" aria-modal="true" aria-labelledby="login-title">
+      <span id="closeLogin" class="close" aria-label="Cerrar">&times;</span>
+      <h2 id="login-title">Bienvenido a LovePage</h2>
+      <form id="loginForm" autocomplete="off">
+        <label for="username">Usuario</label>
+        <input type="text" id="username" name="username" required autocomplete="username" />
+
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password" />
+
+        <button type="submit" class="login-submit">Entrar</button>
+        <div id="login-message" class="login-message" role="alert"></div>
+      </form>
+      <hr>
+      <div>
+        <span>¿No tienes cuenta?</span>
+        <button id="showRegister" class="register-toggle">Registrarse</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div id="registerModal" class="login-modal">
+    <div class="login-modal-content">
+      <span id="closeRegister" class="close">&times;</span>
+      <h2>Registro en LovePage</h2>
+      <form id="registerForm" autocomplete="off">
+        <label for="regUsername">Usuario</label>
+        <input type="text" id="regUsername" name="regUsername" required />
+
+        <label for="regPassword">Contraseña</label>
+        <input type="password" id="regPassword" name="regPassword" required />
+
+        <button type="submit" class="login-submit">Crear cuenta</button>
+        <div id="register-message" class="login-message"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Área de usuario logueado -->
+  <div id="userArea" class="user-area" style="display:none;">
+    <span id="userWelcome"></span>
+    <button id="logoutBtn" class="logout-button">Cerrar sesión</button>
+  </div>
 
   <div class="footer">
     <p>Cada momento a tu lado es un tesoro</p>
@@ -80,5 +131,6 @@
   </div>
   <script src="script.js"></script>
   <script src="photos-rotation.js"></script>
+  <script src="Login/login.js"></script>
 </body>
 </html>
