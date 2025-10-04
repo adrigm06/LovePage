@@ -191,6 +191,7 @@ logoutBtn.onclick = function() {
 };
 
 // --- Al cargar la página ---
-window.onload = function() {
-  cargarUsuario();
-};
+// window.onload = function() {
+//   cargarUsuario();
+// };
+document.addEventListener('DOMContentLoaded', cargarUsuario);
