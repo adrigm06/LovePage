@@ -1,5 +1,4 @@
 // Variables globales
-let youtubePlayer;
 let isYouTubePaused = false;
 let resumeTimeout;
 let notificationTimeout;
@@ -89,8 +88,6 @@ function removeStars() {
 
 // Llamar a setupNightMode al final de DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
-  
-  // Añadir esto al final
   setupNightMode();
 });
 
@@ -168,42 +165,12 @@ for (let i = 0; i < totalBadges; i++) {
   badgesContainer.appendChild(badge);
 }
 
-    // 2. Cargar YouTube
-    loadYouTubePlayer();
-
     // 3. Configurar Spotify después de un retraso
     setTimeout(setupSpotifyControls, 1500);
 
     // 4. Configurar botón de mensajes
     setupMessageButton();
 });
-
-// YouTube Player
-function loadYouTubePlayer() {
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    window.onYouTubeIframeAPIReady = function() {
-        youtubePlayer = new YT.Player('youtubeAudio', {
-            events: {
-                'onReady': onYouTubeReady
-            }
-        });
-    };
-}
-
-function onYouTubeReady(event) {
-    event.target.playVideo();
-    
-    // Desmutear al hacer click
-    document.addEventListener('click', function() {
-        if (youtubePlayer && typeof youtubePlayer.unMute === 'function') {
-            youtubePlayer.unMute();
-        }
-    });
-}
 
 // Spotify Controls
 function setupSpotifyControls() {
@@ -216,41 +183,6 @@ function setupSpotifyControls() {
             handleSpotifyClick();
         }
     });
-
-    // Escuchar mensajes de Spotify
-    window.addEventListener('message', handleSpotifyMessages);
-}
-
-function handleSpotifyClick() {
-    if (youtubePlayer && typeof youtubePlayer.pauseVideo === 'function') {
-        youtubePlayer.pauseVideo();
-        isYouTubePaused = true;
-        
-        cancelResume();
-        
-        resumeTimeout = setTimeout(() => {
-            if (isYouTubePaused) {
-                youtubePlayer.playVideo();
-                isYouTubePaused = false;
-                showNotification("Música de fondo reanudada");
-            }
-        }, 5000);
-    }
-}
-
-function handleSpotifyMessages(e) {
-    if (e.origin === 'https://open.spotify.com' && e.data.type === 'playback_started' && youtubePlayer) {
-        youtubePlayer.pauseVideo();
-        isYouTubePaused = true;
-        cancelResume();
-    }
-}
-
-function cancelResume() {
-    if (resumeTimeout) {
-        clearTimeout(resumeTimeout);
-        resumeTimeout = null;
-    }
 }
 
 // Sistema de notificaciones
@@ -548,4 +480,5 @@ document.querySelector('.theme-toggle')?.addEventListener('click', function() {
       createBubbles();
     }
   }, 500);
+
 });
