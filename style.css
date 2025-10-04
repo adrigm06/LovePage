@@ -735,9 +735,9 @@ body.night-mode .footer {
 /* Toggle switch */
 .theme-toggle {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
+  bottom: 24px;
+  right: 34px;
+  z-index: 1200;
   width: 60px;
   height: 30px;
   background: rgba(255, 255, 255, 0.2);

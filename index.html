@@ -18,6 +18,24 @@
     src="https://www.youtube.com/embed/oC84xDccaos?enablejsapi=1&autoplay=1&mute=1&controls=0" 
     frameborder="0" allow="autoplay">
   </iframe> 
+
+  <!-- Botón de inicio de sesión-->
+  <div class="login-header" id="loginHeader">
+    <button id="loginBtn" class="login-button" aria-label="Iniciar sesión">Iniciar sesión</button>
+  </div>
+
+  <!-- Toggle de tema -->
+  <div class="theme-toggle"></div>
+
+  <!-- Área de usuario y logout -->
+  <div class="user-area-container">
+    <div id="userArea" class="user-area" style="display:none;">
+      <span id="userWelcome" class="user-name" tabindex="0" aria-label="Usuario logueado"></span>
+      <div id="logoutMenu" class="logout-menu" style="display:none;">
+        <button id="logoutBtn" class="logout-button">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
     
   <div class="header">
     <h1>🦦 Para Mi Mundo 🦭</h1>
@@ -74,9 +92,6 @@
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
       </iframe>
   </div>
-  <div class="login-header">
-      <button id="loginBtn" class="login-button" aria-label="Iniciar sesión">Iniciar sesión</button>
-  </div>
 
   <!-- Login Modal -->
   <div id="loginModal" class="login-modal" aria-hidden="true">
@@ -117,12 +132,6 @@
         <div id="register-message" class="login-message"></div>
       </form>
     </div>
-  </div>
-
-  <!-- Área de usuario logueado -->
-  <div id="userArea" class="user-area" style="display:none;">
-    <span id="userWelcome"></span>
-    <button id="logoutBtn" class="logout-button">Cerrar sesión</button>
   </div>
 
   <div class="footer">

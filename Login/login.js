@@ -34,6 +34,8 @@ const registerMessage = document.getElementById('register-message');
 const userArea = document.getElementById('userArea');
 const userWelcome = document.getElementById('userWelcome');
 const logoutBtn = document.getElementById('logoutBtn');
+const logoutMenu = document.getElementById('logoutMenu');
+const loginHeader = document.getElementById('loginHeader');
 
 // --- Mostrar/Ocultar modals ---
 loginBtn.onclick = function() {
@@ -133,7 +135,7 @@ loginForm.onsubmit = function(e) {
   });
 };
 
-// --- Mostrar usuario logueado y logout ---
+// --- Mostrar usuario logueado y menú logout ---
 function cargarUsuario() {
   fetch('http://localhost:4000/session', {
     credentials: 'include'
@@ -142,22 +144,49 @@ function cargarUsuario() {
   .then(data => {
     if (data.logged && data.user) {
       userArea.style.display = 'flex';
-      userWelcome.textContent = `¡Bienvenido, ${data.user.username}!`;
-      loginBtn.style.display = 'none';
+      userWelcome.textContent = `${data.user.username}`;
+      loginHeader.style.display = 'none';
+      logoutMenu.style.display = 'none'; // Oculta el menú al cargar
     } else {
       userArea.style.display = 'none';
-      loginBtn.style.display = '';
+      loginHeader.style.display = '';
+      logoutMenu.style.display = 'none';
     }
   });
 }
 
+// Mostrar menú logout al hacer click en el usuario
+userWelcome.onclick = function() {
+  if (logoutMenu.style.display === 'none' || logoutMenu.style.display === '') {
+    logoutMenu.style.display = 'block';
+  } else {
+    logoutMenu.style.display = 'none';
+  }
+};
+
+// También mostrar el menú con Enter (accesibilidad)
+userWelcome.onkeydown = function(e) {
+  if (e.key === 'Enter' || e.key === ' ') {
+    userWelcome.click();
+  }
+};
+
+// Ocultar el menú logout si se hace click fuera
+document.addEventListener('click', function(e) {
+  if (!userWelcome.contains(e.target) && !logoutMenu.contains(e.target)) {
+    logoutMenu.style.display = 'none';
+  }
+});
+
+// --- Logout ---
 logoutBtn.onclick = function() {
   fetch('http://localhost:4000/logout', {
     method: 'POST',
     credentials: 'include'
   }).then(() => {
     userArea.style.display = 'none';
-    loginBtn.style.display = '';
+    loginHeader.style.display = '';
+    logoutMenu.style.display = 'none';
   });
 };
 

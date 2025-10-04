@@ -3,14 +3,13 @@ const mysql = require('mysql2/promise');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
-
 const app = express();
 
 // Configuración de la base de datos local
 const dbConfig = {
   host: 'localhost',
-  user: 'root', // Pon aquí tu usuario real
-  password: '1234', // Pon aquí tu contraseña real
+  user: 'root',
+  password: '1234',
   database: 'lovepage'
 };
 
