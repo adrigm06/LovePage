@@ -1,4 +1,4 @@
-/* Login modal overlay adaptado a modo noche */
+/* Modal arriba de todo */
 .login-modal {
   display: none;
   position: fixed;
@@ -8,17 +8,15 @@
   width: 100vw;
   height: 100vh;
   overflow: auto;
-  background: rgba(233, 30, 99, 0.35);
+  background: rgba(233,30,99,0.35);
   backdrop-filter: blur(1px);
   transition: background 0.3s;
 }
 
-/* Overlay noche */
 body.night-mode .login-modal {
-  background: rgba(44, 83, 100, 0.85); /* Noche: azul oscuro con transparencia */
+  background: rgba(44,83,100,0.85);
 }
 
-/* Contenido del modal */
 .login-modal-content {
   background: #fffafc;
   margin: 7% auto;
@@ -34,7 +32,6 @@ body.night-mode .login-modal {
   transition: background 0.3s, border-color 0.3s, color 0.3s;
 }
 
-/* Modal noche */
 body.night-mode .login-modal-content {
   background: linear-gradient(135deg, #203a43 0%, #2c5364 100%);
   border-color: #FF6B8B;
@@ -42,7 +39,6 @@ body.night-mode .login-modal-content {
   box-shadow: 0 6px 24px #2c5364a8;
 }
 
-/* Botón cerrar */
 .close {
   color: #e57373;
   position: absolute;
@@ -62,7 +58,6 @@ body.night-mode .close {
   color: #FF6B8B;
 }
 
-/* Titulo modal */
 .login-modal-content h2 {
   color: #e57373;
   transition: color 0.3s;
@@ -71,7 +66,6 @@ body.night-mode .login-modal-content h2 {
   color: #FF9A8B;
 }
 
-/* Etiquetas y inputs */
 .login-modal-content label {
   display: block;
   margin: 15px 0 6px 12px;
@@ -108,7 +102,6 @@ body.night-mode .login-modal-content input:focus {
   outline: none;
 }
 
-/* Botón submit */
 .login-submit, .register-toggle {
   background: linear-gradient(90deg, #f06292, #e57373);
   color: #fff;
@@ -135,7 +128,6 @@ body.night-mode .register-toggle {
   color: #2c5364;
 }
 
-/* Mensaje de error/exito */
 .login-message {
   margin-top: 16px;
   font-size: 1em;
@@ -163,7 +155,7 @@ body.night-mode .login-message.success {
   color: #4CAF50;
 }
 
-/* Botón de inicio de sesión arriba derecha fijo */
+/* Botón arriba derecha */
 .login-header {
   position: fixed;
   top: 24px;
@@ -171,10 +163,10 @@ body.night-mode .login-message.success {
   z-index: 1200;
 }
 
-/* Área de usuario sigue arriba derecha, debajo del header */
+/* Usuario arriba derecha, debajo del botón */
 .user-area-container {
   position: fixed;
-  top: 74px; /* debajo del login-header */
+  top: 74px;
   right: 34px;
   z-index: 1100;
   display: flex;

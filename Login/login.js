@@ -1,4 +1,5 @@
-// --- Utilidades de mensajes ---
+// Botón de inicio de sesión arriba derecha, modal, registro y logout
+
 function showLoginMessage(msg, success=false) {
   loginMessage.textContent = msg;
   loginMessage.classList.add('show');
@@ -18,26 +19,24 @@ function clearRegisterMessage() {
   registerMessage.classList.remove('show', 'success');
 }
 
-// --- Elementos ---
+// Elementos principales
 const loginBtn = document.getElementById('loginBtn');
 const loginModal = document.getElementById('loginModal');
 const closeLogin = document.getElementById('closeLogin');
 const loginForm = document.getElementById('loginForm');
 const loginMessage = document.getElementById('login-message');
 const showRegister = document.getElementById('showRegister');
-
 const registerModal = document.getElementById('registerModal');
 const closeRegister = document.getElementById('closeRegister');
 const registerForm = document.getElementById('registerForm');
 const registerMessage = document.getElementById('register-message');
-
 const userArea = document.getElementById('userArea');
 const userWelcome = document.getElementById('userWelcome');
 const logoutBtn = document.getElementById('logoutBtn');
 const logoutMenu = document.getElementById('logoutMenu');
 const loginHeader = document.getElementById('loginHeader');
 
-// --- Mostrar/Ocultar modals ---
+// Abrir/cerrar modals
 loginBtn.onclick = function() {
   loginModal.style.display = 'block';
   loginForm.username.focus();
@@ -74,7 +73,7 @@ window.addEventListener('keydown', function(e){
   }
 });
 
-// --- Registro ---
+// Registro
 registerForm.onsubmit = function(e) {
   e.preventDefault();
   const user = registerForm.regUsername.value.trim();
@@ -104,7 +103,7 @@ registerForm.onsubmit = function(e) {
   });
 };
 
-// --- Login ---
+// Login
 loginForm.onsubmit = function(e) {
   e.preventDefault();
   const user = loginForm.username.value.trim();
@@ -135,7 +134,7 @@ loginForm.onsubmit = function(e) {
   });
 };
 
-// --- Mostrar usuario logueado y menú logout ---
+// Mostrar usuario logueado arriba derecha
 function cargarUsuario() {
   fetch('http://localhost:4000/session', {
     credentials: 'include'
@@ -146,7 +145,7 @@ function cargarUsuario() {
       userArea.style.display = 'flex';
       userWelcome.textContent = `${data.user.username}`;
       loginHeader.style.display = 'none';
-      logoutMenu.style.display = 'none'; // Oculta el menú al cargar
+      logoutMenu.style.display = 'none';
     } else {
       userArea.style.display = 'none';
       loginHeader.style.display = '';
@@ -155,30 +154,20 @@ function cargarUsuario() {
   });
 }
 
-// Mostrar menú logout al hacer click en el usuario
+// Menú de logout
 userWelcome.onclick = function() {
-  if (logoutMenu.style.display === 'none' || logoutMenu.style.display === '') {
-    logoutMenu.style.display = 'block';
-  } else {
-    logoutMenu.style.display = 'none';
-  }
+  logoutMenu.style.display = (logoutMenu.style.display === 'none' || logoutMenu.style.display === '') ? 'block' : 'none';
 };
-
-// También mostrar el menú con Enter (accesibilidad)
 userWelcome.onkeydown = function(e) {
-  if (e.key === 'Enter' || e.key === ' ') {
-    userWelcome.click();
-  }
+  if (e.key === 'Enter' || e.key === ' ') userWelcome.click();
 };
-
-// Ocultar el menú logout si se hace click fuera
 document.addEventListener('click', function(e) {
   if (!userWelcome.contains(e.target) && !logoutMenu.contains(e.target)) {
     logoutMenu.style.display = 'none';
   }
 });
 
-// --- Logout ---
+// Logout
 logoutBtn.onclick = function() {
   fetch('http://localhost:4000/logout', {
     method: 'POST',
@@ -190,8 +179,5 @@ logoutBtn.onclick = function() {
   });
 };
 
-// --- Al cargar la página ---
-// window.onload = function() {
-//   cargarUsuario();
-// };
+// Al cargar la página, mostrar usuario si está logueado
 document.addEventListener('DOMContentLoaded', cargarUsuario);

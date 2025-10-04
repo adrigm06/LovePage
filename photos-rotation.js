@@ -1,5 +1,5 @@
 (function() {
-  const BASE_PATH = 'img/';  // CAMBIADO: de '../img/' a 'img/'
+  const BASE_PATH = 'img/';
   const JSON_FILE = 'photos.json';
   const FRAMES_SELECTOR = '.photo-gallery .photo-image';
   const START_DATE = '2025-07-18';
@@ -28,8 +28,6 @@
       console.warn('img/photos.json no contiene nombres de imagen válidos.');
       return;
     }
-
-    // Resto del código igual...
     const baseIndex = computeBaseIndexByDate(new Date(), photos.length, STEP);
     setFrameImages(frames, photos, baseIndex);
   }
@@ -55,7 +53,7 @@
   function setFrameImages(frames, photos, baseIndex) {
     for (let i = 0; i < frames.length; i++) {
       const idx = mod(baseIndex + i, photos.length);
-      const src = `${BASE_PATH}${photos[idx]}`;  // Ahora usa 'img/nombre.jpg'
+      const src = `${BASE_PATH}${photos[idx]}`;  // 
       const img = frames[i];
       if (img.getAttribute('src') !== src) {
         img.src = src;
