@@ -5,7 +5,6 @@ const cors = require('cors');
 const session = require('express-session');
 const app = express();
 
-// Configuración de la base de datos local
 const dbConfig = {
   host: 'localhost',
   user: 'root',
@@ -13,7 +12,6 @@ const dbConfig = {
   database: 'lovepage'
 };
 
-// Cambia CORS para permitir el acceso desde tu frontend local
 app.use(cors({
   origin: function(origin, callback) {
     const allowedOrigins = [
@@ -38,21 +36,20 @@ app.use(session({
   cookie: { secure: false }
 }));
 
-// Inicializa la tabla de usuarios si no existe
 async function createTable() {
   const conn = await mysql.createConnection(dbConfig);
   await conn.execute(`
     CREATE TABLE IF NOT EXISTS users (
       id INT AUTO_INCREMENT PRIMARY KEY,
       username VARCHAR(50) UNIQUE NOT NULL,
-      password VARCHAR(100) NOT NULL
+      password VARCHAR(100) NOT NULL,
+      special_date DATE NULL
     )
   `);
   await conn.end();
 }
 createTable();
 
-// Registro de usuario
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -65,7 +62,6 @@ app.post('/register', async (req, res) => {
   }
 });
 
-// Login y sesión
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -73,7 +69,7 @@ app.post('/login', async (req, res) => {
     const [rows] = await conn.execute('SELECT * FROM users WHERE username = ? AND password = ?', [username, password]);
     await conn.end();
     if (rows.length) {
-      req.session.user = { id: rows[0].id, username: rows[0].username };
+      req.session.user = { id: rows[0].id, username: rows[0].username, special_date: rows[0].special_date };
       res.json({ success: true, user: req.session.user });
     } else {
       res.status(401).json({ error: "Credenciales incorrectas" });
@@ -83,16 +79,40 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Revisar sesión
-app.get('/session', (req, res) => {
+app.get('/session', async (req, res) => {
   if (req.session.user) {
+    const conn = await mysql.createConnection(dbConfig);
+    const [rows] = await conn.execute('SELECT special_date FROM users WHERE id = ?', [req.session.user.id]);
+    await conn.end();
+    if (rows.length) req.session.user.special_date = rows[0].special_date;
     res.json({ logged: true, user: req.session.user });
   } else {
     res.json({ logged: false });
   }
 });
 
-// Logout
+app.get('/special-date', async (req, res) => {
+  if (!req.session.user) return res.status(401).json({ error: "No logueado" });
+  const conn = await mysql.createConnection(dbConfig);
+  const [rows] = await conn.execute('SELECT special_date FROM users WHERE id = ?', [req.session.user.id]);
+  await conn.end();
+  if (rows.length) {
+    res.json({ special_date: rows[0].special_date });
+  } else {
+    res.json({ special_date: null });
+  }
+});
+
+app.post('/special-date', async (req, res) => {
+  if (!req.session.user) return res.status(401).json({ error: "No logueado" });
+  const { special_date } = req.body;
+  const conn = await mysql.createConnection(dbConfig);
+  await conn.execute('UPDATE users SET special_date = ? WHERE id = ?', [special_date, req.session.user.id]);
+  await conn.end();
+  req.session.user.special_date = special_date;
+  res.json({ success: true, special_date });
+});
+
 app.post('/logout', (req, res) => {
   req.session.destroy();
   res.json({ success: true });

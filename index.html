@@ -27,7 +27,8 @@
     <div id="userArea" class="user-area" style="display:none;">
       <span id="userWelcome" class="user-name" tabindex="0" aria-label="Usuario logueado"></span>
       <div id="logoutMenu" class="logout-menu" style="display:none;">
-        <button id="logoutBtn" class="logout-button">Cerrar sesión</button>
+        <button id="settingsBtn" class="logout-button menu-btn">Ajustes</button>
+        <button id="logoutBtn" class="logout-button menu-btn">Cerrar sesión</button>
       </div>
     </div>
   </div>
@@ -40,9 +41,12 @@
 
   <div class="counter-container">
     <div class="counter-title">Donde todo comenzó</div>
-    <div class="counter">Llevas aguantandome <span id="days"></span> dias y los que quedan </div>
+    <div class="counter">
+      Llevas aguantandome <span id="days"></span> días y los que quedan
+      <span id="specialDateText"></span>
+    </div>
     <div class="badges-container">
-      <div class="badge-tracker">Meses magicos:</div>
+      <div class="badge-tracker">Meses mágicos:</div>
       <div class="badges" id="badges"></div>
     </div>
   </div>
@@ -125,6 +129,20 @@
 
         <button type="submit" class="login-submit">Crear cuenta</button>
         <div id="register-message" class="login-message"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Ajustes Usuario -->
+  <div id="settingsModal" class="settings-modal" aria-hidden="true">
+    <div class="settings-modal-content" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <span id="closeSettings" class="close" aria-label="Cerrar">&times;</span>
+      <h2 id="settings-title">Ajustes de usuario</h2>
+      <form id="settingsForm" autocomplete="off">
+        <label for="specialDate">Cambiar fecha recordatorio</label>
+        <input type="date" id="specialDate" name="specialDate" />
+        <div id="settings-message" class="login-message" role="alert"></div>
+        <button type="submit" class="login-submit">Guardar cambios</button>
       </form>
     </div>
   </div>

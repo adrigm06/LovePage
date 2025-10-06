@@ -1,5 +1,4 @@
-// Botón de inicio de sesión arriba derecha, modal, registro y logout
-
+// --- Mensajes y helpers ---
 function showLoginMessage(msg, success=false) {
   loginMessage.textContent = msg;
   loginMessage.classList.add('show');
@@ -19,7 +18,7 @@ function clearRegisterMessage() {
   registerMessage.classList.remove('show', 'success');
 }
 
-// Elementos principales
+// --- Elementos principales ---
 const loginBtn = document.getElementById('loginBtn');
 const loginModal = document.getElementById('loginModal');
 const closeLogin = document.getElementById('closeLogin');
@@ -36,7 +35,16 @@ const logoutBtn = document.getElementById('logoutBtn');
 const logoutMenu = document.getElementById('logoutMenu');
 const loginHeader = document.getElementById('loginHeader');
 
-// Abrir/cerrar modals
+// Ajustes
+const settingsBtn = document.getElementById('settingsBtn');
+const settingsModal = document.getElementById('settingsModal');
+const closeSettings = document.getElementById('closeSettings');
+const settingsForm = document.getElementById('settingsForm');
+const settingsMessage = document.getElementById('settings-message');
+const specialDateInput = document.getElementById('specialDate');
+const specialDateText = document.getElementById('specialDateText');
+
+// --- Abrir/cerrar modals ---
 loginBtn.onclick = function() {
   loginModal.style.display = 'block';
   loginForm.username.focus();
@@ -63,6 +71,10 @@ window.onclick = function(event) {
     registerModal.style.display = 'none';
     clearRegisterMessage();
   }
+  if (event.target === settingsModal) {
+    settingsModal.style.display = 'none';
+    settingsMessage.textContent = "";
+  }
 };
 window.addEventListener('keydown', function(e){
   if(e.key==="Escape") {
@@ -70,10 +82,12 @@ window.addEventListener('keydown', function(e){
     clearLoginMessage();
     registerModal.style.display = 'none';
     clearRegisterMessage();
+    settingsModal.style.display = 'none';
+    settingsMessage.textContent = "";
   }
 });
 
-// Registro
+// --- Registro ---
 registerForm.onsubmit = function(e) {
   e.preventDefault();
   const user = registerForm.regUsername.value.trim();
@@ -103,7 +117,7 @@ registerForm.onsubmit = function(e) {
   });
 };
 
-// Login
+// --- Login ---
 loginForm.onsubmit = function(e) {
   e.preventDefault();
   const user = loginForm.username.value.trim();
@@ -134,7 +148,7 @@ loginForm.onsubmit = function(e) {
   });
 };
 
-// Mostrar usuario logueado arriba derecha
+// --- Mostrar usuario logueado arriba derecha y actualizar fecha ---
 function cargarUsuario() {
   fetch('http://localhost:4000/session', {
     credentials: 'include'
@@ -146,15 +160,39 @@ function cargarUsuario() {
       userWelcome.textContent = `${data.user.username}`;
       loginHeader.style.display = 'none';
       logoutMenu.style.display = 'none';
+      // Guardar la fecha en variable global
+      window.userSpecialDate = data.user.special_date ? data.user.special_date.split("T")[0] : null;
+      // Elimina cualquier texto en specialDateText
+      if (specialDateText) specialDateText.textContent = '';
+      actualizarContadorDias();
     } else {
       userArea.style.display = 'none';
       loginHeader.style.display = '';
       logoutMenu.style.display = 'none';
+      window.userSpecialDate = null;
+      if (specialDateText) specialDateText.textContent = '';
+      actualizarContadorDias();
     }
   });
 }
 
-// Menú de logout
+// --- Contador de días ---
+function actualizarContadorDias() {
+  // Usa la fecha especial del usuario si existe, si no la predeterminada
+  const startDateStr = window.userSpecialDate ? window.userSpecialDate : "2025-07-18";
+  const startDate = new Date(startDateStr);
+  startDate.setHours(0, 0, 0, 0);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const diffTime = today - startDate;
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  const daysSpan = document.getElementById('days');
+  if (daysSpan) daysSpan.textContent = diffDays;
+}
+
+// --- Menú de logout/ajustes ---
 userWelcome.onclick = function() {
   logoutMenu.style.display = (logoutMenu.style.display === 'none' || logoutMenu.style.display === '') ? 'block' : 'none';
 };
@@ -167,7 +205,65 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Logout
+// --- Botón ajustes ---
+settingsBtn.onclick = function() {
+  logoutMenu.style.display = 'none';
+  settingsModal.style.display = 'block';
+  cargarFechaEspecial();
+};
+
+// --- Cerrar ajustes ---
+closeSettings.onclick = function() {
+  settingsModal.style.display = 'none';
+  settingsMessage.textContent = "";
+};
+
+// --- Cargar fecha especial al abrir ajustes ---
+function cargarFechaEspecial() {
+  fetch('http://localhost:4000/special-date', { credentials: 'include' })
+    .then(res => res.json())
+    .then(data => {
+      if (data.special_date) {
+        specialDateInput.value = data.special_date.split('T')[0];
+      } else {
+        specialDateInput.value = "";
+      }
+    });
+}
+
+// --- Guardar fecha especial y actualizar contador ---
+settingsForm.onsubmit = function(e) {
+  e.preventDefault();
+  const date = specialDateInput.value;
+  fetch('http://localhost:4000/special-date', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ special_date: date })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      settingsMessage.textContent = "¡Fecha actualizada!";
+      settingsMessage.classList.add('show', 'success');
+      window.userSpecialDate = date; // Actualiza la fecha en variable global
+      actualizarContadorDias();      // Recalcula el contador
+      setTimeout(() => {
+        settingsModal.style.display = 'none';
+        settingsMessage.textContent = "";
+        cargarUsuario(); // Recarga usuario y contador
+      }, 1000);
+    } else {
+      settingsMessage.textContent = "Error al guardar.";
+      settingsMessage.classList.add('show');
+    }
+  }).catch(() => {
+    settingsMessage.textContent = "Servidor no disponible.";
+    settingsMessage.classList.add('show');
+  });
+};
+
+// --- Logout ---
 logoutBtn.onclick = function() {
   fetch('http://localhost:4000/logout', {
     method: 'POST',
@@ -176,8 +272,11 @@ logoutBtn.onclick = function() {
     userArea.style.display = 'none';
     loginHeader.style.display = '';
     logoutMenu.style.display = 'none';
+    window.userSpecialDate = null;
+    if (specialDateText) specialDateText.textContent = '';
+    actualizarContadorDias();
   });
 };
 
-// Al cargar la página, mostrar usuario si está logueado
+// --- Al cargar la página, mostrar usuario y contador si está logueado ---
 document.addEventListener('DOMContentLoaded', cargarUsuario);
