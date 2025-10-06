@@ -60,7 +60,7 @@ function removeStars() {
 }
 document.addEventListener('DOMContentLoaded', setupNightMode);
 
-// --- CONTADOR DE DÍAS PERSONALIZADO ---
+// --- CONTADOR DE DÍAS PERSONALIZADO Y BADGES ---
 function getSpecialDate() {
   return window.userSpecialDate ? window.userSpecialDate : "2025-07-18";
 }
@@ -73,7 +73,9 @@ function actualizarContadorDias() {
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
   const daysSpan = document.getElementById('days');
   if (daysSpan) daysSpan.textContent = diffDays;
-
+  actualizarBadges(diffDays);
+}
+function actualizarBadges(diffDays) {
   const badgesContainer = document.getElementById('badges');
   if (badgesContainer) {
     const totalBadges = 12;
@@ -97,7 +99,7 @@ function actualizarContadorDias() {
 document.addEventListener('DOMContentLoaded', actualizarContadorDias);
 window.actualizarContadorDias = actualizarContadorDias;
 
-// --- Mensajes especiales ---
+// --- Mensajes bonitos y genéricos ---
 const things = [
   "Tu sonrisa ilumina mis días",
   "Siempre encuentras la manera de animarme",
@@ -130,13 +132,14 @@ const things = [
   "Tu mirada me llena de calma",
   "Solo tengo ojos para ti",
   "Por muchos momentos juntos más"
-].filter(msg => msg.trim() !== "");
+];
 
 const romanticMessages = [
-  "Tu amor incondicional",
-  "La forma en que me miras",
-  "Tu hermosa mirada",
-  "Tu amor incondicional que me da fuerzas"
+  "Tu amor me completa",
+  "No imagino mi vida sin ti",
+  "Eres mi razón de ser",
+  "Te amo más de lo que puedo expresar",
+  "Nuestro amor es mi mayor tesoro"
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -196,7 +199,7 @@ function showFinalMessage() {
   messageBox.style.opacity = '0';
   messageBox.style.transform = 'translateY(20px)';
   setTimeout(() => {
-    messageBox.textContent = "Y muchas más cosas mas... Gracias por ser tu ❤️";
+    messageBox.textContent = "Y muchas más cosas más... Gracias por ser tú ❤️";
     messageBox.style.opacity = '1';
     messageBox.style.transform = 'translateY(0)';
     for (let i = 0; i < 30; i++) {

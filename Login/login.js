@@ -1,4 +1,3 @@
-// --- Mensajes y helpers ---
 function showLoginMessage(msg, success=false) {
   loginMessage.textContent = msg;
   loginMessage.classList.add('show');
@@ -18,7 +17,7 @@ function clearRegisterMessage() {
   registerMessage.classList.remove('show', 'success');
 }
 
-// --- Elementos principales ---
+// Elementos principales
 const loginBtn = document.getElementById('loginBtn');
 const loginModal = document.getElementById('loginModal');
 const closeLogin = document.getElementById('closeLogin');
@@ -44,7 +43,7 @@ const settingsMessage = document.getElementById('settings-message');
 const specialDateInput = document.getElementById('specialDate');
 const specialDateText = document.getElementById('specialDateText');
 
-// --- Abrir/cerrar modals ---
+// Abrir/cerrar modals
 loginBtn.onclick = function() {
   loginModal.style.display = 'block';
   loginForm.username.focus();
@@ -87,7 +86,7 @@ window.addEventListener('keydown', function(e){
   }
 });
 
-// --- Registro ---
+// Registro
 registerForm.onsubmit = function(e) {
   e.preventDefault();
   const user = registerForm.regUsername.value.trim();
@@ -117,7 +116,7 @@ registerForm.onsubmit = function(e) {
   });
 };
 
-// --- Login ---
+// Login
 loginForm.onsubmit = function(e) {
   e.preventDefault();
   const user = loginForm.username.value.trim();
@@ -148,7 +147,7 @@ loginForm.onsubmit = function(e) {
   });
 };
 
-// --- Mostrar usuario logueado arriba derecha y actualizar fecha ---
+// Mostrar usuario logueado arriba derecha y actualizar fecha y badges
 function cargarUsuario() {
   fetch('http://localhost:4000/session', {
     credentials: 'include'
@@ -160,9 +159,7 @@ function cargarUsuario() {
       userWelcome.textContent = `${data.user.username}`;
       loginHeader.style.display = 'none';
       logoutMenu.style.display = 'none';
-      // Guardar la fecha en variable global
       window.userSpecialDate = data.user.special_date ? data.user.special_date.split("T")[0] : null;
-      // Elimina cualquier texto en specialDateText
       if (specialDateText) specialDateText.textContent = '';
       actualizarContadorDias();
     } else {
@@ -176,23 +173,7 @@ function cargarUsuario() {
   });
 }
 
-// --- Contador de días ---
-function actualizarContadorDias() {
-  // Usa la fecha especial del usuario si existe, si no la predeterminada
-  const startDateStr = window.userSpecialDate ? window.userSpecialDate : "2025-07-18";
-  const startDate = new Date(startDateStr);
-  startDate.setHours(0, 0, 0, 0);
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const diffTime = today - startDate;
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  const daysSpan = document.getElementById('days');
-  if (daysSpan) daysSpan.textContent = diffDays;
-}
-
-// --- Menú de logout/ajustes ---
+// Menú de logout/ajustes
 userWelcome.onclick = function() {
   logoutMenu.style.display = (logoutMenu.style.display === 'none' || logoutMenu.style.display === '') ? 'block' : 'none';
 };
@@ -205,20 +186,20 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// --- Botón ajustes ---
+// Botón ajustes
 settingsBtn.onclick = function() {
   logoutMenu.style.display = 'none';
   settingsModal.style.display = 'block';
   cargarFechaEspecial();
 };
 
-// --- Cerrar ajustes ---
+// Cerrar ajustes
 closeSettings.onclick = function() {
   settingsModal.style.display = 'none';
   settingsMessage.textContent = "";
 };
 
-// --- Cargar fecha especial al abrir ajustes ---
+// Cargar fecha especial al abrir ajustes
 function cargarFechaEspecial() {
   fetch('http://localhost:4000/special-date', { credentials: 'include' })
     .then(res => res.json())
@@ -231,7 +212,7 @@ function cargarFechaEspecial() {
     });
 }
 
-// --- Guardar fecha especial y actualizar contador ---
+// Guardar fecha especial y actualizar contador y badges
 settingsForm.onsubmit = function(e) {
   e.preventDefault();
   const date = specialDateInput.value;
@@ -247,11 +228,11 @@ settingsForm.onsubmit = function(e) {
       settingsMessage.textContent = "¡Fecha actualizada!";
       settingsMessage.classList.add('show', 'success');
       window.userSpecialDate = date; // Actualiza la fecha en variable global
-      actualizarContadorDias();      // Recalcula el contador
+      actualizarContadorDias();      // Recalcula el contador y badges
       setTimeout(() => {
         settingsModal.style.display = 'none';
         settingsMessage.textContent = "";
-        cargarUsuario(); // Recarga usuario y contador
+        cargarUsuario(); // Recarga usuario y todo
       }, 1000);
     } else {
       settingsMessage.textContent = "Error al guardar.";
@@ -263,7 +244,7 @@ settingsForm.onsubmit = function(e) {
   });
 };
 
-// --- Logout ---
+// Logout
 logoutBtn.onclick = function() {
   fetch('http://localhost:4000/logout', {
     method: 'POST',
@@ -278,5 +259,5 @@ logoutBtn.onclick = function() {
   });
 };
 
-// --- Al cargar la página, mostrar usuario y contador si está logueado ---
+// Al cargar la página, mostrar usuario y contador si está logueado
 document.addEventListener('DOMContentLoaded', cargarUsuario);
