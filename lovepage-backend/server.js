@@ -3,39 +3,33 @@ const mysql = require('mysql2/promise');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
+const remindersRouter = require('./reminders-backend.js');
 const app = express();
 
-const dbConfig = {
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
-  database: 'lovepage'
-};
-
+// CORS: DEBE ir antes de cualquier middleware/ruta
 app.use(cors({
-  origin: function(origin, callback) {
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'http://127.0.0.1:5500',
-      'http://localhost:5500'
-    ];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
+  origin: 'http://localhost:5500', // Cambia si usas otro puerto/frontend
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'OPTIONS']
 }));
 
+// Permitir preflight OPTIONS (necesario para POST/PUT con credentials)
+app.options('*', cors());
+
+// Middlewares
 app.use(bodyParser.json());
 app.use(session({
   secret: 'lovepage_secret',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: { secure: false } // Solo para desarrollo/localhost
 }));
 
+app.use(remindersRouter);
+
+const dbConfig = require('./dbConfig');
+
+// Crear tabla users si no existe
 async function createTable() {
   const conn = await mysql.createConnection(dbConfig);
   await conn.execute(`
