@@ -329,3 +329,21 @@ document.querySelector('.theme-toggle')?.addEventListener('click', function() {
     }
   }, 500);
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  fetch('http://localhost:4000/spotify-playlist', { credentials: 'include' })
+    .then(res => res.json())
+    .then(data => {
+      const playlist = data.playlist;
+      const iframe = document.querySelector('.spotify-container iframe');
+      if (playlist && playlist.length > 10) {
+        // Si es un link de Spotify completo, dale formato embed si es necesario
+        let embedUrl = playlist;
+        if (playlist.includes('/playlist/') && !playlist.includes('/embed/')) {
+          // Convierte a formato embed si hace falta
+          embedUrl = playlist.replace('/playlist/', '/embed/playlist/');
+        }
+        iframe.src = embedUrl;
+      }
+    });
+});

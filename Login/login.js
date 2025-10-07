@@ -225,7 +225,7 @@ settingsForm.onsubmit = function(e) {
   .then(res => res.json())
   .then(data => {
     if (data.success) {
-      settingsMessage.textContent = "¡Fecha actualizada!";
+      settingsMessage.textContent = "¡Ajustes Actualizados!";
       settingsMessage.classList.add('show', 'success');
       window.userSpecialDate = date; // Actualiza la fecha en variable global
       actualizarContadorDias();      // Recalcula el contador y badges
@@ -243,6 +243,31 @@ settingsForm.onsubmit = function(e) {
     settingsMessage.classList.add('show');
   });
 };
+
+// Al abrir modal de ajustes, carga el playlist del usuario
+document.getElementById('settingsBtn').addEventListener('click', function() {
+  fetch('http://localhost:4000/spotify-playlist', { credentials: 'include' })
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('spotifyPlaylist').value = data.playlist || '';
+    });
+});
+
+// Al guardar ajustes, también guarda la playlist
+document.getElementById('settingsForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const playlist = document.getElementById('spotifyPlaylist').value.trim();
+  fetch('http://localhost:4000/spotify-playlist', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ playlist })
+  })
+    .then(res => res.json())
+    .then(data => {
+      // Puedes mostrar un mensaje de éxito aquí
+    });
+});
 
 // Logout
 logoutBtn.onclick = function() {
