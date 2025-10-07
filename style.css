@@ -1027,6 +1027,7 @@ body.night-mode .reminder-btn:hover {
   gap: 20px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
 }
 
 .date-card:hover {

@@ -52,11 +52,16 @@
   color: #E91E63;
 }
 .edit-reminder-btn {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  z-index: 10;
   background: none;
   border: none;
   outline: none;
   cursor: pointer;
-  margin-left: 18px;
   transition: transform .2s;
   font-size: 1.35em;
   color: #a84a7d;
