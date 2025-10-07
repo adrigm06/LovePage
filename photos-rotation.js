@@ -66,10 +66,6 @@
     return ((n % m) + m) % m;
   }
 
-  function mod(n, m) {
-    return ((n % m) + m) % m;
-  }
-
   function getQueryParam(name) {
     return new URLSearchParams(window.location.search).get(name);
   }

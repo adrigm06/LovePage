@@ -649,25 +649,22 @@ body.night-mode {
     100% { transform: scale(1); }
 }
 
-body::after {
-    content: "";
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 30px;
-    height: 30px;
-    background-color: rgba(233, 30, 99, 0.2);
-    border-radius: 50%;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    animation: heartbeat 1.5s infinite;
-    z-index: 100;
+/* Heartbeat separado en elemento dedicado .heartbeat-indicator */
+.heartbeat-indicator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(233, 30, 99, 0.2);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  animation: heartbeat 1.5s infinite;
+  z-index: 100;
+  pointer-events: none;
 }
-
-/* Añade esta clase cuando quieras activar el latido */
-.heartbeat-active::after {
-    opacity: 0.8;
-}
+.heartbeat-active .heartbeat-indicator { opacity: 0.8; }
 
 @media (max-width: 900px) {
     .photo-gallery {
@@ -1139,6 +1136,18 @@ body.night-mode .days-counter {
 /* Estilo cuando es hoy */
 .date-card-today {
   animation: pulseHighlight 2s infinite;
+}
+
+/* Estilos para estado 'hoy' extraídos de inline JS */
+.date-card-today {
+  background: linear-gradient(135deg, #E91E63 0%, #9C27B0 100%) !important;
+  color: #fff !important;
+}
+.date-card-today h3 { color: #fff !important; }
+.date-card-today .date { color: rgba(255,255,255,0.9) !important; }
+.days-counter-today {
+  color: #4CAF50 !important;
+  background: rgba(255,255,255,0.15) !important;
 }
 
 @keyframes pulseHighlight {

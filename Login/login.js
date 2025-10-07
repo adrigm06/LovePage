@@ -61,7 +61,8 @@ closeRegister.onclick = function() {
   registerModal.style.display = 'none';
   clearRegisterMessage();
 };
-window.onclick = function(event) {
+// Sustituido window.onclick único por listener no destructivo
+document.addEventListener('click', function(event) {
   if (event.target === loginModal) {
     loginModal.style.display = 'none';
     clearLoginMessage();
@@ -74,7 +75,7 @@ window.onclick = function(event) {
     settingsModal.style.display = 'none';
     settingsMessage.textContent = "";
   }
-};
+});
 window.addEventListener('keydown', function(e){
   if(e.key==="Escape") {
     loginModal.style.display = 'none';

@@ -1,6 +1,48 @@
 // Variables globales para mensajes y efectos visuales
 let currentMessageIndex = 0;
 
+// Encapsulación de mensajes
+const Messages = {
+  list: [
+    "Tu sonrisa ilumina mis días",
+    "Siempre encuentras la manera de animarme",
+    "Tu abrazo es mi refugio favorito",
+    "Admiro tu fuerza y tu bondad",
+    "Tu risa es la melodía que más me gusta escuchar",
+    "Me encanta compartir cada momento contigo",
+    "Tu forma de ver la vida me inspira",
+    "Gracias por estar siempre a mi lado",
+    "Eres mi mejor apoyo y mi mejor amigo/a",
+    "Cada día contigo es un regalo",
+    "Me haces sentir amado/a y especial",
+    "Tus palabras me llenan de paz",
+    "Tu amor me da fuerzas para todo",
+    "Contigo todo es más bonito",
+    "Me encanta que compartas tus sueños conmigo",
+    "Tu ternura es infinita",
+    "Tu compañía es mi lugar favorito",
+    "Me haces reír incluso en los días grises",
+    "Siempre sabes cómo sorprenderme",
+    "Eres mi hogar y mi aventura",
+    "Gracias por cuidar de mí",
+    "Adoro tus detalles y tu creatividad",
+    "Nuestro amor crece cada día",
+    "Me siento afortunado/a de tenerte",
+    "Tu forma de amar me inspira a ser mejor",
+    "Contigo aprendí lo que es la felicidad",
+    "Siempre eres mi razón para sonreír",
+    "El mundo es más bonito contigo",
+    "Tu mirada me llena de calma",
+    "Solo tengo ojos para ti",
+    "Por muchos momentos juntos más"
+  ],
+  next() {
+    if (currentMessageIndex >= this.list.length) return null;
+    return this.list[currentMessageIndex++];
+  },
+  remaining() { return this.list.length - currentMessageIndex; }
+};
+
 // --- Modo noche ---
 function setupNightMode() {
   const toggle = document.createElement('div');
@@ -62,7 +104,8 @@ document.addEventListener('DOMContentLoaded', setupNightMode);
 
 // --- CONTADOR DE DÍAS PERSONALIZADO Y BADGES ---
 function getSpecialDate() {
-  return window.userSpecialDate ? window.userSpecialDate : "2025-07-18";
+  // Fecha centralizada en APP_CONFIG
+  return window.userSpecialDate ? window.userSpecialDate : (window.APP_CONFIG?.START_DATE || '2025-07-18');
 }
 function actualizarContadorDias() {
   const startDate = new Date(getSpecialDate());
@@ -100,62 +143,14 @@ document.addEventListener('DOMContentLoaded', actualizarContadorDias);
 window.actualizarContadorDias = actualizarContadorDias;
 
 // --- Mensajes bonitos y genéricos ---
-const things = [
-  "Tu sonrisa ilumina mis días",
-  "Siempre encuentras la manera de animarme",
-  "Tu abrazo es mi refugio favorito",
-  "Admiro tu fuerza y tu bondad",
-  "Tu risa es la melodía que más me gusta escuchar",
-  "Me encanta compartir cada momento contigo",
-  "Tu forma de ver la vida me inspira",
-  "Gracias por estar siempre a mi lado",
-  "Eres mi mejor apoyo y mi mejor amigo/a",
-  "Cada día contigo es un regalo",
-  "Me haces sentir amado/a y especial",
-  "Tus palabras me llenan de paz",
-  "Tu amor me da fuerzas para todo",
-  "Contigo todo es más bonito",
-  "Me encanta que compartas tus sueños conmigo",
-  "Tu ternura es infinita",
-  "Tu compañía es mi lugar favorito",
-  "Me haces reír incluso en los días grises",
-  "Siempre sabes cómo sorprenderme",
-  "Eres mi hogar y mi aventura",
-  "Gracias por cuidar de mí",
-  "Adoro tus detalles y tu creatividad",
-  "Nuestro amor crece cada día",
-  "Me siento afortunado/a de tenerte",
-  "Tu forma de amar me inspira a ser mejor",
-  "Contigo aprendí lo que es la felicidad",
-  "Siempre eres mi razón para sonreír",
-  "El mundo es más bonito contigo",
-  "Tu mirada me llena de calma",
-  "Solo tengo ojos para ti",
-  "Por muchos momentos juntos más"
-];
+// Lista original movida a Messages.list
 
-const romanticMessages = [
-  "Tu amor me completa",
-  "No imagino mi vida sin ti",
-  "Eres mi razón de ser",
-  "Te amo más de lo que puedo expresar",
-  "Nuestro amor es mi mayor tesoro"
-];
-
+// Init principal
 document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(setupSpotifyControls, 1500);
+  // Se elimina llamada a función inexistente handleSpotifyClick()
   setupMessageButton();
+  ensureHeartbeatIndicator();
 });
-
-function setupSpotifyControls() {
-  const spotifyContainer = document.querySelector('.spotify-container');
-  if (!spotifyContainer) return;
-  document.body.addEventListener('click', function(e) {
-    if (e.target.closest('.spotify-container')) {
-      handleSpotifyClick();
-    }
-  });
-}
 
 // --- Mensajes y corazones ---
 function setupMessageButton() {
@@ -168,18 +163,18 @@ function setupMessageButton() {
   }, 1000);
 
   showBtn.addEventListener('click', () => {
-    if (currentMessageIndex >= things.length) return;
+  if (currentMessageIndex >= Messages.list.length) return;
     messageBox.style.opacity = '0';
     messageBox.style.transform = 'translateY(20px)';
     setTimeout(() => {
-      const message = things[currentMessageIndex];
-      messageBox.textContent = message;
+  const message = Messages.next();
+  if (message === null) return;
+  messageBox.textContent = message;
       messageBox.style.opacity = '1';
       messageBox.style.transform = 'translateY(0)';
       createHearts();
       checkHeartbeat(message);
-      currentMessageIndex++;
-      if (currentMessageIndex >= things.length) {
+      if (currentMessageIndex >= Messages.list.length) {
         disableButtonNow();
         setTimeout(showFinalMessage, 3000);
       }
@@ -224,14 +219,6 @@ function createHearts() {
     }, 2500);
   }
 }
-function checkHeartbeat(message) {
-  if (romanticMessages.includes(message)) {
-    document.body.classList.add('heartbeat-active');
-    setTimeout(() => {
-      document.body.classList.remove('heartbeat-active');
-    }, 3000);
-  }
-}
 
 // --- RECORDATORIOS ---
 // En la página de recordatorios, calcular días hasta la próxima ocurrencia
@@ -274,60 +261,53 @@ function calculateDaysDifference(counter, originalDate) {
   targetDate.setHours(0, 0, 0, 0);
   const diffTime = targetDate - now;
   const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+  // Reemplazo de estilos inline por clases
+  const card = counter.closest('.date-card');
+  card?.classList.remove('date-card-today');
+  counter.classList.remove('days-counter-today');
   if (diffDays === 0) {
     counter.textContent = '¡Es hoy!';
-    counter.style.color = '#4CAF50';
-    counter.parentElement.parentElement.style.background = 'linear-gradient(135deg, #E91E63 0%, #9C27B0 100%)';
-    counter.parentElement.parentElement.style.color = 'white';
-    counter.parentElement.querySelector('h3').style.color = 'white';
-    counter.parentElement.querySelector('.date').style.color = 'rgba(255,255,255,0.9)';
+    card?.classList.add('date-card-today');
+    counter.classList.add('days-counter-today');
   } else {
-    counter.textContent = `Faltan ${diffDays} ${Math.abs(diffDays) === 1 ? 'día' : 'días'}`;
-    counter.style.color = '#E91E63';
+    // Siempre mostrar futuro (anual). diffDays ya es positivo en esta lógica.
+    counter.textContent = `Faltan ${diffDays} ${diffDays === 1 ? 'día' : 'días'}`;
   }
 }
 
 // --- Burbuja flotante ---
+// Unificación de creación de burbujas y listener de tema (eliminados duplicados)
 function createBubbles() {
-  if (!document.body.classList.contains('night-mode')) {
-    const bubbleCount = 5;
-    for (let i = 0; i < bubbleCount; i++) {
-      const bubble = document.createElement('div');
-      bubble.className = 'bubble';
-      bubble.style.left = `${Math.random() * 90 + 5}%`;
-      bubble.style.top = `${Math.random() * 90 + 5}%`;
-      const size = Math.random() * 25 + 15;
-      bubble.style.width = `${size}px`;
-      bubble.style.height = `${size}px`;
-      bubble.style.animationDuration = `${Math.random() * 15 + 15}s`;
-      bubble.style.animationDelay = `${Math.random() * 10}s`;
-      document.body.appendChild(bubble);
-    }
+  if (document.body.classList.contains('night-mode')) return; // sólo modo día
+  const bubbleCount = 5;
+  for (let i = 0; i < bubbleCount; i++) {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.style.left = `${Math.random() * 90 + 5}%`;
+    bubble.style.top = `${Math.random() * 90 + 5}%`;
+    const size = Math.random() * 25 + 15;
+    bubble.style.width = `${size}px`;
+    bubble.style.height = `${size}px`;
+    bubble.style.animationDuration = `${Math.random() * 15 + 15}s`;
+    bubble.style.animationDelay = `${Math.random() * 10}s`;
+    document.body.appendChild(bubble);
   }
 }
-document.addEventListener('DOMContentLoaded', createBubbles);
-
-document.querySelector('.theme-toggle')?.addEventListener('click', function() {
-  setTimeout(() => {
-    const bubbles = document.querySelectorAll('.bubble');
-    bubbles.forEach(bubble => bubble.remove());
-    if (!document.body.classList.contains('night-mode')) {
-      createBubbles();
-    }
-  }, 500);
-});
 function removeBubbles() {
-  document.querySelectorAll('.bubble').forEach(bubble => bubble.remove());
+  document.querySelectorAll('.bubble').forEach(b => b.remove());
 }
-document.addEventListener('DOMContentLoaded', createBubbles);
-document.querySelector('.theme-toggle')?.addEventListener('click', function() {
-  setTimeout(() => {
-    if (document.body.classList.contains('night-mode')) {
-      removeBubbles();
-    } else {
-      createBubbles();
-    }
-  }, 500);
+document.addEventListener('DOMContentLoaded', () => {
+  createBubbles();
+  document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+    setTimeout(() => {
+      if (document.body.classList.contains('night-mode')) {
+        removeBubbles();
+      } else {
+        removeBubbles();
+        createBubbles();
+      }
+    }, 400);
+  });
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -347,3 +327,12 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 });
+
+// Indicador de latido separado del pseudo-elemento body::after
+function ensureHeartbeatIndicator() {
+  if (!document.querySelector('.heartbeat-indicator')) {
+    const el = document.createElement('div');
+    el.className = 'heartbeat-indicator';
+    document.body.appendChild(el);
+  }
+}

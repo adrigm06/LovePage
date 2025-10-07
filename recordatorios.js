@@ -6,14 +6,29 @@ function formatDateText(dateStr) {
   return `${date.getDate()} de ${meses[date.getMonth()]}`;
 }
 
+// Nueva lógica: todas las fechas son anuales. Siempre mostramos días que faltan para la PRÓXIMA ocurrencia.
 function calculateDaysTo(dateStr) {
   const today = new Date();
   today.setHours(0,0,0,0);
-  const target = new Date(dateStr);
-  target.setHours(0,0,0,0);
-  let diff = Math.round((target - today) / (1000*60*60*24));
-  if (diff === 0) return "¡Es hoy!";
-  return diff > 0 ? `Faltan ${diff} días` : `Hace ${-diff} días`;
+
+  // Normalizar fecha de entrada (puede venir con año actual/otro año)
+  const base = new Date(dateStr);
+  if (isNaN(base)) return '';
+  const month = base.getMonth();
+  const day = base.getDate();
+
+  // Candidata este año
+  let next = new Date(today.getFullYear(), month, day);
+  next.setHours(0,0,0,0);
+
+  // Si ya pasó hoy, usar año siguiente
+  if (next < today) {
+    next = new Date(today.getFullYear() + 1, month, day);
+  }
+
+  const diffDays = Math.round((next - today) / 86400000); // ms -> días
+  if (diffDays === 0) return '¡Es hoy!';
+  return `Faltan ${diffDays} ${diffDays === 1 ? 'día' : 'días'}`;
 }
 
 // Map de recordatorios predeterminados
@@ -88,12 +103,13 @@ closeEditModal.onclick = function() {
   editReminderModal.style.display = 'none';
   editingReminderCode = null;
 };
-window.onclick = function(event) {
+// Listener no destructivo en lugar de sobrescribir window.onclick
+document.addEventListener('click', function(event) {
   if (event.target === editReminderModal) {
     editReminderModal.style.display = 'none';
     editingReminderCode = null;
   }
-};
+});
 
 editReminderForm.onsubmit = function(e) {
   e.preventDefault();
