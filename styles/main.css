@@ -408,10 +408,12 @@ body.night-mode {
     padding: 15px 15px 50px 15px;
     border-radius: 2px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.1), 0 3px 6px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
+    transition: box-shadow 0.3s, transform 0.3s;
+    will-change: transform, box-shadow;
+    backface-visibility: hidden;
     transform-style: preserve-3d;
     cursor: pointer;
-    aspect-ratio: 3/4; /* Relación más alargada (3:4) */
+    aspect-ratio: 3/4;
     overflow: hidden;
 }
 
@@ -437,6 +439,7 @@ body.night-mode {
     transform: rotate(0deg) scale(1.05) translateY(-5px) !important;
     box-shadow: 0 10px 20px rgba(233, 30, 99, 0.2);
     z-index: 20;
+    will-change: transform, box-shadow;
 }
 
   .photo-frame:hover .photo-caption {
@@ -663,6 +666,7 @@ body.night-mode {
   animation: heartbeat 1.5s infinite;
   z-index: 100;
   pointer-events: none;
+  will-change: opacity;
 }
 .heartbeat-active .heartbeat-indicator { opacity: 0.8; }
 
@@ -788,6 +792,7 @@ body.night-mode .theme-toggle .moon {
   z-index: -1;
   animation: twinkle var(--duration) infinite ease-in-out;
   opacity: 0;
+  will-change: opacity;
 }
 
 @keyframes twinkle {

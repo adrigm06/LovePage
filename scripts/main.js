@@ -66,8 +66,7 @@ function setupNightMode() {
   if (localStorage.getItem('nightMode') === 'true') {
     document.body.classList.add('night-mode');
     createStars();
-  }
-  if (document.body.classList.contains('night-mode')) {
+  } else if (document.body.classList.contains('night-mode')) {
     createStars();
   }
 }
@@ -78,8 +77,11 @@ function createStars() {
     starsContainer = document.createElement('div');
     starsContainer.className = 'stars-container';
     document.body.appendChild(starsContainer);
+  } else {
+    starsContainer.innerHTML = '';
   }
   const starCount = Math.floor(window.innerWidth * window.innerHeight / 5000);
+  const fragment = document.createDocumentFragment();
   for (let i = 0; i < starCount; i++) {
     const star = document.createElement('div');
     star.className = 'star';
@@ -93,8 +95,9 @@ function createStars() {
     star.style.setProperty('--opacity', opacity);
     star.style.setProperty('--duration', duration);
     star.style.animationDelay = `${Math.random() * 5}s`;
-    starsContainer.appendChild(star);
+    fragment.appendChild(star);
   }
+  starsContainer.appendChild(fragment);
 }
 function removeStars() {
   const starsContainer = document.querySelector('.stars-container');
@@ -205,6 +208,7 @@ function showFinalMessage() {
   }, 300);
 }
 function createHearts() {
+  const fragment = document.createDocumentFragment();
   for (let i = 0; i < 15; i++) {
     const heart = document.createElement('div');
     heart.classList.add('heart');
@@ -213,11 +217,12 @@ function createHearts() {
     heart.style.animationDuration = `${1.2 + Math.random() * 1.3}s`;
     heart.style.setProperty('--delay', `${Math.random() * 2}s`);
     heart.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
-    document.body.appendChild(heart);
+    fragment.appendChild(heart);
     setTimeout(() => {
       heart.remove();
     }, 2500);
   }
+  document.body.appendChild(fragment);
 }
 
 // --- RECORDATORIOS ---
@@ -280,6 +285,15 @@ function calculateDaysDifference(counter, originalDate) {
 function createBubbles() {
   if (document.body.classList.contains('night-mode')) return; // sólo modo día
   const bubbleCount = 5;
+  let bubblesContainer = document.querySelector('.bubbles-container');
+  if (!bubblesContainer) {
+    bubblesContainer = document.createElement('div');
+    bubblesContainer.className = 'bubbles-container';
+    document.body.appendChild(bubblesContainer);
+  } else {
+    bubblesContainer.innerHTML = '';
+  }
+  const fragment = document.createDocumentFragment();
   for (let i = 0; i < bubbleCount; i++) {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
@@ -290,11 +304,17 @@ function createBubbles() {
     bubble.style.height = `${size}px`;
     bubble.style.animationDuration = `${Math.random() * 15 + 15}s`;
     bubble.style.animationDelay = `${Math.random() * 10}s`;
-    document.body.appendChild(bubble);
+    fragment.appendChild(bubble);
   }
+  bubblesContainer.appendChild(fragment);
 }
 function removeBubbles() {
-  document.querySelectorAll('.bubble').forEach(b => b.remove());
+  const bubblesContainer = document.querySelector('.bubbles-container');
+  if (bubblesContainer) {
+    bubblesContainer.innerHTML = '';
+  } else {
+    document.querySelectorAll('.bubble').forEach(b => b.remove());
+  }
 }
 document.addEventListener('DOMContentLoaded', () => {
   createBubbles();
