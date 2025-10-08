@@ -66,7 +66,7 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
     opacity: 1;
 }
 
-    .photo-caption {
+.photo-caption {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -76,7 +76,7 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
     padding: 10px;
     opacity: 0;
     transition: opacity 0.3s ease;
-    }
+}
 
 .photo-frame::before {
     display: none;
@@ -117,6 +117,7 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
         padding: 10px 5px 20px 5px;
         height: auto;
         align-items: center;
+        grid-template-columns: 1fr;
     }
 
     .photo-frame {
@@ -169,11 +170,5 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
 @media (max-width: 900px) {
     .photo-gallery {
         grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 480px) {
-    .photo-gallery {
-        grid-template-columns: 1fr;
     }
 }

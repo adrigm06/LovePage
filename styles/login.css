@@ -166,9 +166,9 @@ body.night-mode .login-message.success {
 /* Usuario arriba derecha, debajo del botón */
 .user-area-container {
   position: fixed;
-  top: 74px;
-  right: 34px;
-  z-index: 1100;
+  top: 30px;
+  right: 30px;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
