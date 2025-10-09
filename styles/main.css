@@ -1,8 +1,8 @@
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 /* Cursor en forma de corazón */
 html {
@@ -51,11 +51,11 @@ body::after {
 }
 
 body {
-  background: linear-gradient(135deg, #FFDEE9 0%, #B5FFFC 100%);
+  background: linear-gradient(135deg, var(--color-orange-light) 0%, var(--color-blue-light) 100%);
   background-size: 400% 400%;
   animation: gradientFlow 15s ease infinite;
   font-family: 'Raleway', sans-serif;
-  color: #333;
+  color: var(--color-black);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,7 +84,7 @@ body::before {
   z-index: -1;
 }
 
-.header {
+header {
   text-align: center;
   margin-bottom: 30px;
   position: relative;
@@ -95,15 +95,15 @@ body::before {
 h1 {
   font-family: 'Dancing Script', cursive;
   font-size: 4rem;
-  color: #E91E63;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  color: var(--color-accent);
+  text-shadow: 2px 2px 4px var(--color-shadow-black);
   margin-bottom: 15px;
   animation: pulse 3s infinite;
 }
 .subtitle {
   font-family: 'Pacifico', cursive;
   font-size: 1.8rem;
-  color: #9C27B0;
+  color: var(--color-secondary);
   margin-bottom: 30px;
 }
 .counter-container {
@@ -119,14 +119,14 @@ h1 {
 }
 .counter-title {
   font-weight: 500;
-  color: #673AB7;
+  color: var(--color-purple);
   margin-bottom: 10px;
   font-size: 1.1rem;
 }
 .counter {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #E91E63;
+  color: var(--color-accent);
   font-family: 'Montserrat', sans-serif;
 }
 .envelope-container {
@@ -136,20 +136,20 @@ h1 {
   max-width: 700px;
   width: 100%;
   margin-bottom: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  box-shadow: 0 10px 30px var(--color-shadow-black);
   text-align: center;
   z-index: 1;
   position: relative;
-  border: 1px solid rgba(233, 30, 99, 0.15);
+  border: 1px solid var(--color-shadow-light);
   transition: all 0.4s ease;
 }
 .envelope-container:hover {
-  box-shadow: 0 15px 35px rgba(233, 30, 99, 0.2);
+  box-shadow: var(--box-shadow-dual);
   transform: translateY(-5px);
 }
 .envelope-text {
   font-size: 1.4rem;
-  color: #5a5a5a;
+  color: var(--color-grey-dark);
   font-weight: 500;
   line-height: 1.6;
   min-height: 100px;
@@ -165,19 +165,19 @@ h1 {
   position: absolute;
   left: -20px;
   top: -30px;
-  color: rgba(233, 30, 99, 0.2);
+  color: var(--color-shadow-dark);
 }
 .envelope-text::after {
   font-size: 5rem;
   position: absolute;
   right: -20px;
   bottom: -40px;
-  color: rgba(233, 30, 99, 0.2);
+  color: var(--color-shadow-dark);
   transform: rotate(180deg);
 }
 .btn {
-  background: linear-gradient(135deg, #E91E63 0%, #9C27B0 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%);
+  color: var(--color-white);
   border: none;
   padding: 18px 50px;
   font-size: 1.1rem;
@@ -185,7 +185,7 @@ h1 {
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
-  box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+  box-shadow: 0 6px 20px var(--color-shadow-btn);
   z-index: 2;
   position: relative;
   overflow: hidden;
@@ -194,7 +194,7 @@ h1 {
 }
 .btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(233, 30, 99, 0.5);
+  box-shadow: 0 8px 25px var(--color-shadow-btn-hover);
 }
 .btn:active {
   transform: translateY(1px);
@@ -214,11 +214,11 @@ h1 {
   left: 120%;
 }
 .btn-disabled {
-  background: linear-gradient(135deg, rgba(233, 30, 99, 0.3) 0%, rgba(156, 39, 176, 0.3) 100%) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  background: linear-gradient(135deg, var(--color-shadow-dark) 0%, var(--color-shadow-purple) 100%) !important;
+  color: var(--color-white) !important;
   cursor: not-allowed;
   transform: none !important;
-  box-shadow: 0 4px 15px rgba(233, 30, 99, 0.2) !important;
+  box-shadow: 0 4px 15px var(--color-shadow-purple) !important;
   position: relative;
   overflow: hidden;
 }
@@ -263,11 +263,15 @@ h1 {
   opacity: 0.7;
 }
 
+#heartIcon{
+  margin-right: 10px;
+}
+
     .heart {
       position: absolute;
       width: 20px;
       height: 20px;
-      background: #E91E63;
+  background: var(--color-accent);
       transform: rotate(45deg);
       animation: floatUp 2.5s ease-out forwards;
       opacity: 0.8;
@@ -281,7 +285,7 @@ h1 {
       position: absolute;
       width: 20px;
       height: 20px;
-      background: #E91E63;
+  background: var(--color-accent);
       border-radius: 50%;
       box-shadow: 0 0 10px rgba(233, 30, 99, 0.3);
     }
@@ -315,7 +319,7 @@ h1 {
       top: -15px;
       left: 50%;
       transform: translateX(-50%);
-      background: #9C27B0;
+      background: var(--color-secondary);
       color: white;
       padding: 5px 20px;
       border-radius: 15px;
@@ -347,11 +351,11 @@ h1 {
     100% { box-shadow: 0 0 0 0 rgba(29, 185, 84, 0); }
   }
 
-    .footer {
-      margin-top: 40px;
+footer {
+      margin-top: auto;
       padding: 20px;
       text-align: center;
-      color: #888;
+      color: var(--color-grey);
       font-size: 0.9rem;
       width: 100%;
       border-top: 1px solid rgba(233, 30, 99, 0.1);
@@ -360,7 +364,7 @@ h1 {
     .signature {
       font-family: 'Dancing Script', cursive;
       font-size: 2rem;
-      color: #E91E63;
+  color: var(--color-accent);
       margin-top: 10px;
     }
 
@@ -496,7 +500,7 @@ h1 {
 
 .theme-toggle i {
   font-size: 18px;
-  color: #fff;
+  color: var(--color-white);
   transition: all 0.3s ease;
 }
 
@@ -521,7 +525,7 @@ h1 {
 .badge-tracker {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  color: #E91E63;
+  color: var(--color-accent);
   margin-bottom: 15px;
   font-size: 1.1rem;
   letter-spacing: 0.5px;
@@ -571,11 +575,11 @@ h1 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 800;
   font-size: 12px;
-  color: #555;
+  color: var(--color-grey-dark);
 }
 
 .badge.completed::after {
-  color: #fff;
+  color: var(--color-white);
   text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
@@ -601,23 +605,23 @@ h1 {
 
 .reminder-btn {
   background: rgba(255, 255, 255, 0.9);
-  color: #E91E63;
-  border: 2px solid #E91E63;
+  color: var(--color-accent);
+  border: 2px solid var(--color-accent);
   padding: 8px 20px;
   border-radius: 50px;
   font-weight: 600;
   margin-top: 15px;
   text-decoration: none;
   transition: all 0.3s;
-  box-shadow: 0 3px 10px rgba(233, 30, 99, 0.2);
+  box-shadow: 0 3px 10px var(--color-shadow);
   display: inline-block;
 }
 
 .reminder-btn:hover {
-  background: #E91E63;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-white);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+  box-shadow: 0 5px 15px var(--color-shadow-dark);
 }
 
 .back-btn-container {
@@ -629,7 +633,7 @@ h1 {
 
 .back-btn {
   background: rgba(255, 255, 255, 0.9);
-  color: #E91E63;
+  color: var(--color-accent);
   padding: 8px 15px;
   border-radius: 50px;
   text-decoration: none;
@@ -643,8 +647,8 @@ h1 {
 
 .back-btn:hover {
   transform: translateX(-3px);
-  background: #E91E63;
-  color: white;
+  background: var(--color-secondary);
+  color: var(--color-white);
 }
 
 .dates-container {
@@ -679,13 +683,13 @@ h1 {
 }
 
 .date-content h3 {
-  color: #E91E63;
+  color: var(--color-accent);
   margin-bottom: 5px;
   font-family: 'Montserrat', sans-serif;
 }
 
 .date {
-  color: #777;
+  color: var(--color-grey);
   font-weight: 500;
   margin-bottom: 10px;
 }
@@ -693,7 +697,7 @@ h1 {
 .days-counter {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  color: #9C27B0;
+  color: var(--color-secondary);
 }
 
 /* Estilos para grupos de tarjetas */
@@ -748,13 +752,13 @@ h1 {
 
 /* Estilos para estado 'hoy' extraídos de inline JS */
 .date-card-today {
-  background: linear-gradient(135deg, #E91E63 0%, #9C27B0 100%) !important;
-  color: #fff !important;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%) !important;
+  color: var(--color-white) !important;
 }
-.date-card-today h3 { color: #fff !important; }
+.date-card-today h3 { color: var(--color-white) !important; }
 .date-card-today .date { color: rgba(255,255,255,0.9) !important; }
 .days-counter-today {
-  color: #4CAF50 !important;
+  color: var(--color-green) !important;
   background: rgba(255,255,255,0.15) !important;
 }
 
@@ -769,13 +773,13 @@ body:not(.night-mode) .bubble {
   position: fixed;
   border-radius: 50%;
   z-index: -1;
-  animation: floatBubble 20s infinite ease-in-out; /* Más rápido (20s) */
+  animation: floatBubble 20s infinite ease-in-out;
   pointer-events: none;
   opacity: 0.8;
   filter: blur(1px);
 }
 
-/* Efecto de burbuja (igual que antes) */
+/* Efecto de burbuja */
 body:not(.night-mode) .bubble::before {
   content: '';
   position: absolute;
@@ -808,7 +812,7 @@ body:not(.night-mode) .bubble::after {
   filter: blur(5px);
 }
 
-/* Animación de burbujas - Punto medio en movimiento */
+/* Animación de burbujas */
 @keyframes floatBubble {
   0%, 100% {
     transform: translate(0, 0) rotate(0deg);
@@ -824,20 +828,6 @@ body:not(.night-mode) .bubble::after {
   }
 }
 
-/* Ajustamos la duración para que sea un poco más rápida */
-body:not(.night-mode) .bubble {
-  animation: floatBubble 25s infinite ease-in-out; /* 25s (antes 30s) */
-}
+/* Ajustamos la duración de burbujas: mantener una sola definición arriba */
 
-/* Limitar el tamaño del body para evitar scroll no deseado */
-body {
-  overflow-x: hidden;
-  min-height: 100vh;
-  position: relative;
-}
-
-
-/* Asegurarse que el footer siempre esté en la parte inferior */
-.footer {
-  margin-top: auto;
-}
+/* Limitar el tamaño del body para evitar scroll no deseado: ya aplicado en el bloque principal de body */

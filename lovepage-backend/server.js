@@ -118,7 +118,7 @@ app.post('/special-date', async (req, res) => {
   res.json({ success: true, special_date });
 });
 
-// ------ NUEVO: Guardar y obtener playlist personalizada
+// Guardar y obtener playlist personalizada
 app.post('/spotify-playlist', async (req, res) => {
   if (!req.session.user) return res.status(401).json({ error: "No logueado" });
   const { playlist } = req.body;

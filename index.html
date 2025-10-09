@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://open.spotify.com">
   <link rel="dns-prefetch" href="https://open.spotify.com">
 
+  <link rel="stylesheet" href="styles/variables.css">
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/night-mode.css">
   <link rel="stylesheet" href="styles/login.css">
@@ -48,11 +49,11 @@
     </div>
   </div>
     
-  <div class="header">
+  <header class="header">
     <h1>🦦 Para Mi Mundo 🦭</h1>
     <div class="subtitle">Eres todo lo que necesito</div>
     <a href="recordatorios.html" class="reminder-btn">Fechas Importantes</a>
-  </div>
+  </header>
 
   <div class="counter-container">
     <div class="counter-title">Donde todo comenzó</div>
@@ -73,7 +74,7 @@
   </div>
 
   <button class="btn" id="showBtn">
-    <i class="fas fa-heart" style="margin-right: 10px;"></i>Descubrir más 🦭
+    <i id="heartIcon" class="fas fa-heart"></i>Descubrir más 🦭
   </button>
 
   <div class="photo-gallery">
@@ -165,10 +166,10 @@
     </div>
   </div>
 
-  <div class="footer">
+  <footer class="footer">
     <p>Cada momento a tu lado es un tesoro</p>
     <div class="signature">Con todo mi amor</div>
-  </div>
+  </footer>
   
   <script src="scripts/main.js"></script>
   <script src="scripts/gallery.js"></script>

@@ -1,0 +1,49 @@
+/* CSS Variables for LovePage theme colors */
+:root {
+  --color-accent: #E91E63;
+  --color-secondary: #9C27B0;
+  --color-tertiary: #C2185B;
+  --color-pink-light: #f06292;
+  --color-pink-dark: #e57373;
+  --color-pink-bg: #fffafc;
+  --color-white: #fff;
+  --color-black: #333;
+  --color-purple: #673AB7;
+  --color-green: #4CAF50;
+  --color-green-dark: #43a047;
+  --color-orange: #FF8E53;
+  --color-orange-light: #FFDEE9;
+  --color-blue-light: #B5FFFC;
+  --color-night-bg1: #0f2027;
+  --color-night-bg2: #203a43;
+  --color-night-bg3: #2c5364;
+  --color-night-accent: #FF9A8B;
+  --color-night-red: #FF6B6B;
+  --color-night-text: #f0f0f0;
+  --color-grey: #888;
+  --color-grey-light: #d1d1d1;
+  --color-grey-dark: #555;
+  --color-grey-mid: #999;
+  --color-shadow: rgba(233, 30, 99, 0.2);
+  --color-shadow-light: rgba(233, 30, 99, 0.09);
+  --color-shadow-dark: rgba(233, 30, 99, 0.3);
+  --color-shadow-btn: rgba(233, 30, 99, 0.4);
+  --color-shadow-btn-hover: rgba(233, 30, 99, 0.5);
+  --color-shadow-purple: rgba(156, 39, 176, 0.3);
+  --color-shadow-black: rgba(0,0,0,0.1);
+  --color-shadow-black-dark: rgba(0,0,0,0.3);
+  --color-shadow-pink: #f8bbd0;
+  /* Common translucent whites */
+  --white-95: rgba(255, 255, 255, 0.95);
+  --white-90: rgba(255, 255, 255, 0.9);
+  --white-85: rgba(255, 255, 255, 0.85);
+  --white-30: rgba(255, 255, 255, 0.3);
+  --box-shadow-dual:
+          -5px -6px 10px -3px var(--color-accent),
+          5px 8px 8px -3px var(--color-secondary),
+          -7px -7px 10px -5px transparent,
+          7px 7px 10px -5px transparent,
+          0 0 5px 0px rgba(255,255,255,0),
+          0 25px 25px -20px rgba(0, 0, 0, 0.5);
+  ;
+}

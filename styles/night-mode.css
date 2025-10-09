@@ -1,64 +1,47 @@
 /* Modo nocturno */
 body.night-mode {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FF6B8B" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, auto;
-}
-
-body.night-mode {
-    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FF6B8B" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, auto;
+    background: linear-gradient(135deg, var(--color-night-bg1) 0%, var(--color-night-bg2) 50%, var(--color-night-bg3) 100%);
+    color: var(--color-night-text);
 }
 
 body.night-mode .spotify-container:hover {
     animation: pulse-green-dark 2s infinite;
 }
 
-:root {
-    --day-bg: linear-gradient(135deg, #FFDEE9 0%, #B5FFFC 100%);
-    --night-bg: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-    --day-text: #333;
-    --night-text: #f0f0f0;
-    --day-accent: #E91E63;
-    --night-accent: #FF9A8B;
-    --gradient-angle: 135deg;
-    --gradient-angle-2: 315deg;
-}
-
-body.night-mode {
-    background: var(--night-bg);
-    color: var(--night-text);
-}
-
-body.night-mode .header h1 {
-    color: var(--night-accent);
+body.night-mode header.header h1, body.night-mode .header h1 {
+    color: var(--color-night-accent);
     text-shadow: 0 0 10px rgba(255, 154, 139, 0.5);
 }
 
-body.night-mode .subtitle {
-    color: #FF6B6B;
-}
+body.night-mode .subtitle { color: var(--color-night-red); }
 
 body.night-mode .counter-container {
     background: rgba(15, 32, 39, 0.85);
-    color: var(--night-text);
+    color: var(--color-night-text);
 }
 
 body.night-mode .envelope-container {
     background: rgba(15, 32, 39, 0.95);
-    color: var(--night-text);
+    color: var(--color-night-text);
     border-color: rgba(255, 154, 139, 0.2);
 }
 
 body.night-mode .btn {
-    background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+    background: linear-gradient(135deg, var(--color-night-red) 0%, var(--color-orange) 100%);
     box-shadow: 0 6px 20px rgba(255, 106, 107, 0.4);
+    color: var(--color-white) !important;
 }
 
+/* Mantener marco de fotos blanco en modo noche */
 body.night-mode .photo-frame {
-    background: #1a2a32;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    background: white !important;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1) !important;
 }
 
-body.night-mode .footer {
+body.night-mode footer.footer, body.night-mode .footer {
     border-top: 1px solid rgba(255, 154, 139, 0.1);
+    color: var(--color-grey-light) !important;
 }
 
 body.night-mode .theme-toggle .sun {
@@ -70,53 +53,22 @@ body.night-mode .theme-toggle .moon {
     transform: translateX(0);
     opacity: 1;
 }
-/* Mantener marco de fotos blanco en modo noche */
-body.night-mode .photo-frame {
-    background: white !important;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1) !important;
-}
 
 /* Texto más claro en el sobre */
-body.night-mode .envelope-text {
-    color: #f8f8f8 !important;
-}
+body.night-mode .envelope-text { color: #f8f8f8 !important; }
 
 /* Mejor contraste para el contador */
-body.night-mode .counter {
-    color: #FF9A8B !important;
-}
-
+body.night-mode .counter { color: var(--color-night-accent) !important; }
 /* Mejor contraste para el título del contador */
-body.night-mode .counter-title {
-    color: #FF6B6B !important;
-}
-
-/* Ajustar el color del texto en el footer */
-body.night-mode .footer {
-    color: #d1d1d1 !important;
-}
+body.night-mode .counter-title { color: var(--color-night-red) !important; }
 
 /* Ajustar el color de la firma */
-body.night-mode .signature {
-    color: #FF9A8B !important;
-}
+body.night-mode .signature { color: var(--color-night-accent) !important; }
 
-/* Mejor contraste para el texto del botón */
-body.night-mode .btn {
-    color: white !important;
-}
+body.night-mode .photo-image { border: 1px solid #eee; }
 
-body.night-mode .photo-image {
-    border: 1px solid #eee;
-}
-
-body.night-mode .badge {
-    opacity: 0.5;
-}
-
-body.night-mode .badge::after {
-    color: #999;
-}
+body.night-mode .badge { opacity: 0.5; }
+body.night-mode .badge::after { color: var(--color-grey-mid); }
 
 @keyframes mandarinaGlowDark {
     0% { box-shadow: 0 0 5px rgba(255, 165, 0, 0.5); }
@@ -128,49 +80,36 @@ body.night-mode .badge.completed::before {
 }
 
 body.night-mode .badge-tracker {
-    color: #FF9A8B;
+    color: var(--color-night-accent);
     text-shadow: 0 0 5px rgba(255, 106, 107, 0.3);
 }
+
 body.night-mode .reminder-btn {
     background: rgba(15, 32, 39, 0.9);
-    color: #FF9A8B;
-    border-color: #FF9A8B;
+    color: var(--color-night-accent);
+    border-color: var(--color-night-accent);
 }
 
 body.night-mode .reminder-btn:hover {
-    background: #FF9A8B;
-    color: #0f2027;
+    background: var(--color-night-accent);
+    color: var(--color-night-bg1);
 }
 
 body.night-mode .back-btn {
     background: rgba(15, 32, 39, 0.9);
-    color: #FF9A8B;
+    color: var(--color-night-accent);
 }
 
 body.night-mode .back-btn:hover {
-    background: #FF9A8B;
-    color: #0f2027;
+    background: var(--color-night-accent);
+    color: var(--color-night-bg1);
 }
 
-body.night-mode .date-card {
-    background: rgba(15, 32, 39, 0.95);
-}
-
-body.night-mode .date-content h3 {
-    color: #FF9A8B;
-}
-
-body.night-mode .date {
-    color: #bbb;
-}
-
-body.night-mode .days-counter {
-    color: #FF6B6B;
-}
-
-body.night-mode .days-counter {
-    background: rgba(255, 154, 139, 0.1);
-}
+body.night-mode .date-card { background: rgba(15, 32, 39, 0.95); }
+body.night-mode .date-content h3 { color: var(--color-night-accent); }
+body.night-mode .date { color: #bbb; }
+body.night-mode .days-counter { color: var(--color-night-red); }
+body.night-mode .days-counter { background: rgba(255, 154, 139, 0.1); }
 
 /* Estrellas */
 .star {
