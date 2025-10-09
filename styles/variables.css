@@ -4,6 +4,7 @@
   --color-secondary: #9C27B0;
   --color-tertiary: #C2185B;
   --color-pink-light: #f06292;
+  --color-pink-soft: #FF6B8B;
   --color-pink-dark: #e57373;
   --color-pink-bg: #fffafc;
   --color-white: #fff;
@@ -33,7 +34,6 @@
   --color-shadow-black: rgba(0,0,0,0.1);
   --color-shadow-black-dark: rgba(0,0,0,0.3);
   --color-shadow-pink: #f8bbd0;
-  /* Common translucent whites */
   --white-95: rgba(255, 255, 255, 0.95);
   --white-90: rgba(255, 255, 255, 0.9);
   --white-85: rgba(255, 255, 255, 0.85);

@@ -34,7 +34,7 @@ body.night-mode .login-modal {
 
 body.night-mode .login-modal-content {
   background: linear-gradient(135deg, var(--color-night-bg2) 0%, var(--color-night-bg3) 100%);
-  border-color: #FF6B8B;
+  border-color: var(--color-pink-soft);
   color: var(--color-night-text);
   box-shadow: 0 6px 24px #2c5364a8;
 }
@@ -57,7 +57,7 @@ body.night-mode .login-modal-content {
 }
 
 body.night-mode .close {
-  color: #FF6B8B;
+  color: var(--color-pink-soft);
 }
 
 .login-modal-content h2 {
@@ -78,7 +78,7 @@ body.night-mode .login-modal-content h2 {
 }
 
 body.night-mode .login-modal-content label {
-  color: #FF6B8B;
+  color: var(--color-pink-soft);
 }
 
 .login-modal-content input {
@@ -105,7 +105,7 @@ body.night-mode .login-modal-content input {
 }
 
 body.night-mode .login-modal-content input:focus {
-  border-color: #FF6B8B;
+  border-color: var(--color-pink-soft);
   outline: none;
 }
 
@@ -210,7 +210,7 @@ body.night-mode .login-message.success {
 
 body.night-mode .user-area {
   background: linear-gradient(135deg, var(--color-night-bg2) 0%, var(--color-night-bg3) 100%);
-  border-color: #FF6B8B;
+  border-color: var(--color-pink-soft);
   color: var(--color-night-text);
   box-shadow: 0 2px 10px #2c5364a8;
 }
@@ -241,7 +241,7 @@ body.night-mode .user-name {
 
 body.night-mode .logout-menu {
   background: linear-gradient(135deg, var(--color-night-bg2) 0%, var(--color-night-bg3) 100%);
-  border-color: #FF6B8B;
+  border-color: var(--color-pink-soft);
   color: var(--color-night-text);
   box-shadow: 0 2px 10px #2c5364a8;
 }
@@ -314,7 +314,7 @@ body.night-mode .settings-modal {
 
 body.night-mode .settings-modal-content {
   background: linear-gradient(135deg, var(--color-night-bg2) 0%, var(--color-night-bg3) 100%);
-  border-color: #FF6B8B;
+  border-color: var(--color-pink-soft);
   color: var(--color-night-text);
   box-shadow: 0 6px 24px #2c5364a8;
 }
@@ -329,7 +329,7 @@ body.night-mode .settings-modal-content {
 }
 
 body.night-mode .settings-modal-content label {
-  color: #FF6B8B;
+  color: var(--color-pink-soft);
 }
 
 .settings-modal-content input[type="date"] {
@@ -356,6 +356,6 @@ body.night-mode .settings-modal-content input[type="date"] {
 }
 
 body.night-mode .settings-modal-content input[type="date"]:focus {
-  border-color: #FF6B8B;
+  border-color: var(--color-pink-soft);
   outline: none;
 }

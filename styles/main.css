@@ -41,10 +41,7 @@ body:hover::after {
 *, *::before, *::after {
   cursor: inherit;
 }
-body {
-  --x: 0;
-  --y: 0;
-}
+
 body::after {
   left: var(--x);
   top: var(--y);
@@ -818,7 +815,7 @@ body:not(.night-mode) .bubble::after {
     transform: translate(0, 0) rotate(0deg);
   }
   25% {
-    transform: translate(7vw, -8vh) rotate(3deg); /* Más suave que antes */
+    transform: translate(7vw, -8vh) rotate(3deg);
   }
   50% {
     transform: translate(-5vw, 6vh) rotate(-3deg);
@@ -827,7 +824,3 @@ body:not(.night-mode) .bubble::after {
     transform: translate(8vw, 4vh) rotate(5deg);
   }
 }
-
-/* Ajustamos la duración de burbujas: mantener una sola definición arriba */
-
-/* Limitar el tamaño del body para evitar scroll no deseado: ya aplicado en el bloque principal de body */

@@ -280,40 +280,42 @@ function calculateDaysDifference(counter, originalDate) {
   }
 }
 
-// --- Burbuja flotante ---
-// Unificación de creación de burbujas y listener de tema (eliminados duplicados)
+// --- Burbujas flotante ---
 function createBubbles() {
-  if (document.body.classList.contains('night-mode')) return; // sólo modo día
-  const bubbleCount = 5;
-  let bubblesContainer = document.querySelector('.bubbles-container');
-  if (!bubblesContainer) {
-    bubblesContainer = document.createElement('div');
-    bubblesContainer.className = 'bubbles-container';
-    document.body.appendChild(bubblesContainer);
-  } else {
-    bubblesContainer.innerHTML = '';
-  }
-  const fragment = document.createDocumentFragment();
-  for (let i = 0; i < bubbleCount; i++) {
+  document.querySelectorAll('.bubble').forEach(bubble => bubble.remove());
+
+  // Burbujas grandes (4 fijas)
+  const bigSizes = [160, 220, 240, 280];
+  const bigPositions = [
+    { left: "15%", top: "25%" },
+    { left: "75%", top: "35%" },
+    { left: "25%", top: "65%" },
+    { left: "70%", top: "75%" }
+  ];
+  bigSizes.forEach((size, idx) => {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
-    bubble.style.left = `${Math.random() * 90 + 5}%`;
-    bubble.style.top = `${Math.random() * 90 + 5}%`;
-    const size = Math.random() * 25 + 15;
     bubble.style.width = `${size}px`;
     bubble.style.height = `${size}px`;
-    bubble.style.animationDuration = `${Math.random() * 15 + 15}s`;
+    bubble.style.left = bigPositions[idx].left;
+    bubble.style.top = bigPositions[idx].top;
+    bubble.style.animationDuration = `${Math.random() * 8 + 20}s`;
+    bubble.style.animationDelay = `${Math.random() * 5}s`;
+    document.body.appendChild(bubble);
+  });
+
+  // Burbujas pequeñas (10 aleatorias)
+  for (let i = 0; i < 10; i++) {
+    const size = Math.random() * 20 + 10;
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.style.width = `${size}px`;
+    bubble.style.height = `${size}px`;
+    bubble.style.left = `${Math.random() * 90 + 2}%`;
+    bubble.style.top = `${Math.random() * 90 + 2}%`;
+    bubble.style.animationDuration = `${Math.random() * 10 + 15}s`;
     bubble.style.animationDelay = `${Math.random() * 10}s`;
-    fragment.appendChild(bubble);
-  }
-  bubblesContainer.appendChild(fragment);
-}
-function removeBubbles() {
-  const bubblesContainer = document.querySelector('.bubbles-container');
-  if (bubblesContainer) {
-    bubblesContainer.innerHTML = '';
-  } else {
-    document.querySelectorAll('.bubble').forEach(b => b.remove());
+    document.body.appendChild(bubble);
   }
 }
 document.addEventListener('DOMContentLoaded', () => {
