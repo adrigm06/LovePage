@@ -1,360 +1,109 @@
-// Variables globales para mensajes y efectos visuales
-let currentMessageIndex = 0;
+/* ============================================
+   MAIN.JS - Coordinador principal de la aplicación
+   Este archivo solo inicializa y coordina los módulos
+   ============================================ */
 
-// Encapsulación de mensajes
-const Messages = {
-  list: [
-    "Tu sonrisa ilumina mis días",
-    "Siempre encuentras la manera de animarme",
-    "Tu abrazo es mi refugio favorito",
-    "Admiro tu fuerza y tu bondad",
-    "Tu risa es la melodía que más me gusta escuchar",
-    "Me encanta compartir cada momento contigo",
-    "Tu forma de ver la vida me inspira",
-    "Gracias por estar siempre a mi lado",
-    "Eres mi mejor apoyo y mi mejor amigo/a",
-    "Cada día contigo es un regalo",
-    "Me haces sentir amado/a y especial",
-    "Tus palabras me llenan de paz",
-    "Tu amor me da fuerzas para todo",
-    "Contigo todo es más bonito",
-    "Me encanta que compartas tus sueños conmigo",
-    "Tu ternura es infinita",
-    "Tu compañía es mi lugar favorito",
-    "Me haces reír incluso en los días grises",
-    "Siempre sabes cómo sorprenderme",
-    "Eres mi hogar y mi aventura",
-    "Gracias por cuidar de mí",
-    "Adoro tus detalles y tu creatividad",
-    "Nuestro amor crece cada día",
-    "Me siento afortunado/a de tenerte",
-    "Tu forma de amar me inspira a ser mejor",
-    "Contigo aprendí lo que es la felicidad",
-    "Siempre eres mi razón para sonreír",
-    "El mundo es más bonito contigo",
-    "Tu mirada me llena de calma",
-    "Solo tengo ojos para ti",
-    "Por muchos momentos juntos más"
-  ],
-  next() {
-    if (currentMessageIndex >= this.list.length) return null;
-    return this.list[currentMessageIndex++];
-  },
-  remaining() { return this.list.length - currentMessageIndex; }
+// === INICIALIZACIÓN PRINCIPAL ===
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('🎉 LovePage iniciada');
+  
+  // Los módulos se inicializan automáticamente con sus propios DOMContentLoaded
+  // Este archivo solo coordina funcionalidades especiales si son necesarias
+  
+  initializeApp();
+});
+
+// === FUNCIÓN DE INICIALIZACIÓN ===
+function initializeApp() {
+  // Verificar que los módulos estén cargados
+  checkModules();
+  
+  // Inicializar cursor personalizado
+  setupCustomCursor();
+}
+
+// === VERIFICAR MÓDULOS CARGADOS ===
+function checkModules() {
+  const requiredModules = [
+    'AnimationsModule',
+    'ThemeModule',
+    'CounterModule',
+    'MessagesModule'
+  ];
+  
+  requiredModules.forEach(moduleName => {
+    if (window[moduleName]) {
+      console.log(`✅ ${moduleName} cargado`);
+    } else {
+      console.warn(`⚠️ ${moduleName} no está disponible`);
+    }
+  });
+}
+
+// === CURSOR PERSONALIZADO ===
+function setupCustomCursor() {
+  // Actualizar posición del efecto de cursor
+  let mouseX = 0;
+  let mouseY = 0;
+  
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    // Actualizar variables CSS para el cursor
+    document.documentElement.style.setProperty('--x', `${mouseX}px`);
+    document.documentElement.style.setProperty('--y', `${mouseY}px`);
+  });
+}
+
+// === UTILIDADES GLOBALES ===
+
+// Función helper para hacer scroll suave
+function smoothScrollTo(elementId) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// Función helper para mostrar notificaciones temporales
+function showNotification(message, duration = 3000) {
+  const notification = document.createElement('div');
+  notification.textContent = message;
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(233, 30, 99, 0.95);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    animation: slideInRight 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.style.animation = 'slideOutRight 0.3s ease';
+    setTimeout(() => notification.remove(), 300);
+  }, duration);
+}
+
+// === EXPORTAR UTILIDADES ===
+window.AppUtils = {
+  smoothScrollTo,
+  showNotification
 };
 
-// --- Modo noche ---
-function setupNightMode() {
-  const toggle = document.createElement('div');
-  toggle.className = 'theme-toggle';
-  toggle.innerHTML = `
-    <i class="fas fa-sun sun"></i>
-    <i class="fas fa-moon moon"></i>
-  `;
-  document.body.appendChild(toggle);
-
-  toggle.addEventListener('click', () => {
-    document.body.classList.toggle('night-mode');
-    localStorage.setItem('nightMode', document.body.classList.contains('night-mode'));
-    if (document.body.classList.contains('night-mode')) {
-      createStars();
-    } else {
-      removeStars();
-    }
-  });
-
-  if (localStorage.getItem('nightMode') === 'true') {
-    document.body.classList.add('night-mode');
-    createStars();
-  } else if (document.body.classList.contains('night-mode')) {
-    createStars();
-  }
-}
-function createStars() {
-  removeStars();
-  let starsContainer = document.querySelector('.stars-container');
-  if (!starsContainer) {
-    starsContainer = document.createElement('div');
-    starsContainer.className = 'stars-container';
-    document.body.appendChild(starsContainer);
-  } else {
-    starsContainer.innerHTML = '';
-  }
-  const starCount = Math.floor(window.innerWidth * window.innerHeight / 5000);
-  const fragment = document.createDocumentFragment();
-  for (let i = 0; i < starCount; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    const size = Math.random() * 2 + 1;
-    star.style.width = `${size}px`;
-    star.style.height = `${size}px`;
-    star.style.left = `${Math.random() * 100}%`;
-    star.style.top = `${Math.random() * 100}%`;
-    const opacity = Math.random() * 0.8 + 0.2;
-    const duration = `${Math.random() * 3 + 2}s`;
-    star.style.setProperty('--opacity', opacity);
-    star.style.setProperty('--duration', duration);
-    star.style.animationDelay = `${Math.random() * 5}s`;
-    fragment.appendChild(star);
-  }
-  starsContainer.appendChild(fragment);
-}
-function removeStars() {
-  const starsContainer = document.querySelector('.stars-container');
-  if (starsContainer) starsContainer.remove();
-}
-document.addEventListener('DOMContentLoaded', setupNightMode);
-
-// --- CONTADOR DE DÍAS PERSONALIZADO Y BADGES ---
-function getSpecialDate() {
-  // Fecha centralizada en APP_CONFIG
-  return window.userSpecialDate ? window.userSpecialDate : (window.APP_CONFIG?.START_DATE || '2025-07-18');
-}
-function actualizarContadorDias() {
-  const startDate = new Date(getSpecialDate());
-  startDate.setHours(0, 0, 0, 0);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const diffTime = today - startDate;
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  const daysSpan = document.getElementById('days');
-  if (daysSpan) daysSpan.textContent = diffDays;
-  actualizarBadges(diffDays);
-}
-function actualizarBadges(diffDays) {
-  const badgesContainer = document.getElementById('badges');
-  if (badgesContainer) {
-    const totalBadges = 12;
-    const completedBadges = Math.min(Math.floor(diffDays / 30), totalBadges);
-    badgesContainer.innerHTML = '';
-    for (let i = 0; i < totalBadges; i++) {
-      const badge = document.createElement('div');
-      badge.className = 'badge';
-      badge.setAttribute('data-month', i + 1);
-      badge.innerHTML = '🍊';
-      if (i < completedBadges) {
-        badge.classList.add('completed');
-        if (i === completedBadges - 1) {
-          badge.style.animation = 'mandarinaPop 0.6s';
-        }
-      }
-      badgesContainer.appendChild(badge);
-    }
-  }
-}
-document.addEventListener('DOMContentLoaded', actualizarContadorDias);
-window.actualizarContadorDias = actualizarContadorDias;
-
-// --- Mensajes bonitos y genéricos ---
-// Lista original movida a Messages.list
-
-// Init principal
-document.addEventListener('DOMContentLoaded', function() {
-  // Se elimina llamada a función inexistente handleSpotifyClick()
-  setupMessageButton();
-  ensureHeartbeatIndicator();
+// === MANEJO DE ERRORES GLOBAL ===
+window.addEventListener('error', (event) => {
+  console.error('❌ Error en la aplicación:', event.error);
 });
 
-// --- Mensajes y corazones ---
-function setupMessageButton() {
-  const messageBox = document.getElementById('randomMessage');
-  const showBtn = document.getElementById('showBtn');
-  if (!messageBox || !showBtn) return;
-
-  setTimeout(() => {
-    messageBox.style.transition = 'all 0.8s ease';
-  }, 1000);
-
-  showBtn.addEventListener('click', () => {
-  if (currentMessageIndex >= Messages.list.length) return;
-    messageBox.style.opacity = '0';
-    messageBox.style.transform = 'translateY(20px)';
-    setTimeout(() => {
-  const message = Messages.next();
-  if (message === null) return;
-  messageBox.textContent = message;
-      messageBox.style.opacity = '1';
-      messageBox.style.transform = 'translateY(0)';
-      createHearts();
-      checkHeartbeat(message);
-      if (currentMessageIndex >= Messages.list.length) {
-        disableButtonNow();
-        setTimeout(showFinalMessage, 3000);
-      }
-    }, 300);
-  });
-}
-function disableButtonNow() {
-  const showBtn = document.getElementById('showBtn');
-  if (!showBtn) return;
-  showBtn.disabled = true;
-  showBtn.classList.add('btn-disabled');
-  showBtn.innerHTML = '<i class="fas fa-heart" style="margin-right: 10px;"></i>¡Completado!';
-}
-function showFinalMessage() {
-  const messageBox = document.getElementById('randomMessage');
-  if (!messageBox) return;
-  messageBox.style.opacity = '0';
-  messageBox.style.transform = 'translateY(20px)';
-  setTimeout(() => {
-    messageBox.textContent = "Y muchas más cosas más... Gracias por ser tú ❤️";
-    messageBox.style.opacity = '1';
-    messageBox.style.transform = 'translateY(0)';
-    for (let i = 0; i < 30; i++) {
-      setTimeout(() => {
-        createHearts();
-      }, i * 100);
-    }
-  }, 300);
-}
-function createHearts() {
-  const fragment = document.createDocumentFragment();
-  for (let i = 0; i < 15; i++) {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    heart.style.left = `${Math.random() * 100}%`;
-    heart.style.top = '70%';
-    heart.style.animationDuration = `${1.2 + Math.random() * 1.3}s`;
-    heart.style.setProperty('--delay', `${Math.random() * 2}s`);
-    heart.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
-    fragment.appendChild(heart);
-    setTimeout(() => {
-      heart.remove();
-    }, 2500);
-  }
-  document.body.appendChild(fragment);
-}
-
-// --- RECORDATORIOS ---
-// En la página de recordatorios, calcular días hasta la próxima ocurrencia
-if (document.querySelector('.dates-container')) {
-  document.querySelectorAll('.days-counter').forEach(counter => {
-    const targetDateStr = counter.dataset.date;
-    const now = new Date();
-    if (targetDateStr.split('-').length === 2) {
-      const [month, day] = targetDateStr.split('-');
-      let nextDate = new Date(now.getFullYear(), month - 1, day);
-      if (nextDate < now) {
-        nextDate = new Date(now.getFullYear() + 1, month - 1, day);
-      }
-      calculateDaysDifference(counter, nextDate);
-    } else {
-      const targetDate = new Date(targetDateStr);
-      calculateDaysDifference(counter, targetDate);
-    }
-  });
-}
-function calculateDaysDifference(counter, originalDate) {
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
-  const dateParts = counter.dataset.date.split('-');
-  let targetDate;
-  if (counter.dataset.type === 'monthly') {
-    const day = parseInt(dateParts[2] || '18');
-    targetDate = new Date(now.getFullYear(), now.getMonth(), day);
-    if (targetDate < now) {
-      targetDate = new Date(now.getFullYear(), now.getMonth() + 1, day);
-    }
-  } else {
-    const month = parseInt(dateParts[1]) - 1;
-    const day = parseInt(dateParts[2]);
-    targetDate = new Date(now.getFullYear(), month, day);
-    if (targetDate < now) {
-      targetDate = new Date(now.getFullYear() + 1, month, day);
-    }
-  }
-  targetDate.setHours(0, 0, 0, 0);
-  const diffTime = targetDate - now;
-  const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
-  // Reemplazo de estilos inline por clases
-  const card = counter.closest('.date-card');
-  card?.classList.remove('date-card-today');
-  counter.classList.remove('days-counter-today');
-  if (diffDays === 0) {
-    counter.textContent = '¡Es hoy!';
-    card?.classList.add('date-card-today');
-    counter.classList.add('days-counter-today');
-  } else {
-    // Siempre mostrar futuro (anual). diffDays ya es positivo en esta lógica.
-    counter.textContent = `Faltan ${diffDays} ${diffDays === 1 ? 'día' : 'días'}`;
-  }
-}
-
-// --- Burbujas flotante ---
-function createBubbles() {
-  document.querySelectorAll('.bubble').forEach(bubble => bubble.remove());
-
-  // Burbujas grandes (4 fijas)
-  const bigSizes = [160, 220, 240, 280];
-  const bigPositions = [
-    { left: "15%", top: "25%" },
-    { left: "75%", top: "35%" },
-    { left: "25%", top: "65%" },
-    { left: "70%", top: "75%" }
-  ];
-  bigSizes.forEach((size, idx) => {
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    bubble.style.width = `${size}px`;
-    bubble.style.height = `${size}px`;
-    bubble.style.left = bigPositions[idx].left;
-    bubble.style.top = bigPositions[idx].top;
-    bubble.style.animationDuration = `${Math.random() * 8 + 20}s`;
-    bubble.style.animationDelay = `${Math.random() * 5}s`;
-    document.body.appendChild(bubble);
-  });
-
-  // Burbujas pequeñas (10 aleatorias)
-  for (let i = 0; i < 10; i++) {
-    const size = Math.random() * 20 + 10;
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    bubble.style.width = `${size}px`;
-    bubble.style.height = `${size}px`;
-    bubble.style.left = `${Math.random() * 90 + 2}%`;
-    bubble.style.top = `${Math.random() * 90 + 2}%`;
-    bubble.style.animationDuration = `${Math.random() * 10 + 15}s`;
-    bubble.style.animationDelay = `${Math.random() * 10}s`;
-    document.body.appendChild(bubble);
-  }
-}
-document.addEventListener('DOMContentLoaded', () => {
-  createBubbles();
-  document.querySelector('.theme-toggle')?.addEventListener('click', () => {
-    setTimeout(() => {
-      if (document.body.classList.contains('night-mode')) {
-        removeBubbles();
-      } else {
-        removeBubbles();
-        createBubbles();
-      }
-    }, 400);
-  });
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('❌ Promesa rechazada:', event.reason);
 });
-
-document.addEventListener('DOMContentLoaded', function() {
-  fetch('http://localhost:4000/spotify-playlist', { credentials: 'include' })
-    .then(res => res.json())
-    .then(data => {
-      const playlist = data.playlist;
-      const iframe = document.querySelector('.spotify-container iframe');
-      if (playlist && playlist.length > 10) {
-        // Si es un link de Spotify completo, dale formato embed si es necesario
-        let embedUrl = playlist;
-        if (playlist.includes('/playlist/') && !playlist.includes('/embed/')) {
-          // Convierte a formato embed si hace falta
-          embedUrl = playlist.replace('/playlist/', '/embed/playlist/');
-        }
-        iframe.src = embedUrl;
-      }
-    });
-});
-
-// Indicador de latido separado del pseudo-elemento body::after
-function ensureHeartbeatIndicator() {
-  if (!document.querySelector('.heartbeat-indicator')) {
-    const el = document.createElement('div');
-    el.className = 'heartbeat-indicator';
-    document.body.appendChild(el);
-  }
-}

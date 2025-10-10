@@ -328,6 +328,44 @@ footer {
   margin-top: 10px;
 }
 
+/* Enlace GitHub en el footer */
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  text-decoration: none;
+  color: inherit; /* hereda color del footer según el tema */
+  padding: 6px 12px;
+  border-radius: 999px;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  /* Hacer que el 0 se distinga de la o (si la fuente lo soporta) */
+  font-variant-numeric: slashed-zero;
+  font-feature-settings: 'zero' 1;
+}
+
+.github-link i { font-size: 20px; line-height: 1; }
+
+.github-link:hover {
+  transform: translateY(-1px);
+  background: rgba(0,0,0,0.05);
+}
+
+/* Ajustes en modo noche */
+body.night-mode .github-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Asegurar legibilidad en ambos modos */
+footer { color: var(--color-grey); }
+body.night-mode footer { color: var(--color-grey-light); }
+
+/* Accesibilidad: foco visible para teclado */
+.github-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
     @media (max-width: 768px) {
       h1 {
         font-size: 3.5rem;

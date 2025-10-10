@@ -1,14 +1,10 @@
-/* ============================================
-   THEMES.CSS - Gestión de temas (día y noche)
-   ============================================ */
-
 /* === MODO DÍA (DEFAULT) === */
 
 /* Gradiente animado de fondo */
 @keyframes gradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Patrón de fondo */
@@ -70,6 +66,14 @@ body.night-mode {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FF6B8B" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, auto;
     background: linear-gradient(135deg, var(--color-night-bg1) 0%, var(--color-night-bg2) 50%, var(--color-night-bg3) 100%);
     color: var(--color-night-text);
+        /* Desactivar animación del gradiente diurno para evitar repaints innecesarios */
+        animation: none !important;
+        background-size: auto !important;
+}
+
+/* Ocultar patrón de fondo en modo noche para reducir capas y parpadeos */
+body.night-mode::before {
+    display: none;
 }
 
 body.night-mode .spotify-container:hover {

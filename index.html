@@ -11,9 +11,11 @@
   <meta name="keywords" content="amor, recuerdos, fotos, fechas importantes, playlist, sorpresa">
   <meta name="robots" content="index, follow">
 
+  <!-- Preconexiones para mejorar rendimiento -->
   <link rel="preconnect" href="https://open.spotify.com">
   <link rel="dns-prefetch" href="https://open.spotify.com">
 
+  <!-- Hojas de estilo -->
   <link rel="stylesheet" href="styles/variables.css">
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/themes.css">
@@ -23,7 +25,7 @@
 
   <link rel="preconnect" href="https://fonts.gstatic.com">
 
-  <link rel="icon" type="image/png" href="icono.png">
+  <link rel="icon" type="image/png" href="icons/icono.png">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Montserrat:wght@300;500;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
@@ -49,13 +51,15 @@
       </div>
     </div>
   </div>
-    
+
+  <!-- Encabezado -->
   <header class="header">
     <h1>🦦 Para Mi Mundo 🦭</h1>
     <div class="subtitle">Eres todo lo que necesito</div>
     <a href="recordatorios.html" class="reminder-btn">Fechas Importantes</a>
   </header>
 
+  <!-- Contador de días -->
   <div class="counter-container">
     <div class="counter-title">Donde todo comenzó</div>
     <div class="counter">
@@ -68,17 +72,20 @@
     </div>
   </div>
 
+  <!-- Mensajes aleatorios -->
   <div class="envelope-container">
     <div class="envelope-text" id="randomMessage">
       Haz clic en el botón para descubrir algo que amo de ti ❤️
     </div>
   </div>
 
+  <!-- Botón para aparecer mensajes -->
   <button class="btn" id="showBtn">
     <i id="heartIcon" class="fas fa-heart"></i>Descubrir más 🦭
   </button>
 
-  <div class="photo-gallery">
+  <!-- Galería de fotos -->
+  <section class="photo-gallery">
     <div class="photo-frame">
       <div class="photo-placeholder">
         <img src="img/1.jpg" class="photo-image" loading="lazy" alt="Foto 1">
@@ -86,31 +93,32 @@
     </div>
     <div class="photo-frame">
       <div class="photo-placeholder">
-        <img src="img/perro.jpg" class="photo-image" loading="lazy" alt="Perro">
+        <img src="img/perro.jpg" class="photo-image" loading="lazy" alt="Foto 2">
       </div>
     </div>
     <div class="photo-frame">
       <div class="photo-placeholder">
-        <img src="img/cita.jpg" class="photo-image" loading="lazy" alt="Cita">
+        <img src="img/cita.jpg" class="photo-image" loading="lazy" alt="Foto 3">
       </div>
     </div>
     <div class="photo-frame">
       <div class="photo-placeholder">
-        <img src="img/corazon.jpg" class="photo-image" loading="lazy" alt="Corazón">
+        <img src="img/corazon.jpg" class="photo-image" loading="lazy" alt="Foto 4">
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="spotify-container">
+  <!-- Playlist de Spotify -->
+  <section class="spotify-container">
     <iframe src="https://open.spotify.com/embed/playlist/2u9ZOQoR9muOEisrhSDr78?utm_source=generator" 
       width="100%" height="352" frameborder="0" 
       title="Lista de reproducción de Spotify"
       allowfullscreen="" 
       allow="autoplay; clipboard-write; encrypted-media; picture-in-picture">
       </iframe>
-  </div>
+  </section>
 
-  <!-- Login Modal -->
+  <!-- Modal Login -->
   <div id="loginModal" class="login-modal" aria-hidden="true">
     <div class="login-modal-content" role="dialog" aria-modal="true" aria-labelledby="login-title">
       <span id="closeLogin" class="close" aria-label="Cerrar">&times;</span>
@@ -133,7 +141,7 @@
     </div>
   </div>
 
-  <!-- Register Modal -->
+  <!-- Modal Registro  -->
   <div id="registerModal" class="login-modal">
     <div class="login-modal-content">
       <span id="closeRegister" class="close">&times;</span>
@@ -170,13 +178,30 @@
   <footer class="footer">
     <p>Cada momento a tu lado es un tesoro</p>
     <div class="signature">Con todo mi amor</div>
+    <a
+      class="github-link"
+      href="https://github.com/adrigm06"
+      target="_blank"
+      aria-label="GitHub de Adrigm06">
+      <i class="fab fa-github" aria-hidden="true"></i>
+      <span>AdrigmØ6</span>
+    </a>
   </footer>
   
-  <script src="scripts/main.js"></script>
-  <script src="scripts/gallery.js"></script>
-  <script src="scripts/photos-rotation.js" defer></script>
+  <!-- Scripts de configuración -->
+  <script src="scripts/config.js"></script>
+  
+  <!-- Scripts modulares (en orden de dependencias) -->
+  <script src="scripts/animations.js"></script>
   <script src="scripts/theme.js"></script>
-  <script src="scripts/config.js" defer></script>
-  <script src="scripts/login.js" defer></script>
+  <script src="scripts/counter.js"></script>
+  <script src="scripts/messages.js"></script>
+  <script src="scripts/gallery.js"></script>
+  <script src="scripts/spotify.js"></script>
+  <script src="scripts/photos-rotation.js"></script>
+  
+  <!-- Scripts de integración -->
+  <script src="scripts/login.js"></script>
+  <script src="scripts/main.js"></script>
 </body>
 </html>

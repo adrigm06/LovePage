@@ -5,11 +5,17 @@
 
 /* === BURBUJAS FLOTANTES === */
 
-/* Burbujas flotantes con movimiento más rápido */
-body:not(.night-mode) .bubble {
+/* Base de burbujas para evitar que afecten al layout en modo noche */
+.bubble {
   position: fixed;
   border-radius: 50%;
   z-index: -1;
+  pointer-events: none;
+}
+
+/* Burbujas flotantes con movimiento más rápido */
+body:not(.night-mode) .bubble {
+  /* La posición y capa ya están definidas en la base */
   animation: floatBubble 20s infinite ease-in-out;
   pointer-events: none;
   opacity: 0.8;
@@ -76,7 +82,9 @@ body:not(.night-mode) .bubble::after {
     z-index: -1;
     animation: twinkle var(--duration) infinite ease-in-out;
     opacity: 0;
-    will-change: opacity;
+  will-change: opacity;
+  backface-visibility: hidden;
+  contain: paint;
 }
 
 @keyframes twinkle {
@@ -93,6 +101,19 @@ body:not(.night-mode) .bubble::after {
     pointer-events: none;
     z-index: -1;
     overflow: hidden;
+  /* Crear su propia capa para evitar parpadeos al hacer scroll */
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: layout paint style;
+}
+
+/* Respetar usuarios con reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .star {
+    animation: none !important;
+    opacity: var(--opacity) !important;
+  }
 }
 
 /* === ANIMACIONES GENERALES === */
