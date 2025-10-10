@@ -1,4 +1,71 @@
-/* Modo nocturno */
+/* ============================================
+   THEMES.CSS - Gestión de temas (día y noche)
+   ============================================ */
+
+/* === MODO DÍA (DEFAULT) === */
+
+/* Gradiente animado de fondo */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Patrón de fondo */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M20,20 Q40,5 50,30 T80,20" fill="none" stroke="rgba(233,30,99,0.1)" stroke-width="1"/></svg>');
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* Toggle switch - Modo Día */
+.theme-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 34px;
+  z-index: 10;
+  width: 60px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.theme-toggle i {
+  font-size: 18px;
+  color: var(--color-white);
+  transition: all 0.3s ease;
+}
+
+.theme-toggle .sun {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.theme-toggle .moon {
+  transform: translateX(30px);
+  opacity: 0;
+  position: absolute;
+  right: 5px;
+}
+
+/* === MODO NOCTURNO === */
+
 body.night-mode {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FF6B8B" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, auto;
     background: linear-gradient(135deg, var(--color-night-bg1) 0%, var(--color-night-bg2) 50%, var(--color-night-bg3) 100%);
@@ -9,7 +76,7 @@ body.night-mode .spotify-container:hover {
     animation: pulse-green-dark 2s infinite;
 }
 
-body.night-mode header.header h1, body.night-mode .header h1 {
+body.night-mode .header h1 {
     color: var(--color-night-accent);
     text-shadow: 0 0 10px rgba(255, 154, 139, 0.5);
 }
@@ -40,7 +107,7 @@ body.night-mode .photo-frame {
     box-shadow: 0 3px 6px rgba(0,0,0,0.1) !important;
 }
 
-body.night-mode footer.footer, body.night-mode .footer {
+body.night-mode .footer {
     border-top: 1px solid rgba(255, 154, 139, 0.1);
     color: var(--color-grey-light) !important;
 }
@@ -81,11 +148,6 @@ body.night-mode .badge {
 
 body.night-mode .badge::after { 
     color: var(--color-grey-mid); 
-}
-
-@keyframes mandarinaGlowDark {
-    0% { box-shadow: 0 0 5px rgba(255, 165, 0, 0.5); }
-    100% { box-shadow: 0 0 15px rgba(255, 165, 0, 0.9); }
 }
 
 body.night-mode .badge.completed::before {
@@ -129,38 +191,8 @@ body.night-mode .date-content h3 {
 body.night-mode .date { 
     color: #bbb; 
 }
+
 body.night-mode .days-counter { 
     color: var(--color-night-red); 
-}
-
-body.night-mode .days-counter { 
     background: rgba(255, 154, 139, 0.1); 
-}
-
-/* Estrellas */
-.star {
-    position: fixed;
-    background-color: var(--color-white);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: -1;
-    animation: twinkle var(--duration) infinite ease-in-out;
-    opacity: 0;
-    will-change: opacity;
-}
-
-@keyframes twinkle {
-    0%, 100% { opacity: 0; }
-    50% { opacity: var(--opacity); }
-}
-
-.stars-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    pointer-events: none;
-    z-index: -1;
-    overflow: hidden;
 }
