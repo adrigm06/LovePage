@@ -1,8 +1,14 @@
+/* ============================================
+    Contiene: Estilos para la galería de fotos
+   ============================================ */
+
+
 /* Cursor para elementos clickeables */
 a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path fill="%23FF1493" d="M14 24.35l-1.45-1.32C5.4 18.36 2 15.28 2 11.5 2 8.42 4.42 6 7.5 6c1.74 0 3.41.81 4.5 2.09C13.09 6.81 14.76 6 16.5 6 19.58 6 22 8.42 22 11.5c0 3.78-3.4 6.86-8.55 11.54L14 24.35z"/></svg>') 14 14, pointer !important;
 }
 
+/* Efecto de inclinación para las fotos */
 .photo-frame:nth-child(odd) {
     transform: rotate(-3deg) translateY(8px);
 }
@@ -11,6 +17,7 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
     transform: rotate(3deg) translateY(8px);
 }
 
+/* Galería de fotos */
 .photo-gallery {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -22,6 +29,7 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
     perspective: 1000px;
 }
 
+/* Estilo para cada marco de foto */
 .photo-frame {
     position: relative;
     background: var(--color-white);
@@ -37,10 +45,12 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
     overflow: hidden;
 }
 
+/* Efecto de zoom en la imagen */
 .photo-frame:hover .photo-image {
     transform: scale(1.05);
 }
 
+/* Punto superior del marco */
 .photo-frame::before {
     content: "";
     position: absolute;
@@ -55,6 +65,7 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
     z-index: 10;
 }
 
+/* Efecto rotacion en el marco */
 .photo-frame:hover {
     transform: rotate(0deg) scale(1.05) translateY(-5px) !important;
     box-shadow: 0 10px 20px var(--color-shadow);
@@ -62,11 +73,13 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
     will-change: transform, box-shadow;
 }
 
+/* Mostrar Caption de la foto (Para futuro)
 .photo-frame:hover .photo-caption {
     opacity: 1;
-}
+} */
 
-.photo-caption {
+/* Estilo del caption (Para futuro) */
+/* .photo-caption {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -76,12 +89,9 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
     padding: 10px;
     opacity: 0;
     transition: opacity 0.3s ease;
-}
+} */
 
-.photo-frame::before {
-    display: none;
-}
-
+/* Placeholder para la foto */
 .photo-placeholder {
     display: flex;
     align-items: center;
@@ -92,22 +102,24 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
     font-size: 3rem;
 }
 
+/* Estilo para la imagen */
 .photo-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.05);
 }
 
-@media (min-width: 901px) {
-    .photo-frame:nth-child(odd) {
-        transform: rotate(-3deg) translateY(8px);
-    }
-    .photo-frame:nth-child(even) {
-        transform: rotate(3deg) translateY(8px);
+/* Adaptacion para tablets */
+@media (max-width: 900px) {
+    .photo-gallery {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
+/* Adaptacion para moviles */
 @media (max-width: 480px) {
     .photo-gallery {
         display: flex;
@@ -130,7 +142,7 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-    background: var(--color-white);
+        background: var(--color-white);
         border-radius: 2px;
         box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
@@ -155,20 +167,9 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
         margin: 0 auto;
     }
 
-    /* Punto superior centrado */
     .photo-frame::before {
         left: 50%;
         transform: translateX(-50%);
     }
     
-}
-
-.photo-frame:hover .photo-image {
-    transform: scale(1.05);
-}
-
-@media (max-width: 900px) {
-    .photo-gallery {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
