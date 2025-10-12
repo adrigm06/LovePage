@@ -44,11 +44,11 @@ body::after {
 }
 
 body {
-  background: linear-gradient(135deg, var(--color-orange-light) 0%, var(--color-blue-light) 100%);
+  background: linear-gradient(135deg, var(--orange-light) 0%, var(--blue-light) 100%);
   background-size: 400% 400%;
   animation: gradientFlow 15s ease infinite;
   font-family: 'Raleway', sans-serif;
-  color: var(--color-black);
+  color: var(--black);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,23 +70,23 @@ header {
 h1 {
   font-family: 'Dancing Script', cursive;
   font-size: 4rem;
-  color: var(--color-accent);
-  text-shadow: 2px 2px 4px var(--color-shadow-black);
+  color: var(--accent);
+  text-shadow: 2px 2px 4px var(--shadow-black);
   margin-bottom: 15px;
   animation: pulse 3s infinite;
 }
 .subtitle {
   font-family: 'Pacifico', cursive;
   font-size: 1.8rem;
-  color: var(--color-secondary);
+  color: var(--secondary);
   margin-bottom: 30px;
 }
 .counter-container {
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--white-85);
   border-radius: 15px;
   padding: 15px 25px;
   margin-bottom: 30px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px var(--black-10);
   text-align: center;
   width: 100%;
   max-width: 400px;
@@ -94,37 +94,37 @@ h1 {
 }
 .counter-title {
   font-weight: 500;
-  color: var(--color-purple);
+  color: var(--purple);
   margin-bottom: 10px;
   font-size: 1.1rem;
 }
 .counter {
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--accent);
   font-family: 'Montserrat', sans-serif;
 }
 .envelope-container {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--white-95);
   border-radius: 20px;
   padding: 40px 30px;
   max-width: 700px;
   width: 100%;
   margin-bottom: 30px;
-  box-shadow: 0 10px 30px var(--color-shadow-black);
+  box-shadow: 0 10px 30px var(--shadow-black);
   text-align: center;
   z-index: 1;
   position: relative;
-  border: 1px solid var(--color-shadow-light);
+  border: 1px solid var(--shadow-light);
   transition: all 0.4s ease;
 }
 .envelope-container:hover {
-  box-shadow: var(--box-shadow-dual);
+  box-shadow: var(--shadow-dual);
   transform: translateY(-5px);
 }
 .envelope-text {
   font-size: 1.4rem;
-  color: var(--color-grey-dark);
+  color: var(--grey-dark);
   font-weight: 500;
   line-height: 1.6;
   min-height: 100px;
@@ -140,19 +140,19 @@ h1 {
   position: absolute;
   left: -20px;
   top: -30px;
-  color: var(--color-shadow-dark);
+  color: var(--shadow-dark);
 }
 .envelope-text::after {
   font-size: 5rem;
   position: absolute;
   right: -20px;
   bottom: -40px;
-  color: var(--color-shadow-dark);
+  color: var(--shadow-dark);
   transform: rotate(180deg);
 }
 .btn {
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%);
-  color: var(--color-white);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+  color: var(--white);
   border: none;
   padding: 18px 50px;
   font-size: 1.1rem;
@@ -160,7 +160,7 @@ h1 {
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
-  box-shadow: 0 6px 20px var(--color-shadow-btn);
+  box-shadow: 0 6px 20px var(--shadow-btn);
   z-index: 2;
   position: relative;
   overflow: hidden;
@@ -169,7 +169,7 @@ h1 {
 }
 .btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px var(--color-shadow-btn-hover);
+  box-shadow: 0 8px 25px var(--shadow-btn-hover);
 }
 .btn:active {
   transform: translateY(1px);
@@ -181,7 +181,7 @@ h1 {
   left: -60%;
   width: 20px;
   height: 200%;
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--white-30);
   transform: rotate(30deg);
   transition: all 0.6s;
 }
@@ -189,11 +189,11 @@ h1 {
   left: 120%;
 }
 .btn-disabled {
-  background: linear-gradient(135deg, var(--color-shadow-dark) 0%, var(--color-shadow-purple) 100%) !important;
-  color: var(--color-white) !important;
+  background: linear-gradient(135deg, var(--shadow-dark) 0%, var(--shadow-purple) 100%) !important;
+  color: var(--white) !important;
   cursor: not-allowed;
   transform: none !important;
-  box-shadow: 0 4px 15px var(--color-shadow-purple) !important;
+  box-shadow: 0 4px 15px var(--shadow-purple) !important;
   position: relative;
   overflow: hidden;
 }
@@ -211,7 +211,7 @@ h1 {
   bottom: 0;
   background: linear-gradient(45deg, 
     transparent 45%, 
-    rgba(255, 255, 255, 0.3) 50%, 
+    var(--white-30) 50%, 
     transparent 55%);
   background-size: 200% 200%;
   animation: shine 2s infinite;
@@ -225,7 +225,7 @@ h1 {
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.2em;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--white-85);
   z-index: 2;
 }
 
@@ -241,12 +241,12 @@ h1 {
   position: fixed;
   width: 20px;
   height: 20px;
-  background: var(--color-accent);
+  background: var(--accent);
   transform: rotate(45deg);
   animation: floatUp 2.5s ease-out forwards;
   opacity: 0.8;
   z-index: 0;
-  box-shadow: 0 0 10px rgba(233, 30, 99, 0.3);
+  box-shadow: 0 0 10px var(--shadow-pink-dark);
 }
 
 .heart::before,
@@ -255,9 +255,9 @@ h1 {
   position: absolute;
   width: 20px;
   height: 20px;
-  background: var(--color-accent);
+  background: var(--accent);
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(233, 30, 99, 0.3);
+  box-shadow: 0 0 10px var(--shadow-pink-dark);
 }
 
 .heart::before {
@@ -273,11 +273,11 @@ h1 {
     .spotify-container {
       width: 100%;
       max-width: 600px;
-      background: rgba(255, 255, 255, 0.92);
+      background: var(--white-90);
       border-radius: 20px;
       padding: 12px;
       margin: 40px 0;
-      box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+      box-shadow: 0 12px 25px var(--black-15);
       z-index: 1;
       position: relative;
       overflow: hidden;
@@ -289,18 +289,18 @@ h1 {
       top: -15px;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--color-secondary);
+      background: var(--secondary);
       color: white;
       padding: 5px 20px;
       border-radius: 15px;
       font-size: 0.9rem;
       font-weight: 600;
-      box-shadow: 0 4px 10px rgba(156, 39, 176, 0.3);
+      box-shadow: 0 4px 10px var(--shadow-purple);
     }
     
 .spotify-container:hover {
-  box-shadow: 0 0 15px 5px rgba(29, 185, 84, 0.3),
-              0 15px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 0 15px 5px var(--shadow-spotify),
+              0 15px 30px var(--black-10);
   animation: pulse-green 2s infinite;
   transform: translateY(-2px);
 }
@@ -315,16 +315,16 @@ footer {
   margin-top: auto;
   padding: 20px;
   text-align: center;
-  color: var(--color-grey);
+  color: var(--grey);
   font-size: 0.9rem;
   width: 100%;
-  border-top: 1px solid rgba(233, 30, 99, 0.1);
+  border-top: 1px solid var(--shadow-pink-10);
 }
 
 .signature {
   font-family: 'Dancing Script', cursive;
   font-size: 2rem;
-  color: var(--color-accent);
+  color: var(--accent);
   margin-top: 10px;
 }
 
@@ -348,17 +348,17 @@ footer {
 
 .github-link:hover {
   transform: translateY(-1px);
-  background: rgba(0,0,0,0.05);
+  background: var(--black-05);
 }
 
 /* Ajustes en modo noche */
 body.night-mode .github-link:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--white-08);
 }
 
 /* Asegurar legibilidad en ambos modos */
-footer { color: var(--color-grey); }
-body.night-mode footer { color: var(--color-grey-light); }
+footer { color: var(--grey); }
+body.night-mode footer { color: var(--grey-light); }
 
 /* Accesibilidad: foco visible para teclado */
 .github-link:focus-visible {
@@ -430,7 +430,7 @@ body.night-mode footer { color: var(--color-grey-light); }
   right: 20px;
   width: 30px;
   height: 30px;
-  background-color: rgba(233, 30, 99, 0.2);
+  background-color: var(--shadow-pink);
   border-radius: 50%;
   opacity: 0;
   transition: opacity 0.5s ease;
@@ -450,7 +450,7 @@ body.night-mode footer { color: var(--color-grey-light); }
 .badge-tracker {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--accent);
   margin-bottom: 15px;
   font-size: 1.1rem;
   letter-spacing: 0.5px;
@@ -476,7 +476,7 @@ body.night-mode footer { color: var(--color-grey-light); }
   transform: scale(0.9);
   cursor: default;
   text-shadow: 
-    0 0 2px rgba(0,0,0,0.2),
+    0 0 2px var(--black-10),
     0 0 10px rgba(255,255,255,0.3);
 }
 
@@ -486,8 +486,8 @@ body.night-mode footer { color: var(--color-grey-light); }
   transform: scale(1.1);
   animation: mandarinaPulse 1.5s infinite alternate;
   text-shadow: 
-    0 0 5px rgba(255,165,0,0.5),
-    0 0 15px rgba(255,165,0,0.3);
+    0 0 5px var(--shadow-orange-50),
+    0 0 15px var(--shadow-orange-30);
 }
 
 /* Número superpuesto */
@@ -500,35 +500,35 @@ body.night-mode footer { color: var(--color-grey-light); }
   font-family: 'Montserrat', sans-serif;
   font-weight: 800;
   font-size: 12px;
-  color: var(--color-grey-dark);
+  color: var(--grey-dark);
 }
 
 .badge.completed::after {
-  color: var(--color-white);
-  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  color: var(--white);
+  text-shadow: 0 1px 3px var(--black-30);
 }
 
 /*BOTONES*/
 
 .reminder-btn {
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--color-accent);
-  border: 2px solid var(--color-accent);
+  background: var(--white-90);
+  color: var(--accent);
+  border: 2px solid var(--accent);
   padding: 8px 20px;
   border-radius: 50px;
   font-weight: 600;
   margin-top: 15px;
   text-decoration: none;
   transition: all 0.3s;
-  box-shadow: 0 3px 10px var(--color-shadow);
+  box-shadow: 0 3px 10px var(--shadow);
   display: inline-block;
 }
 
 .reminder-btn:hover {
-  background: var(--color-accent);
-  color: var(--color-white);
+  background: var(--accent);
+  color: var(--white);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px var(--color-shadow-dark);
+  box-shadow: 0 5px 15px var(--shadow-dark);
 }
 
 .back-btn-container {
@@ -539,13 +539,13 @@ body.night-mode footer { color: var(--color-grey-light); }
 }
 
 .back-btn {
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--color-accent);
+  background: var(--white-90);
+  color: var(--accent);
   padding: 8px 15px;
   border-radius: 50px;
   text-decoration: none;
   font-weight: 600;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 10px var(--black-10);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -554,8 +554,8 @@ body.night-mode footer { color: var(--color-grey-light); }
 
 .back-btn:hover {
   transform: translateX(-3px);
-  background: var(--color-secondary);
-  color: var(--color-white);
+  background: var(--secondary);
+  color: var(--white);
 }
 
 .dates-container {
@@ -566,21 +566,21 @@ body.night-mode footer { color: var(--color-grey-light); }
 }
 
 .date-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--white-95);
   border-radius: 15px;
   padding: 20px;
   margin-bottom: 20px;
   display: flex;
   align-items: center;
   gap: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px var(--black-10);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   position: relative;
 }
 
 .date-card:hover {
   transform: perspective(500px) rotateX(5deg) translateY(-10px);
-  box-shadow: 0 15px 30px rgba(233, 30, 99, 0.3);
+  box-shadow: 0 15px 30px var(--shadow-pink-dark);
 }
 
 .date-icon {
@@ -590,13 +590,13 @@ body.night-mode footer { color: var(--color-grey-light); }
 }
 
 .date-content h3 {
-  color: var(--color-accent);
+  color: var(--accent);
   margin-bottom: 5px;
   font-family: 'Montserrat', sans-serif;
 }
 
 .date {
-  color: var(--color-grey);
+  color: var(--grey);
   font-weight: 500;
   margin-bottom: 10px;
 }
@@ -604,7 +604,7 @@ body.night-mode footer { color: var(--color-grey-light); }
 .days-counter {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  color: var(--color-secondary);
+  color: var(--secondary);
 }
 
 /* Estilos para grupos de tarjetas */
@@ -648,7 +648,7 @@ body.night-mode footer { color: var(--color-grey-light); }
   padding: 5px 10px;
   border-radius: 50px;
   display: inline-block;
-  background: rgba(233, 30, 99, 0.1);
+  background: var(--shadow-pink-10);
   transition: all 0.3s;
 }
 
@@ -659,12 +659,12 @@ body.night-mode footer { color: var(--color-grey-light); }
 
 /* Estilos para estado 'hoy' extraídos de inline JS */
 .date-card-today {
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%) !important;
-  color: var(--color-white) !important;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%) !important;
+  color: var(--white) !important;
 }
-.date-card-today h3 { color: var(--color-white) !important; }
-.date-card-today .date { color: rgba(255,255,255,0.9) !important; }
+.date-card-today h3 { color: var(--white) !important; }
+.date-card-today .date { color: var(--white-90) !important; }
 .days-counter-today {
-  color: var(--color-green) !important;
-  background: rgba(255,255,255,0.15) !important;
+  color: var(--green) !important;
+  background: var(--white-15) !important;
 }

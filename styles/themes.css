@@ -28,23 +28,23 @@ body::before {
   z-index: 10;
   width: 60px;
   height: 30px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--white-20);
   border-radius: 30px;
   cursor: pointer;
   display: flex;
   align-items: center;
   padding: 0 5px;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px var(--black-10);
 }
 
 .theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--white-30);
 }
 
 .theme-toggle i {
   font-size: 18px;
-  color: var(--color-white);
+  color: var(--white);
   transition: all 0.3s ease;
 }
 
@@ -64,8 +64,8 @@ body::before {
 
 body.night-mode {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FF6B8B" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, auto;
-    background: linear-gradient(135deg, var(--color-night-bg1) 0%, var(--color-night-bg2) 50%, var(--color-night-bg3) 100%);
-    color: var(--color-night-text);
+    background: linear-gradient(135deg, var(--night-bg1) 0%, var(--night-bg2) 50%, var(--night-bg3) 100%);
+    color: var(--night-text);
         /* Desactivar animación del gradiente diurno para evitar repaints innecesarios */
         animation: none !important;
         background-size: auto !important;
@@ -81,39 +81,39 @@ body.night-mode .spotify-container:hover {
 }
 
 body.night-mode .header h1 {
-    color: var(--color-night-accent);
-    text-shadow: 0 0 10px rgba(255, 154, 139, 0.5);
+    color: var(--night-accent);
+    text-shadow: 0 0 10px var(--night-text-shadow);
 }
 
 body.night-mode .subtitle { 
-    color: var(--color-night-red); 
+    color: var(--night-red); 
 }
 
 body.night-mode .counter-container {
-    background: rgba(15, 32, 39, 0.85);
-    color: var(--color-night-text);
+    background: var(--night-bg-85);
+    color: var(--night-text);
 }
 
 body.night-mode .envelope-container {
-    background: rgba(15, 32, 39, 0.95);
-    color: var(--color-night-text);
-    border-color: rgba(255, 154, 139, 0.2);
+    background: var(--night-bg-95);
+    color: var(--night-text);
+    border-color: var(--night-accent-20);
 }
 
 body.night-mode .btn {
-    background: linear-gradient(135deg, var(--color-night-red) 0%, var(--color-orange) 100%);
-    box-shadow: 0 6px 20px rgba(255, 106, 107, 0.4);
-    color: var(--color-white) !important;
+    background: linear-gradient(135deg, var(--night-red) 0%, var(--orange) 100%);
+    box-shadow: 0 6px 20px var(--night-red-40);
+    color: var(--white) !important;
 }
 
 body.night-mode .photo-frame {
-    background: var(--color-white) !important;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1) !important;
+    background: var(--white) !important;
+    box-shadow: 0 3px 6px var(--black-10) !important;
 }
 
 body.night-mode .footer {
-    border-top: 1px solid rgba(255, 154, 139, 0.1);
-    color: var(--color-grey-light) !important;
+    border-top: 1px solid var(--night-accent-10);
+    color: var(--grey-light) !important;
 }
 
 body.night-mode .theme-toggle .sun {
@@ -127,23 +127,23 @@ body.night-mode .theme-toggle .moon {
 }
 
 body.night-mode .envelope-text { 
-    color: var(--color-night-text) !important; 
+    color: var(--night-text) !important; 
 }
 
 body.night-mode .counter { 
-    color: var(--color-night-accent) !important; 
+    color: var(--night-accent) !important; 
 }
 
 body.night-mode .counter-title { 
-    color: var(--color-night-red) !important; 
+    color: var(--night-red) !important; 
 }
 
 body.night-mode .signature { 
-    color: var(--color-night-accent) !important; 
+    color: var(--night-accent) !important; 
 } 
 
 body.night-mode .photo-image { 
-    border: 1px solid var(--color-grey-light); 
+    border: 1px solid var(--grey-light); 
 }
 
 body.night-mode .badge { 
@@ -151,57 +151,57 @@ body.night-mode .badge {
 }
 
 body.night-mode .badge::after { 
-    color: var(--color-grey-mid); 
+    color: var(--grey-mid); 
 }
 
 body.night-mode .badge.completed {
-    filter: grayscale(0%) brightness(1) drop-shadow(0 0 5px rgba(255, 142, 83, 0.5));
+    filter: grayscale(0%) brightness(1) drop-shadow(0 0 5px var(--shadow-orange-badge));
     animation: mandarinaGlowDark 1.5s ease-in-out infinite alternate;
 }
 
 body.night-mode .badge.completed::before {
-    background: linear-gradient(145deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%);
+    background: linear-gradient(145deg, var(--white-30) 0%, transparent 60%);
 }
 
 body.night-mode .badge-tracker {
-    color: var(--color-night-accent);
-    text-shadow: 0 0 5px rgba(255, 106, 107, 0.3);
+    color: var(--night-accent);
+    text-shadow: 0 0 5px var(--night-text-shadow-red);
 }
 
 body.night-mode .reminder-btn {
-    background: rgba(15, 32, 39, 0.9);
-    color: var(--color-night-accent);
-    border-color: var(--color-night-accent);
+    background: var(--night-bg-90);
+    color: var(--night-accent);
+    border-color: var(--night-accent);
 }
 
 body.night-mode .reminder-btn:hover {
-    background: var(--color-night-accent);
-    color: var(--color-night-bg1);
+    background: var(--night-accent);
+    color: var(--night-bg1);
 }
 
 body.night-mode .back-btn {
-    background: rgba(15, 32, 39, 0.9);
-    color: var(--color-night-accent);
+    background: var(--night-bg-90);
+    color: var(--night-accent);
 }
 
 body.night-mode .back-btn:hover {
-    background: var(--color-night-accent);
-    color: var(--color-night-bg1);
+    background: var(--night-accent);
+    color: var(--night-bg1);
 }
 
 body.night-mode .date-card { 
-    background: rgba(15, 32, 39, 0.95); 
+    background: var(--night-bg-95); 
 }
 
 body.night-mode .date-content h3 { 
-    color: var(--color-night-accent); 
+    color: var(--night-accent); 
 }
 
 body.night-mode .date { 
-    color: #bbb; 
+    color: var(--grey-light); 
 }
 
 body.night-mode .days-counter { 
-    color: var(--color-night-red); 
-    background: rgba(255, 154, 139, 0.1); 
+    color: var(--night-red); 
+    background: var(--night-accent-10); 
 }

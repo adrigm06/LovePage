@@ -1,50 +1,111 @@
-/* CSS Variables for LovePage theme colors */
+/* ============================================
+   CSS Variables - LovePage Theme System
+   ============================================ */
+
 :root {
-  --color-accent: #E91E63;
-  --color-secondary: #9C27B0;
-  --color-tertiary: #C2185B;
-  --color-pink-light: #f06292;
-  --color-pink-soft: #FF6B8B;
-  --color-pink-coral: #e57373;
-  --color-pink-dark: #c62828;
-  --color-pink-bg: #fffafc;
-  --color-white: #fff;
-  --color-black: #333;
-  --color-purple: #673AB7;
-  --color-green: #4CAF50;
-  --color-green-dark: #43a047;
-  --color-orange: #FF8E53;
-  --color-orange-light: #FFDEE9;
-  --color-blue-light: #B5FFFC;
-  --color-night-bg1: #0f2027;
-  --color-night-bg2: #203a43;
-  --color-night-bg3: #2c5364;
-  --color-night-accent: #FF9A8B;
-  --color-night-red: #FF6B6B;
-  --color-night-text: #f0f0f0;
-  --color-grey: #888;
-  --color-grey-light: #d1d1d1;
-  --color-grey-dark: #555;
-  --color-grey-mid: #999;
-  --color-shadow: rgba(233, 30, 99, 0.2);
-  --color-shadow-light: rgba(233, 30, 99, 0.09);
-  --color-shadow-dark: rgba(233, 30, 99, 0.3);
-  --color-shadow-btn: rgba(233, 30, 99, 0.4);
-  --color-shadow-btn-hover: rgba(233, 30, 99, 0.5);
-  --color-shadow-purple: rgba(156, 39, 176, 0.3);
-  --color-shadow-black: rgba(0,0,0,0.1);
-  --color-shadow-black-dark: rgba(0,0,0,0.3);
-  --color-shadow-pink: #f8bbd0;
+  /* ===== Brand Colors ===== */
+  --accent: #E91E63;
+  --secondary: #9C27B0;
+  --tertiary: #C2185B;
+  
+  /* ===== Pink Palette ===== */
+  --pink-light: #f06292;
+  --pink-soft: #FF6B8B;
+  --pink-coral: #e57373;
+  --pink-dark: #c62828;
+  --pink-bg: #fffafc;
+  --pink-shadow: #f8bbd0;
+  
+  /* ===== Grayscale ===== */
+  --white: #fff;
+  --black: #333;
+  --grey: #888;
+  --grey-light: #d1d1d1;
+  --grey-mid: #999;
+  --grey-dark: #555;
+  
+  /* ===== Accent Colors ===== */
+  --purple: #673AB7;
+  --green: #4CAF50;
+  --green-dark: #43a047;
+  --orange: #FF8E53;
+  --orange-light: #FFDEE9;
+  --blue-light: #B5FFFC;
+  
+  /* ===== Night Mode ===== */
+  --night-bg1: #0f2027;
+  --night-bg2: #203a43;
+  --night-bg3: #2c5364;
+  --night-accent: #FF9A8B;
+  --night-red: #FF6B6B;
+  --night-text: #f0f0f0;
+  
+  /* ===== Transparencies - White ===== */
   --white-95: rgba(255, 255, 255, 0.95);
   --white-90: rgba(255, 255, 255, 0.9);
   --white-85: rgba(255, 255, 255, 0.85);
   --white-30: rgba(255, 255, 255, 0.3);
-  --box-shadow-dual:
-          -5px -6px 10px -3px var(--color-accent),
-          5px 8px 8px -3px var(--color-secondary),
-          -7px -7px 10px -5px transparent,
-          7px 7px 10px -5px transparent,
-          0 0 5px 0px var(--color-shadow-black-dark),
-          0 25px 25px -20px var(--color-black);
-  ;
+  --white-20: rgba(255, 255, 255, 0.2);
+  --white-15: rgba(255, 255, 255, 0.15);
+  --white-08: rgba(255, 255, 255, 0.08);
+  --white-06: rgba(255, 255, 255, 0.06);
+  
+  /* ===== Transparencies - Black ===== */
+  --black-70: rgba(0, 0, 0, 0.7);
+  --black-30: rgba(0, 0, 0, 0.3);
+  --black-15: rgba(0, 0, 0, 0.15);
+  --black-10: rgba(0, 0, 0, 0.1);
+  --black-05: rgba(0, 0, 0, 0.05);
+  
+  /* ===== Shadows - Pink ===== */
+  --shadow-pink: rgba(233, 30, 99, 0.2);
+  --shadow-pink-light: rgba(233, 30, 99, 0.09);
+  --shadow-pink-dark: rgba(233, 30, 99, 0.3);
+  --shadow-pink-btn: rgba(233, 30, 99, 0.4);
+  --shadow-pink-hover: rgba(233, 30, 99, 0.5);
+  --shadow-pink-10: rgba(233, 30, 99, 0.1);
+  
+  /* ===== Shadows - Purple ===== */
+  --shadow-purple: rgba(156, 39, 176, 0.3);
+  
+  /* ===== Shadows - Green ===== */
+  --shadow-green-30: rgba(76, 175, 80, 0.3);
+  --shadow-green-dark: rgba(67, 160, 71, 0.5);
+  --shadow-spotify: rgba(29, 185, 84, 0.3);
+  
+  /* ===== Shadows - Orange ===== */
+  --shadow-orange-50: rgba(255, 165, 0, 0.5);
+  --shadow-orange-30: rgba(255, 165, 0, 0.3);
+  --shadow-orange-badge: rgba(255, 142, 83, 0.5);
+  --shadow-orange-badge-glow: rgba(255, 142, 83, 0.9);
+  
+  /* ===== Night Mode Transparencies ===== */
+  --night-overlay: rgba(44, 83, 100, 0.85);
+  --night-bg-95: rgba(15, 32, 39, 0.95);
+  --night-bg-90: rgba(15, 32, 39, 0.9);
+  --night-bg-85: rgba(15, 32, 39, 0.85);
+  --night-accent-20: rgba(255, 154, 139, 0.2);
+  --night-accent-10: rgba(255, 154, 139, 0.1);
+  --night-shadow: rgba(44, 83, 100, 0.66);
+  --night-shadow-30: rgba(44, 83, 100, 0.3);
+  --night-red-40: rgba(255, 106, 107, 0.4);
+  --night-red-30: rgba(255, 107, 107, 0.3);
+  --night-red-15: rgba(255, 107, 107, 0.15);
+  --night-text-shadow: rgba(255, 154, 139, 0.5);
+  --night-text-shadow-red: rgba(255, 106, 107, 0.3);
+  
+  /* ===== Component Specific ===== */
+  --overlay: rgba(233, 30, 99, 0.35);
+  --modal-shadow: rgba(229, 115, 115, 0.66);
+  --glow-soft: rgba(198, 40, 40, 0.12);
+  --placeholder-night: rgba(240, 240, 240, 0.6);
+  
+  /* ===== Complex Shadows ===== */
+  --shadow-dual:
+    -5px -6px 10px -3px var(--accent),
+    5px 8px 8px -3px var(--secondary),
+    -7px -7px 10px -5px transparent,
+    7px 7px 10px -5px transparent,
+    0 0 5px 0px var(--black-30),
+    0 25px 25px -20px var(--black);
 }

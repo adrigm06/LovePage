@@ -29,14 +29,14 @@ body:not(.night-mode) .bubble::before {
   background: radial-gradient(
     circle at 30% 30%,
     var(--white-90) 0%,
-    rgba(255, 255, 255, 0.6) 50%,
+    var(--white-85) 50%,
     var(--white-30) 70%,
     transparent 100%
   );
   box-shadow: 
-    inset -5px -5px 15px rgba(255, 255, 255, 0.4),
+    inset -5px -5px 15px var(--white-30),
     inset 5px 5px 15px var(--white-30),
-    0 0 25px rgba(255, 255, 255, 0.5);
+    0 0 25px var(--white-30);
 }
 
 /* Reflejo de luz */
@@ -72,7 +72,7 @@ body:not(.night-mode) .bubble::after {
 /* Estrellas */
 .star {
     position: fixed;
-    background-color: var(--color-white);
+    background-color: var(--white);
     border-radius: 50%;
     pointer-events: none;
     z-index: -1;
@@ -137,15 +137,15 @@ body:not(.night-mode) .bubble::after {
 @keyframes pulse {
   0% {
     transform: scale(1);
-    text-shadow: 0 0 10px var(--color-shadow);
+    text-shadow: 0 0 10px var(--shadow);
   }
   50% {
     transform: scale(1.03);
-    text-shadow: 0 0 20px var(--color-shadow-btn);
+    text-shadow: 0 0 20px var(--shadow-btn);
   }
   100% {
     transform: scale(1);
-    text-shadow: 0 0 10px var(--color-shadow);
+    text-shadow: 0 0 10px var(--shadow);
   }
 }
 
@@ -164,23 +164,23 @@ body:not(.night-mode) .bubble::after {
 
 /* Animación de pulso verde (Spotify) */
 @keyframes pulse-green {
-  0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.3); }
-  70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+  0% { box-shadow: 0 0 0 0 var(--shadow-green-30); }
+  70% { box-shadow: 0 0 0 10px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
 }
 
 /* Animación de pulso verde oscuro (GitHub) */
 @keyframes pulse-green-dark {
-  0% { box-shadow: 0 0 0 0 rgba(67, 160, 71, 0.5); }
-  70% { box-shadow: 0 0 0 10px rgba(67, 160, 71, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(67, 160, 71, 0); }
+  0% { box-shadow: 0 0 0 0 var(--shadow-green-dark); }
+  70% { box-shadow: 0 0 0 10px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
 }
 
 /* Animación de resaltado con pulso */
 @keyframes pulseHighlight {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(233, 30, 99, 0.7); }
-  70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(233, 30, 99, 0); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(233, 30, 99, 0); }
+  0% { transform: scale(1); box-shadow: 0 0 0 0 var(--shadow-pink-dark); }
+  70% { transform: scale(1.02); box-shadow: 0 0 0 10px transparent; }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 transparent; }
 }
 
 /* Animación de heartbeat */
@@ -207,6 +207,6 @@ body:not(.night-mode) .bubble::after {
 
 /* Animación de brillo mandarina */
 @keyframes mandarinaGlowDark {
-  0% { filter: grayscale(0%) brightness(1) drop-shadow(0 0 5px rgba(255, 142, 83, 0.5)); }
-  100% { filter: grayscale(0%) brightness(1.1) drop-shadow(0 0 15px rgba(255, 142, 83, 0.9)); }
+  0% { filter: grayscale(0%) brightness(1) drop-shadow(0 0 5px var(--shadow-orange-badge)); }
+  100% { filter: grayscale(0%) brightness(1.1) drop-shadow(0 0 15px var(--shadow-orange-badge-glow)); }
 }
