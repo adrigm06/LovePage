@@ -18,13 +18,13 @@
   align-items: center;
   background: var(--color-pink-bg);
   border-radius: 14px;
-  box-shadow: 0 3px 12px var(--color-pink-dark);
+  box-shadow: 0 3px 12px var(--color-pink-coral);
   padding: 18px 22px;
   position: relative;
   transition: box-shadow .25s;
 }
 .reminder-card:hover {
-  box-shadow: 0 6px 24px var(--color-pink-dark);
+  box-shadow: 0 6px 24px var(--color-pink-coral);
 }
 .reminder-icon {
   font-size: 2em;
@@ -39,7 +39,7 @@
 .reminder-name-text {
   font-size: 1.16em;
   font-weight: bold;
-  color: var(--color-pink-dark);
+  color: var(--color-pink-coral);
   margin-bottom: 3px;
 }
 .reminder-date-text {
@@ -71,7 +71,7 @@
 }
 .edit-reminder-btn:hover {
   transform: scale(1.11) rotate(-12deg);
-  color: var(--color-pink-dark);
+  color: var(--color-pink-coral);
   opacity: 1;
 }
 /* Modal estilos */
@@ -94,12 +94,12 @@
   border-radius: 16px;
   width: 350px;
   max-width: 93vw;
-  box-shadow: 0 7px 32px var(--color-pink-dark);
+  box-shadow: 0 7px 32px var(--color-pink-coral);
   position: relative;
   text-align: center;
 }
 .close {
-  color: var(--color-pink-dark);
+  color: var(--color-pink-coral);
   position: absolute;
   right: 18px;
   top: 18px;
@@ -114,7 +114,7 @@
   outline: none;
 }
 .save-edit-btn {
-  background: linear-gradient(90deg, var(--color-pink-dark), var(--color-pink-light));
+  background: linear-gradient(90deg, var(--color-pink-coral), var(--color-pink-light));
   color: var(--color-white);
   border: none;
   padding: 10px 28px;
@@ -126,13 +126,13 @@
   transition: background 0.2s, transform 0.2s;
 }
 .save-edit-btn:hover {
-  background: linear-gradient(90deg, var(--color-pink-light), var(--color-pink-dark));
+  background: linear-gradient(90deg, var(--color-pink-light), var(--color-pink-coral));
   transform: scale(1.08);
 }
 label {
   display: block;
   text-align: left;
-  color: var(--color-pink-dark);
+  color: var(--color-pink-coral);
   font-weight: bold;
   margin-bottom: 5px;
   margin-top: 13px;
@@ -150,6 +150,6 @@ input[type="text"], input[type="date"], select {
   transition: border 0.2s;
 }
 input[type="text"]:focus, input[type="date"]:focus, select:focus {
-  border-color: var(--color-pink-dark);
+  border-color: var(--color-pink-coral);
   outline: none;
 }

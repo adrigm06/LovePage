@@ -1,3 +1,7 @@
+/* ============================================
+    Contiene: Estilos para el modal de login, registro y ajustes
+   ============================================ */
+
 /* Modal arriba de todo */
 .login-modal {
   display: none;
@@ -13,10 +17,12 @@
   transition: background 0.3s;
 }
 
+/* Modal modo noche */
 body.night-mode .login-modal {
   background: rgba(44,83,100,0.85);
 }
 
+/* Contenido del modal */
 .login-modal-content {
   background: var(--color-pink-bg);
   margin: 7% auto;
@@ -32,6 +38,7 @@ body.night-mode .login-modal {
   transition: background 0.3s, border-color 0.3s, color 0.3s;
 }
 
+/* Contenido del modal en modo noche */
 body.night-mode .login-modal-content {
   background: linear-gradient(135deg, var(--color-night-bg2) 0%, var(--color-night-bg3) 100%);
   border-color: var(--color-pink-soft);
@@ -39,8 +46,9 @@ body.night-mode .login-modal-content {
   box-shadow: 0 6px 24px #2c5364a8;
 }
 
+/* Botón de cerrar (X) */
 .close {
-  color: var(--color-pink-dark);
+  color: var(--color-pink-coral);
   position: absolute;
   right: 18px;
   top: 18px;
@@ -50,37 +58,44 @@ body.night-mode .login-modal-content {
   transition: color .18s;
 }
 
+/* Efecto hover y focus en el botón cerrar */
 .close:hover,
 .close:focus {
   color: var(--color-pink-light);
   outline: none;
 }
 
+/* Botón cerrar en modo noche */
 body.night-mode .close {
   color: var(--color-pink-soft);
 }
 
+/* Color del titulo del modal */
 .login-modal-content h2 {
-  color: var(--color-pink-dark);
+  color: var(--color-pink-coral);
   transition: color 0.3s;
 }
 
+/* Color del titulo del modal en modo noche */
 body.night-mode .login-modal-content h2 {
   color: var(--color-night-accent);
 }
 
+/* Estilos para labels */
 .login-modal-content label {
   display: block;
   margin: 15px 0 6px 12px;
   font-weight: bold;
   text-align: left;
-  color: var(--color-pink-dark);
+  color: var(--color-pink-coral);
 }
 
+/* Estilos para labels en modo noche */
 body.night-mode .login-modal-content label {
   color: var(--color-pink-soft);
 }
 
+/* Estilos para inputs de texto y contraseña */
 .login-modal-content input {
   width: 88%;
   padding: 9px;
@@ -93,8 +108,9 @@ body.night-mode .login-modal-content label {
   transition: border 0.2s, background 0.3s, color 0.3s;
 }
 
+/* Efecto focus en inputs */
 .login-modal-content input:focus {
-  border-color: var(--color-pink-dark);
+  border-color: var(--color-pink-coral);
   outline: none;
 }
 
@@ -113,7 +129,7 @@ body.night-mode .login-modal-content input:focus {
 .register-toggle,
 .login-button,
 .settings-button {
-  background: linear-gradient(90deg, var(--color-pink-dark), var(--color-pink-light));
+  background: linear-gradient(90deg, var(--color-pink-coral), var(--color-pink-light));
   color: var(--color-white);
   border: none;
   padding: 10px 28px;
@@ -131,7 +147,7 @@ body.night-mode .login-modal-content input:focus {
 .register-toggle:hover,
 .login-button:hover,
 .settings-button:hover {
-  background: linear-gradient(90deg, var(--color-pink-light), var(--color-pink-dark));
+  background: linear-gradient(90deg, var(--color-pink-light), var(--color-pink-coral));
   transform: scale(1.08);
 }
 
@@ -147,7 +163,7 @@ body.night-mode .settings-button {
   margin-top: 16px;
   font-size: 1em;
   min-height: 1.3em;
-  color: var(--color-pink-dark);
+  color: var(--color-pink-coral);
   opacity: 0;
   transition: opacity .44s, color 0.3s;
 }
@@ -251,7 +267,7 @@ body.night-mode .logout-menu {
   display: block;
   width: 100%;
   margin-bottom: 10px;
-  background: linear-gradient(90deg, var(--color-pink-light), var(--color-pink-dark));
+  background: linear-gradient(90deg, var(--color-pink-light), var(--color-pink-coral));
   color: var(--color-white);
   border: none;
   padding: 8px 22px;
@@ -268,7 +284,7 @@ body.night-mode .logout-menu {
 
 .menu-btn:hover,
 .menu-btn:focus {
-  background: linear-gradient(90deg, var(--color-pink-dark), var(--color-pink-light));
+  background: linear-gradient(90deg, var(--color-pink-coral), var(--color-pink-light));
   transform: scale(1.08);
   outline: none;
 }
@@ -324,7 +340,7 @@ body.night-mode .settings-modal-content {
   margin: 15px 0 6px 12px;
   font-weight: bold;
   text-align: left;
-  color: var(--color-pink-dark);
+  color: var(--color-pink-coral);
   transition: color 0.3s;
 }
 
@@ -351,7 +367,7 @@ body.night-mode .settings-modal-content input[type="date"] {
 }
 
 .settings-modal-content input[type="date"]:focus {
-  border-color: var(--color-pink-dark);
+  border-color: var(--color-pink-coral);
   outline: none;
 }
 
@@ -380,7 +396,7 @@ body.night-mode .settings-modal-content input[type="date"]:focus {
 }
 
 .settings-modal-content textarea:focus {
-  border-color: var(--color-pink-dark);
+  border-color: var(--color-pink-coral);
   outline: none;
   box-shadow: 0 0 8px rgba(233, 30, 99, 0.2);
 }
@@ -412,7 +428,7 @@ body.night-mode .settings-modal-content textarea:focus {
 }
 
 .settings-modal-content textarea::-webkit-scrollbar-thumb:hover {
-  background: var(--color-pink-dark);
+  background: var(--color-pink-coral);
 }
 
 body.night-mode .settings-modal-content textarea::-webkit-scrollbar-track {
@@ -434,7 +450,7 @@ body.night-mode .settings-modal-content textarea::-webkit-scrollbar-thumb {
 }
 
 .messages-info small {
-  color: var(--color-pink-dark);
+  color: var(--color-pink-coral);
   font-size: 0.85em;
   line-height: 1.4;
   display: block;
@@ -469,7 +485,7 @@ body.night-mode .messages-info small {
 }
 
 .settings-modal-content input[type="text"]:focus {
-  border-color: var(--color-pink-dark);
+  border-color: var(--color-pink-coral);
   outline: none;
 }
 
