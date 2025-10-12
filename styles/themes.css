@@ -154,6 +154,11 @@ body.night-mode .badge::after {
     color: var(--color-grey-mid); 
 }
 
+body.night-mode .badge.completed {
+    filter: grayscale(0%) brightness(1) drop-shadow(0 0 5px rgba(255, 142, 83, 0.5));
+    animation: mandarinaGlowDark 1.5s ease-in-out infinite alternate;
+}
+
 body.night-mode .badge.completed::before {
     background: linear-gradient(145deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%);
 }

@@ -238,7 +238,7 @@ h1 {
 }
 
 .heart {
-  position: absolute;
+  position: fixed;
   width: 20px;
   height: 20px;
   background: var(--color-accent);

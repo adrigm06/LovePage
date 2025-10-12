@@ -100,7 +100,7 @@ function createHearts() {
         const heart = document.createElement('div');
         heart.classList.add('heart');
         heart.style.left = `${Math.random() * 100}%`;
-        heart.style.top = '70%';
+        heart.style.bottom = '0px';
         heart.style.animationDuration = `${1.2 + Math.random() * 1.3}s`;
         heart.style.setProperty('--delay', `${Math.random() * 2}s`);
         heart.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
