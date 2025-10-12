@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestras Fechas Importantes</title>
+
+    <!-- Hoja de fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;500;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Hojas de estilo -->
     <link rel="stylesheet" href="styles/variables.css">
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/themes.css">
@@ -13,17 +17,20 @@
     <link rel="stylesheet" href="styles/recordatorios.css">
 </head>
 <body>
+    <!-- Botón de regreso -->
     <div class="back-btn-container">
         <a href="index.html" class="back-btn">
         <i class="fas fa-arrow-left"></i> Volver
         </a>
     </div>
 
+    <!-- Encabezado -->
     <header class="header">
         <h1>📅 Fechas para Recordar</h1>
         <div class="subtitle"></div>
     </header>
 
+    <!-- Contenedor de fechas -->
     <div class="dates-container">
         <div class="date-card" data-id="primer_dia">
             <div class="date-icon">🤍</div>
@@ -37,6 +44,7 @@
             </button>
         </div>
 
+        <!-- Grupo de fechas -->
         <div class="date-group">
             <div class="date-card" data-id="cumple_tu">
                 <div class="date-icon">🍊</div>
@@ -121,8 +129,10 @@
             <form id="editReminderForm">
                 <label for="editReminderName">Nombre</label>
                 <input type="text" id="editReminderName" required>
+
                 <label for="editReminderDate">Fecha</label>
                 <input type="date" id="editReminderDate" required>
+                
                 <label for="editReminderIcon">Icono</label>
                 <select id="editReminderIcon">
                     <option value="🎉">🎉</option>
@@ -138,6 +148,17 @@
                     <option value="🥰">🥰</option>
                     <option value="😾">😾</option>
                     <option value="😘">😘</option>
+                    <option value="😈">😈</option>
+                    <option value="😊">😊</option>
+                    <option value="🤔">🤔</option>
+                    <option value="😭">😭</option>
+                    <option value="😎">😎</option>
+                    <option value="🤗">🤗</option>
+                    <option value="🤑">🤑</option>
+                    <option value="😶">😶</option>
+                    <option value="🌹">🌹</option>
+                    <option value="🍕">🍕</option>
+                    <option value="💘">💘</option>
                 </select>
                 <button type="submit" class="save-edit-btn">Guardar cambios</button>
             </form>
