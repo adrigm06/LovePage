@@ -149,12 +149,13 @@ loginForm.onsubmit = function(e) {
 };
 
 // Mostrar usuario logueado arriba derecha y actualizar fecha y badges
-function cargarUsuario() {
-  fetch('http://localhost:4000/session', {
-    credentials: 'include'
-  })
-  .then(res => res.json())
-  .then(data => {
+async function cargarUsuario() {
+  try {
+    const res = await fetch('http://localhost:4000/session', {
+      credentials: 'include'
+    });
+    const data = await res.json();
+    
     if (data.logged && data.user) {
       userArea.style.display = 'flex';
       userWelcome.textContent = `${data.user.username}`;
@@ -163,6 +164,11 @@ function cargarUsuario() {
       window.userSpecialDate = data.user.special_date ? data.user.special_date.split("T")[0] : null;
       if (specialDateText) specialDateText.textContent = '';
       actualizarContadorDias();
+      
+      // Cargar mensajes del usuario cuando inicia sesión
+      if (window.MessagesModule && window.MessagesModule.Messages) {
+        await window.MessagesModule.Messages.loadUserMessages();
+      }
     } else {
       userArea.style.display = 'none';
       loginHeader.style.display = '';
@@ -170,8 +176,16 @@ function cargarUsuario() {
       window.userSpecialDate = null;
       if (specialDateText) specialDateText.textContent = '';
       actualizarContadorDias();
+      
+      // Si no hay usuario logueado, usar mensajes por defecto
+      if (window.MessagesModule && window.MessagesModule.Messages) {
+        window.MessagesModule.Messages.list = [...window.MessagesModule.DEFAULT_MESSAGES];
+        window.MessagesModule.Messages.reset();
+      }
     }
-  });
+  } catch (error) {
+    console.error('Error al cargar usuario:', error);
+  }
 }
 
 // Menú de logout/ajustes
@@ -245,29 +259,98 @@ settingsForm.onsubmit = function(e) {
   });
 };
 
-// Al abrir modal de ajustes, carga el playlist del usuario
+// Al abrir modal de ajustes, carga el playlist del usuario y los mensajes
 document.getElementById('settingsBtn').addEventListener('click', function() {
+  // Cargar playlist
   fetch('http://localhost:4000/spotify-playlist', { credentials: 'include' })
     .then(res => res.json())
     .then(data => {
       document.getElementById('spotifyPlaylist').value = data.playlist || '';
     });
-});
-
-// Al guardar ajustes, también guarda la playlist
-document.getElementById('settingsForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const playlist = document.getElementById('spotifyPlaylist').value.trim();
-  fetch('http://localhost:4000/spotify-playlist', {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ playlist })
-  })
+  
+  // Cargar mensajes
+  fetch('http://localhost:4000/messages', { credentials: 'include' })
     .then(res => res.json())
     .then(data => {
-      // Puedes mostrar un mensaje de éxito aquí
+      const messagesTextarea = document.getElementById('userMessages');
+      if (data.messages && data.messages.length > 0) {
+        messagesTextarea.value = data.messages.join('\n');
+      } else {
+        // Si no hay mensajes personalizados, mostrar los por defecto
+        if (window.MessagesModule && window.MessagesModule.DEFAULT_MESSAGES) {
+          messagesTextarea.value = window.MessagesModule.DEFAULT_MESSAGES.join('\n');
+        }
+      }
+    })
+    .catch(() => {
+      // En caso de error, mostrar mensajes por defecto
+      if (window.MessagesModule && window.MessagesModule.DEFAULT_MESSAGES) {
+        document.getElementById('userMessages').value = window.MessagesModule.DEFAULT_MESSAGES.join('\n');
+      }
     });
+});
+
+// Al guardar ajustes, también guarda la playlist y los mensajes
+document.getElementById('settingsForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const playlist = document.getElementById('spotifyPlaylist').value.trim();
+  const messagesText = document.getElementById('userMessages').value;
+  const messagesArray = messagesText
+    .split('\n')
+    .map(msg => msg.trim())
+    .filter(msg => msg.length > 0); // Eliminar líneas vacías
+  
+  try {
+    // Guardar playlist
+    await fetch('http://localhost:4000/spotify-playlist', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ playlist })
+    });
+    
+    // Guardar mensajes
+    await fetch('http://localhost:4000/messages', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: messagesArray })
+    });
+    
+    // Recargar mensajes en la página
+    if (window.MessagesModule && window.MessagesModule.Messages) {
+      await window.MessagesModule.Messages.loadUserMessages();
+      window.MessagesModule.Messages.reset();
+      
+      // Actualizar el texto del mensaje visible
+      const messageBox = document.getElementById('randomMessage');
+      if (messageBox) {
+        messageBox.textContent = 'Haz clic en el botón para descubrir algo que amo de ti ❤️';
+      }
+      
+      // Rehabilitar el botón si estaba deshabilitado
+      const showBtn = document.getElementById('showBtn');
+      if (showBtn && showBtn.classList.contains('btn-disabled')) {
+        showBtn.disabled = false;
+        showBtn.classList.remove('btn-disabled');
+        showBtn.innerHTML = '<i id="heartIcon" class="fas fa-heart" style="margin-right: 10px;"></i>Descubrir más 🦭';
+      }
+    }
+    
+    settingsMessage.textContent = "¡Todos los ajustes guardados correctamente!";
+    settingsMessage.classList.add('show', 'success');
+    
+    setTimeout(() => {
+      settingsModal.style.display = 'none';
+      settingsMessage.textContent = "";
+      settingsMessage.classList.remove('show', 'success');
+    }, 1500);
+    
+  } catch (error) {
+    settingsMessage.textContent = "Error al guardar los ajustes.";
+    settingsMessage.classList.add('show');
+  }
 });
 
 // Logout
@@ -282,6 +365,25 @@ logoutBtn.onclick = function() {
     window.userSpecialDate = null;
     if (specialDateText) specialDateText.textContent = '';
     actualizarContadorDias();
+    
+    // Resetear mensajes a los por defecto
+    if (window.MessagesModule && window.MessagesModule.Messages) {
+      window.MessagesModule.Messages.list = [...window.MessagesModule.DEFAULT_MESSAGES];
+      window.MessagesModule.Messages.reset();
+      
+      // Resetear la UI de mensajes
+      const messageBox = document.getElementById('randomMessage');
+      if (messageBox) {
+        messageBox.textContent = 'Haz clic en el botón para descubrir algo que amo de ti ❤️';
+      }
+      
+      const showBtn = document.getElementById('showBtn');
+      if (showBtn && showBtn.classList.contains('btn-disabled')) {
+        showBtn.disabled = false;
+        showBtn.classList.remove('btn-disabled');
+        showBtn.innerHTML = '<i id="heartIcon" class="fas fa-heart" style="margin-right: 10px;"></i>Descubrir más 🦭';
+      }
+    }
   });
 };
 

@@ -18,7 +18,16 @@ CREATE TABLE IF NOT EXISTS reminders (
   UNIQUE(user_id, reminder_code)
 );
 
+CREATE TABLE IF NOT EXISTS messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  message_text TEXT NOT NULL,
+  display_order INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 SELECT * FROM users;
 SELECT * FROM reminders;
+SELECT * FROM messages;
 
 TRUNCATE users;

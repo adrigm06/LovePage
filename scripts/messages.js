@@ -5,40 +5,65 @@
 // === GESTIÓN DE MENSAJES ===
 let currentMessageIndex = 0;
 
+// Mensajes por defecto (se usan si el usuario no tiene mensajes personalizados)
+const DEFAULT_MESSAGES = [
+  "Tu sonrisa ilumina mis días",
+  "Siempre encuentras la manera de animarme",
+  "Tu abrazo es mi refugio favorito",
+  "Admiro tu fuerza y tu bondad",
+  "Tu risa es la melodía que más me gusta escuchar",
+  "Me encanta compartir cada momento contigo",
+  "Tu forma de ver la vida me inspira",
+  "Gracias por estar siempre a mi lado",
+  "Eres mi mejor apoyo y mi mejor amigo/a",
+  "Cada día contigo es un regalo",
+  "Me haces sentir amado/a y especial",
+  "Tus palabras me llenan de paz",
+  "Tu amor me da fuerzas para todo",
+  "Contigo todo es más bonito",
+  "Me encanta que compartas tus sueños conmigo",
+  "Tu ternura es infinita",
+  "Tu compañía es mi lugar favorito",
+  "Me haces reír incluso en los días grises",
+  "Siempre sabes cómo sorprenderme",
+  "Eres mi hogar y mi aventura",
+  "Gracias por cuidar de mí",
+  "Adoro tus detalles y tu creatividad",
+  "Nuestro amor crece cada día",
+  "Me siento afortunado/a de tenerte",
+  "Tu forma de amar me inspira a ser mejor",
+  "Contigo aprendí lo que es la felicidad",
+  "Siempre eres mi razón para sonreír",
+  "El mundo es más bonito contigo",
+  "Tu mirada me llena de calma",
+  "Solo tengo ojos para ti",
+  "Por muchos momentos juntos más"
+];
+
 const Messages = {
-  list: [
-    "Tu sonrisa ilumina mis días",
-    "Siempre encuentras la manera de animarme",
-    "Tu abrazo es mi refugio favorito",
-    "Admiro tu fuerza y tu bondad",
-    "Tu risa es la melodía que más me gusta escuchar",
-    "Me encanta compartir cada momento contigo",
-    "Tu forma de ver la vida me inspira",
-    "Gracias por estar siempre a mi lado",
-    "Eres mi mejor apoyo y mi mejor amigo/a",
-    "Cada día contigo es un regalo",
-    "Me haces sentir amado/a y especial",
-    "Tus palabras me llenan de paz",
-    "Tu amor me da fuerzas para todo",
-    "Contigo todo es más bonito",
-    "Me encanta que compartas tus sueños conmigo",
-    "Tu ternura es infinita",
-    "Tu compañía es mi lugar favorito",
-    "Me haces reír incluso en los días grises",
-    "Siempre sabes cómo sorprenderme",
-    "Eres mi hogar y mi aventura",
-    "Gracias por cuidar de mí",
-    "Adoro tus detalles y tu creatividad",
-    "Nuestro amor crece cada día",
-    "Me siento afortunado/a de tenerte",
-    "Tu forma de amar me inspira a ser mejor",
-    "Contigo aprendí lo que es la felicidad",
-    "Siempre eres mi razón para sonreír",
-    "El mundo es más bonito contigo",
-    "Tu mirada me llena de calma",
-    "Solo tengo ojos para ti",
-    "Por muchos momentos juntos más"
-  ],
+  list: [...DEFAULT_MESSAGES], // Inicialmente usa los mensajes por defecto
+  
+  async loadUserMessages() {
+    try {
+      const response = await fetch('http://localhost:4000/messages', {
+        credentials: 'include'
+      });
+      const data = await response.json();
+      
+      if (data.messages && data.messages.length > 0) {
+        // Usuario tiene mensajes personalizados
+        this.list = data.messages;
+      } else {
+        // Usuario no tiene mensajes, usa los por defecto
+        this.list = [...DEFAULT_MESSAGES];
+      }
+      currentMessageIndex = 0;
+    } catch (err) {
+      console.warn('No se pudieron cargar los mensajes del usuario, usando mensajes por defecto');
+      this.list = [...DEFAULT_MESSAGES];
+      currentMessageIndex = 0;
+    }
+  },
   
   next() {
     if (currentMessageIndex >= this.list.length) return null;
@@ -51,15 +76,22 @@ const Messages = {
   
   isComplete() {
     return currentMessageIndex >= this.list.length;
+  },
+  
+  reset() {
+    currentMessageIndex = 0;
   }
 };
 
 // === CONFIGURACIÓN DEL BOTÓN DE MENSAJES ===
-function setupMessageButton() {
+async function setupMessageButton() {
   const messageBox = document.getElementById('randomMessage');
   const showBtn = document.getElementById('showBtn');
   
   if (!messageBox || !showBtn) return;
+
+  // Cargar mensajes del usuario al iniciar
+  await Messages.loadUserMessages();
 
   // Agregar transición después de un momento
   setTimeout(() => {
@@ -139,5 +171,6 @@ window.MessagesModule = {
   Messages,
   setupMessageButton,
   disableButton,
-  showFinalMessage
+  showFinalMessage,
+  DEFAULT_MESSAGES
 };

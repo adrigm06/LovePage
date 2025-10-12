@@ -359,3 +359,127 @@ body.night-mode .settings-modal-content input[type="date"]:focus {
   border-color: var(--color-pink-soft);
   outline: none;
 }
+
+/* Estilos para textarea de mensajes en ajustes */
+.settings-modal-content textarea {
+  width: 88%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1.5px solid var(--color-pink-light);
+  border-radius: 15px;
+  font-size: 0.95em;
+  font-family: 'Raleway', sans-serif;
+  background: var(--color-white);
+  color: var(--color-black);
+  transition: border 0.2s, background 0.3s, color 0.3s;
+  resize: vertical;
+  min-height: 250px;
+  max-height: 400px;
+  line-height: 1.6;
+  overflow-y: auto;
+}
+
+.settings-modal-content textarea:focus {
+  border-color: var(--color-pink-dark);
+  outline: none;
+  box-shadow: 0 0 8px rgba(233, 30, 99, 0.2);
+}
+
+body.night-mode .settings-modal-content textarea {
+  background: var(--color-night-bg3);
+  color: var(--color-night-text);
+  border: 1.5px solid var(--color-night-accent);
+}
+
+body.night-mode .settings-modal-content textarea:focus {
+  border-color: var(--color-pink-soft);
+  box-shadow: 0 0 8px rgba(255, 107, 107, 0.3);
+}
+
+/* Scrollbar personalizado para el textarea */
+.settings-modal-content textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.settings-modal-content textarea::-webkit-scrollbar-track {
+  background: rgba(233, 30, 99, 0.1);
+  border-radius: 10px;
+}
+
+.settings-modal-content textarea::-webkit-scrollbar-thumb {
+  background: var(--color-pink-light);
+  border-radius: 10px;
+}
+
+.settings-modal-content textarea::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink-dark);
+}
+
+body.night-mode .settings-modal-content textarea::-webkit-scrollbar-track {
+  background: rgba(44, 83, 100, 0.3);
+}
+
+body.night-mode .settings-modal-content textarea::-webkit-scrollbar-thumb {
+  background: var(--color-night-accent);
+}
+
+/* Info sobre los mensajes */
+.messages-info {
+  text-align: left;
+  margin: 5px 0 15px 12px;
+  padding: 8px 12px;
+  background: rgba(233, 30, 99, 0.1);
+  border-left: 3px solid var(--color-pink-light);
+  border-radius: 5px;
+}
+
+.messages-info small {
+  color: var(--color-pink-dark);
+  font-size: 0.85em;
+  line-height: 1.4;
+  display: block;
+}
+
+body.night-mode .messages-info {
+  background: rgba(255, 107, 107, 0.15);
+  border-left-color: var(--color-night-accent);
+}
+
+body.night-mode .messages-info small {
+  color: var(--color-pink-soft);
+}
+
+/* Modal de ajustes más ancho para acomodar el textarea */
+.settings-modal-content {
+  width: 420px;
+  max-width: 94vw;
+}
+
+/* Input de texto también actualizado para coherencia */
+.settings-modal-content input[type="text"] {
+  width: 88%;
+  padding: 9px;
+  margin-bottom: 10px;
+  border: 1.5px solid var(--color-pink-light);
+  border-radius: 15px;
+  font-size: 1em;
+  background: var(--color-white);
+  color: var(--color-black);
+  transition: border 0.2s, background 0.3s, color 0.3s;
+}
+
+.settings-modal-content input[type="text"]:focus {
+  border-color: var(--color-pink-dark);
+  outline: none;
+}
+
+body.night-mode .settings-modal-content input[type="text"] {
+  background: var(--color-night-bg3);
+  color: var(--color-night-text);
+  border: 1.5px solid var(--color-night-accent);
+}
+
+body.night-mode .settings-modal-content input[type="text"]:focus {
+  border-color: var(--color-pink-soft);
+  outline: none;
+}

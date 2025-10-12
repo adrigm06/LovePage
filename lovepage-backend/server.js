@@ -48,6 +48,15 @@ async function createTables() {
       UNIQUE(user_id, reminder_code)
     )
   `);
+  await conn.execute(`
+    CREATE TABLE IF NOT EXISTS messages (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      user_id INT NOT NULL,
+      message_text TEXT NOT NULL,
+      display_order INT NOT NULL,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    )
+  `);
   await conn.end();
 }
 createTables();
@@ -144,6 +153,52 @@ app.get('/spotify-playlist', async (req, res) => {
 app.post('/logout', (req, res) => {
   req.session.destroy();
   res.json({ success: true });
+});
+
+// Obtener mensajes del usuario
+app.get('/messages', async (req, res) => {
+  if (!req.session.user) return res.status(401).json({ error: "No logueado" });
+  const conn = await mysql.createConnection(dbConfig);
+  const [rows] = await conn.execute(
+    'SELECT message_text FROM messages WHERE user_id = ? ORDER BY display_order ASC',
+    [req.session.user.id]
+  );
+  await conn.end();
+  const messages = rows.map(row => row.message_text);
+  res.json({ messages });
+});
+
+// Guardar mensajes del usuario (reemplaza todos los mensajes existentes)
+app.post('/messages', async (req, res) => {
+  if (!req.session.user) return res.status(401).json({ error: "No logueado" });
+  const { messages } = req.body;
+  
+  if (!Array.isArray(messages)) {
+    return res.status(400).json({ error: "El formato de mensajes debe ser un array" });
+  }
+  
+  const conn = await mysql.createConnection(dbConfig);
+  
+  try {
+    // Eliminar mensajes existentes del usuario
+    await conn.execute('DELETE FROM messages WHERE user_id = ?', [req.session.user.id]);
+    
+    // Insertar nuevos mensajes
+    for (let i = 0; i < messages.length; i++) {
+      if (messages[i].trim()) { // Solo insertar si el mensaje no está vacío
+        await conn.execute(
+          'INSERT INTO messages (user_id, message_text, display_order) VALUES (?, ?, ?)',
+          [req.session.user.id, messages[i].trim(), i]
+        );
+      }
+    }
+    
+    await conn.end();
+    res.json({ success: true });
+  } catch (err) {
+    await conn.end();
+    res.status(500).json({ error: "Error al guardar mensajes" });
+  }
 });
 
 const PORT = 4000;
