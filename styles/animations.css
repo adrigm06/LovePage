@@ -114,7 +114,6 @@ body:not(.night-mode) .bubble::after {
 }
 
 /* === ANIMACIONES GENERALES === */
-
 /* Animación de latido del cursor */
 @keyframes heartBeat {
   from { transform: translate(-50%, -50%) scale(0.9); }

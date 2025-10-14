@@ -2,6 +2,7 @@
     Contiene: Estilos para el modal de login, registro y ajustes
    ============================================ */
 
+/* === MODAL DE LOGIN === */
 /* Modal arriba de todo */
 .login-modal {
   display: none;
@@ -134,6 +135,7 @@ body.night-mode .login-modal-content input::placeholder {
   color: var(--placeholder-night);
 }
 
+/* === BOTONES === */
 /* Botones (Iniciar sesión, Registrarse, Ajustes) */
 .login-submit,
 .register-toggle,
@@ -171,6 +173,7 @@ body.night-mode .settings-button {
   color: var(--night-bg3);
 }
 
+/* === MENSAJES === */
 /* Mensajes de login */
 .login-message {
   margin-top: 16px;
@@ -209,6 +212,7 @@ body.night-mode .login-message.success {
   color: var(--green);
 }
 
+/* === ÁREA DE USUARIO === */
 /* Encabezado del modal */
 .login-header {
   position: fixed;
@@ -321,6 +325,7 @@ body.night-mode .menu-btn {
   color: var(--night-bg3);
 }
 
+/* === MODAL DE AJUSTES === */
 /* Modal de ajustes */
 .settings-modal {
   display: none;
@@ -517,6 +522,7 @@ body.night-mode .messages-info small {
   max-width: 94vw;
 }
 
+/* === INPUTS ADICIONALES === */
 /* Input de texto */
 .settings-modal-content input[type="text"] {
   width: 88%;
