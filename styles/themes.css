@@ -1,13 +1,17 @@
+/* ============================================
+    Contiene: Estilos de temas (día y noche) y toggle de cambio de tema
+   ============================================ */
+
 /* === MODO DÍA (DEFAULT) === */
 
-/* Gradiente animado de fondo */
-@keyframes gradientFlow {
+/* Animación de gradiente para fondo diurno (DUPLICADO de animations.css - ya existe allí) */
+/* @keyframes gradientFlow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
-}
+} */
 
-/* Patrón de fondo */
+/* Patrón decorativo de fondo para modo día */
 body::before {
   content: "";
   position: absolute;
@@ -20,7 +24,8 @@ body::before {
   z-index: -1;
 }
 
-/* Toggle switch - Modo Día */
+/* === TOGGLE DE TEMA === */
+/* Switch para cambiar entre modo día y noche */
 .theme-toggle {
   position: fixed;
   bottom: 24px;
@@ -38,21 +43,25 @@ body::before {
   box-shadow: 0 2px 10px var(--black-10);
 }
 
+/* Efecto hover en el toggle */
 .theme-toggle:hover {
   background: var(--white-30);
 }
 
+/* Iconos del toggle (sol y luna) */
 .theme-toggle i {
   font-size: 18px;
   color: var(--white);
   transition: all 0.3s ease;
 }
 
+/* Icono del sol (visible en modo día) */
 .theme-toggle .sun {
   transform: translateX(0);
   opacity: 1;
 }
 
+/* Icono de la luna (oculto en modo día) */
 .theme-toggle .moon {
   transform: translateX(30px);
   opacity: 0;
@@ -61,146 +70,180 @@ body::before {
 }
 
 /* === MODO NOCTURNO === */
-
+/* Body en modo nocturno */
 body.night-mode {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FF6B8B" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, auto;
     background: linear-gradient(135deg, var(--night-bg1) 0%, var(--night-bg2) 50%, var(--night-bg3) 100%);
     color: var(--night-text);
-        /* Desactivar animación del gradiente diurno para evitar repaints innecesarios */
-        animation: none !important;
-        background-size: auto !important;
+    animation: none !important; /* Desactivar animación del gradiente diurno */
+    background-size: auto !important;
 }
 
-/* Ocultar patrón de fondo en modo noche para reducir capas y parpadeos */
+/* Ocultar patrón decorativo en modo noche */
 body.night-mode::before {
     display: none;
 }
 
+/* === ELEMENTOS EN MODO NOCTURNO === */
+/* Spotify en modo noche */
 body.night-mode .spotify-container:hover {
     animation: pulse-green-dark 2s infinite;
 }
 
+/* Título principal en modo noche */
 body.night-mode .header h1 {
     color: var(--night-accent);
     text-shadow: 0 0 10px var(--night-text-shadow);
 }
 
+/* Subtítulo en modo noche */
 body.night-mode .subtitle { 
     color: var(--night-red); 
 }
 
+/* Contador en modo noche */
 body.night-mode .counter-container {
     background: var(--night-bg-85);
     color: var(--night-text);
 }
 
+/* Sobre de mensajes en modo noche */
 body.night-mode .envelope-container {
     background: var(--night-bg-95);
     color: var(--night-text);
     border-color: var(--night-accent-20);
 }
 
+/* Botón principal en modo noche */
 body.night-mode .btn {
     background: linear-gradient(135deg, var(--night-red) 0%, var(--orange) 100%);
     box-shadow: 0 6px 20px var(--night-red-40);
     color: var(--white) !important;
 }
 
+/* Marcos de fotos en modo noche (mantienen colores claros) */
 body.night-mode .photo-frame {
     background: var(--white) !important;
     box-shadow: 0 3px 6px var(--black-10) !important;
 }
 
+/* Footer en modo noche */
 body.night-mode .footer {
     border-top: 1px solid var(--night-accent-10);
     color: var(--grey-light) !important;
 }
 
+/* === TOGGLE EN MODO NOCTURNO === */
+/* Ocultar sol en modo noche */
 body.night-mode .theme-toggle .sun {
     transform: translateX(-30px);
     opacity: 0;
 }
 
+/* Mostrar luna en modo noche */
 body.night-mode .theme-toggle .moon {
     transform: translateX(0);
     opacity: 1;
 }
 
+/* === AJUSTES DE TEXTO EN MODO NOCTURNO === */
+/* Texto del sobre */
 body.night-mode .envelope-text { 
     color: var(--night-text) !important; 
 }
 
+/* Contador de días */
 body.night-mode .counter { 
     color: var(--night-accent) !important; 
 }
 
+/* Título del contador */
 body.night-mode .counter-title { 
     color: var(--night-red) !important; 
 }
 
+/* Firma */
 body.night-mode .signature { 
     color: var(--night-accent) !important; 
-} 
+}
 
+/* === GALERÍA EN MODO NOCTURNO === */
+/* Borde de imágenes en modo noche */
 body.night-mode .photo-image { 
     border: 1px solid var(--grey-light); 
 }
 
+/* === INSIGNIAS EN MODO NOCTURNO === */
+/* Insignia no completada */
 body.night-mode .badge { 
     opacity: 0.5; 
 }
 
+/* Número de insignia no completada */
 body.night-mode .badge::after { 
     color: var(--grey-mid); 
 }
 
+/* Insignia completada en modo noche */
 body.night-mode .badge.completed {
     filter: grayscale(0%) brightness(1) drop-shadow(0 0 5px var(--shadow-orange-badge));
     animation: mandarinaGlowDark 1.5s ease-in-out infinite alternate;
 }
 
-body.night-mode .badge.completed::before {
+/* Brillo adicional en insignia completada (NO USADO - No hay ::before en .badge) */
+/* body.night-mode .badge.completed::before {
     background: linear-gradient(145deg, var(--white-30) 0%, transparent 60%);
-}
+} */
 
+/* Tracker de insignias */
 body.night-mode .badge-tracker {
     color: var(--night-accent);
     text-shadow: 0 0 5px var(--night-text-shadow-red);
 }
 
+/* === BOTONES EN MODO NOCTURNO === */
+/* Botón de recordatorios */
 body.night-mode .reminder-btn {
     background: var(--night-bg-90);
     color: var(--night-accent);
     border-color: var(--night-accent);
 }
 
+/* Hover botón recordatorios */
 body.night-mode .reminder-btn:hover {
     background: var(--night-accent);
     color: var(--night-bg1);
 }
 
+/* Botón de retroceso */
 body.night-mode .back-btn {
     background: var(--night-bg-90);
     color: var(--night-accent);
 }
 
+/* Hover botón retroceso */
 body.night-mode .back-btn:hover {
     background: var(--night-accent);
     color: var(--night-bg1);
 }
 
+/* === FECHAS IMPORTANTES EN MODO NOCTURNO === */
+/* Tarjeta de fecha */
 body.night-mode .date-card { 
     background: var(--night-bg-95); 
 }
 
+/* Título de fecha */
 body.night-mode .date-content h3 { 
     color: var(--night-accent); 
 }
 
+/* Texto de fecha */
 body.night-mode .date { 
     color: var(--grey-light); 
 }
 
+/* Contador de días */
 body.night-mode .days-counter { 
     color: var(--night-red); 
     background: var(--night-accent-10); 
