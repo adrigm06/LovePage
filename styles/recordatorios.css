@@ -1,56 +1,9 @@
-.reminders-container {
-  max-width: 600px;
-  margin: 40px auto;
-  background: var(--white);
-  border-radius: 22px;
-  box-shadow: 0 7px 32px var(--shadow-light);
-  padding: 32px 26px 28px;
-}
+/* ============================================
+    Contiene: Estilos para la página de recordatorios y modal de edición
+   ============================================ */
 
-#reminders-list {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.reminder-card {
-  display: flex;
-  align-items: center;
-  background: var(--pink-bg);
-  border-radius: 14px;
-  box-shadow: 0 3px 12px var(--pink-coral);
-  padding: 18px 22px;
-  position: relative;
-  transition: box-shadow .25s;
-}
-.reminder-card:hover {
-  box-shadow: 0 6px 24px var(--pink-coral);
-}
-.reminder-icon {
-  font-size: 2em;
-  margin-right: 18px;
-  margin-left: 6px;
-}
-.reminder-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.reminder-name-text {
-  font-size: 1.16em;
-  font-weight: bold;
-  color: var(--pink-coral);
-  margin-bottom: 3px;
-}
-.reminder-date-text {
-  font-size: 1em;
-  color: var(--secondary);
-  margin-bottom: 7px;
-}
-.reminder-days-counter {
-  font-size: 0.98em;
-  color: var(--accent);
-}
+/* === BOTÓN DE EDICIÓN === */
+/* Botón de editar recordatorio */
 .edit-reminder-btn {
   position: absolute;
   right: 24px;
@@ -69,12 +22,16 @@
   display: flex;
   align-items: center;
 }
+
+/* Efecto hover en botón editar */
 .edit-reminder-btn:hover {
   transform: scale(1.11) rotate(-12deg);
   color: var(--pink-coral);
   opacity: 1;
 }
-/* Modal estilos */
+
+/* === MODAL DE EDICIÓN === */
+/* Modal principal (SIMILAR A login.css - Considerar unificar) */
 .modal {
   display: none;
   position: fixed;
@@ -87,6 +44,8 @@
   background: var(--shadow-light);
   backdrop-filter: blur(2px);
 }
+
+/* Contenido del modal (SIMILAR A login.css) */
 .modal-content {
   background: var(--white);
   margin: 6% auto;
@@ -98,6 +57,8 @@
   position: relative;
   text-align: center;
 }
+
+/* Botón de cerrar modal (DUPLICADO DE login.css - Considerar unificar) */
 .close {
   color: var(--pink-coral);
   position: absolute;
@@ -108,11 +69,15 @@
   cursor: pointer;
   transition: color .18s;
 }
+
+/* Efecto hover y focus en botón cerrar */
 .close:hover,
 .close:focus {
   color: var(--accent);
   outline: none;
 }
+
+/* Botón para guardar cambios (SIMILAR A login-submit en login.css) */
 .save-edit-btn {
   background: linear-gradient(90deg, var(--pink-coral), var(--pink-light));
   color: var(--white);
@@ -125,10 +90,15 @@
   margin-top: 18px;
   transition: background 0.2s, transform 0.2s;
 }
+
+/* Efecto hover del botón guardar */
 .save-edit-btn:hover {
   background: linear-gradient(90deg, var(--pink-light), var(--pink-coral));
   transform: scale(1.08);
 }
+
+/* === FORMULARIO === */
+/* Labels del formulario (DUPLICADO DE login.css - Considerar unificar) */
 label {
   display: block;
   text-align: left;
@@ -138,6 +108,8 @@ label {
   margin-top: 13px;
   margin-left: 6px;
 }
+
+/* Inputs del formulario (SIMILAR A login.css - Considerar unificar) */
 input[type="text"], input[type="date"], select {
   width: 94%;
   padding: 7px;
@@ -149,6 +121,8 @@ input[type="text"], input[type="date"], select {
   color: var(--black);
   transition: border 0.2s;
 }
+
+/* Efecto focus en inputs (SIMILAR A login.css) */
 input[type="text"]:focus, input[type="date"]:focus, select:focus {
   border-color: var(--pink-coral);
   outline: none;
