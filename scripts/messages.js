@@ -42,6 +42,7 @@ const DEFAULT_MESSAGES = [
 
 const Messages = {
   list: [...DEFAULT_MESSAGES], // Inicialmente usa los mensajes por defecto
+  hasCustomMessages: false, // Flag para saber si el usuario tiene mensajes personalizados
   
   async loadUserMessages() {
     try {
@@ -53,14 +54,18 @@ const Messages = {
       if (data.messages && data.messages.length > 0) {
         // Usuario tiene mensajes personalizados
         this.list = data.messages;
+        this.hasCustomMessages = true;
       } else {
-        // Usuario no tiene mensajes, usa los por defecto
-        this.list = [...DEFAULT_MESSAGES];
+        // Usuario no tiene mensajes personalizados
+        this.list = [];
+        this.hasCustomMessages = false;
       }
       currentMessageIndex = 0;
     } catch (err) {
-      console.warn('No se pudieron cargar los mensajes del usuario, usando mensajes por defecto');
-      this.list = [...DEFAULT_MESSAGES];
+      console.warn('No se pudieron cargar los mensajes del usuario');
+      // Si hay error de red, asumir que no hay mensajes personalizados
+      this.list = [];
+      this.hasCustomMessages = false;
       currentMessageIndex = 0;
     }
   },
@@ -92,6 +97,15 @@ async function setupMessageButton() {
 
   // Cargar mensajes del usuario al iniciar
   await Messages.loadUserMessages();
+
+  // Si no hay mensajes personalizados, deshabilitar el botón y mostrar mensaje informativo
+  if (!Messages.hasCustomMessages || Messages.list.length === 0) {
+    messageBox.textContent = "No hay mensajes personalizados aún. ¡Inicia sesión y agrega tus propios mensajes en Ajustes!";
+    showBtn.disabled = true;
+    showBtn.classList.add('btn-disabled');
+    showBtn.innerHTML = '<i class="fas fa-heart" style="margin-right: 10px;"></i>Sin mensajes';
+    return;
+  }
 
   // Agregar transición después de un momento
   setTimeout(() => {
