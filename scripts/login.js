@@ -395,21 +395,21 @@ logoutBtn.onclick = function() {
     
     // Resetear mensajes a los por defecto
     if (window.MessagesModule && window.MessagesModule.Messages) {
-    	window.MessagesModule.Messages.list = [...window.MessagesModule.DEFAULT_MESSAGES];
-    	window.MessagesModule.Messages.reset();
+		window.MessagesModule.Messages.list = [...window.MessagesModule.DEFAULT_MESSAGES];
+		window.MessagesModule.Messages.reset();
 
       	// Resetear la UI de mensajes
-    	const messageBox = document.getElementById('randomMessage');
-    	if (messageBox) {
-        	messageBox.textContent = 'Haz clic en el botón para descubrir algo que amo de ti ❤️';
-    	}
+		const messageBox = document.getElementById('randomMessage');
+		if (messageBox) {
+			messageBox.textContent = 'Haz clic en el botón para descubrir algo que amo de ti ❤️';
+		}
 
-    	const showBtn = document.getElementById('showBtn');
-    	if (showBtn && showBtn.classList.contains('btn-disabled')) {
+		const showBtn = document.getElementById('showBtn');
+		if (showBtn && showBtn.classList.contains('btn-disabled')) {
 			showBtn.disabled = false;
 			showBtn.classList.remove('btn-disabled');
 			showBtn.innerHTML = '<i id="heartIcon" class="fas fa-heart" style="margin-right: 10px;"></i>Descubrir más 🦭';
-    	}
+		}
     }
 	});
 };
