@@ -66,13 +66,13 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
     z-index: 10;
 }
 
-/* Efecto rotacion en el marco (Comentar si se activa efecto 3d)*/
-.photo-frame:hover {
+/* Efecto rotacion en el marco (Comentar si se activa efecto 3d o zoom)*/
+/*.photo-frame:hover {
     transform: rotate(0deg) scale(1.05) translateY(-5px) !important;
     box-shadow: 0 10px 20px var(--shadow);
     z-index: 20;
     will-change: transform, box-shadow;
-}
+}*/
 
 /* Mostrar Caption de la foto (Para futuro)
 .photo-frame:hover .photo-caption {

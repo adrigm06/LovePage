@@ -1,6 +1,6 @@
 /* ============================================
-   GALLERY.JS - Gestión de la galería de fotos
-   Contenido: Efectos 3D, lazy loading, modal de imágenes y animaciones
+	GALLERY.JS - Gestión de la galería de fotos
+	Contenido: Efectos 3D, lazy loading, modal de imágenes y animaciones
    ============================================ */
 
 /* === CONFIGURACIÓN === */
@@ -144,8 +144,8 @@ function createImageModal(src, alt) {
 	modal.style.display = 'flex';
 }
 
-/* === ANIMACIÓN DE ENTRADA (OPCIONAL) === */
-function animateGalleryEntrance() {
+/* === ANIMACIÓN DE ENTRADA (OPCIONAL, Inacabado) === */
+/*function animateGalleryEntrance() {
 	const frames = document.querySelectorAll(GALLERY_CONFIG.selector);
 	
 	frames.forEach((frame, index) => {
@@ -163,14 +163,14 @@ function animateGalleryEntrance() {
 			frame.style.transform = `${rotation} translateY(8px)`;
 		}, index * 100);
 	});
-}
+}*/
 
 /* === INICIALIZACIÓN === */
 document.addEventListener('DOMContentLoaded', () => {
 	setupGalleryEffects();
 	setupLazyLoading();
-	// setupImageModal(); // Descomentar para habilitar modal de ampliación
-	// animateGalleryEntrance(); // Descomentar para habilitar animación de entrada
+	setupImageModal(); // Comentar si se activa hover antiguo
+	// animateGalleryEntrance(); // Descomentar para habilitar animación
 });
 
 /* === EXPORTAR FUNCIONES === */
