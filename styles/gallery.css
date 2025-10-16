@@ -66,7 +66,7 @@ a, button, .btn, .reminder-btn, .back-btn, .photo-frame, [onclick] {
     z-index: 10;
 }
 
-/* Efecto rotacion en el marco */
+/* Efecto rotacion en el marco (Comentar si se activa efecto 3d)*/
 .photo-frame:hover {
     transform: rotate(0deg) scale(1.05) translateY(-5px) !important;
     box-shadow: 0 10px 20px var(--shadow);
