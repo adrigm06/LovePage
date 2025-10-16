@@ -11,8 +11,17 @@ function loadSpotifyPlaylist() {
 	fetch('http://localhost:4000/spotify-playlist', { 
 		credentials: 'include' 
 	})
-		.then(res => res.json())
+		.then(res => {
+			if (!res.ok) {
+				// Si no está autenticado o hay error, mantener playlist por defecto
+				console.warn('No se pudo cargar playlist personalizada, usando playlist por defecto');
+				return null;
+			}
+			return res.json();
+		})
 		.then(data => {
+			if (!data) return; // No hay datos, mantener iframe por defecto
+			
 			const playlist = data.playlist;
 			
 			// Verificar que la URL tenga contenido válido
@@ -28,7 +37,7 @@ function loadSpotifyPlaylist() {
 			}
 		})
 		.catch(err => {
-			console.error('Error al cargar playlist de Spotify:', err);
+			console.warn('Error al cargar playlist de Spotify, usando playlist por defecto:', err);
 		});
 }
 

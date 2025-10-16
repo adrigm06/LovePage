@@ -178,6 +178,6 @@ window.GalleryModule = {
 	setupGalleryEffects,
 	setupLazyLoading,
 	setupImageModal,
-	animateGalleryEntrance,
+	//animateGalleryEntrance,
 	createImageModal
 };

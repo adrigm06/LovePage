@@ -110,12 +110,4 @@
     7px 7px 10px -5px transparent,          /* Transparente derecha */
     0 0 5px 0px var(--black-30),            /* Sombra central */
     0 25px 25px -20px var(--black);         /* Sombra inferior profunda */
-  
-  /* Variable no usada - considerar eliminar */
-  --shadow: rgba(0, 0, 0, 0.2);             /* (NO USADA - verificar referencias) */
-  --shadow-light: rgba(0, 0, 0, 0.08);      /* (NO USADA - verificar referencias) */
-  --shadow-dark: rgba(0, 0, 0, 0.4);        /* (NO USADA - verificar referencias) */
-  --shadow-black: rgba(0, 0, 0, 0.15);      /* (NO USADA - verificar referencias) */
-  --shadow-btn: rgba(233, 30, 99, 0.3);     /* (NO USADA - verificar referencias) */
-  --shadow-btn-hover: rgba(233, 30, 99, 0.4); /* (NO USADA - verificar referencias) */
 }

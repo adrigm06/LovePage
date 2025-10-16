@@ -52,6 +52,15 @@ const Messages = {
 			const response = await fetch('http://localhost:4000/messages', {
 				credentials: 'include'
 			});
+			
+			if (!response.ok) {
+				// Si no está autenticado o hay error, usar mensajes por defecto
+				console.warn('No se pudieron cargar los mensajes del usuario, usando mensajes por defecto');
+				this.list = [...DEFAULT_MESSAGES];
+				currentMessageIndex = 0;
+				return;
+			}
+			
 			const data = await response.json();
 			
 			if (data.messages && data.messages.length > 0) {

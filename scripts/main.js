@@ -90,7 +90,7 @@ function showNotification(message, duration = 3000) {
 
 /* === EXPORTAR UTILIDADES === */
 window.AppUtils = {
-	showNotification
+	//showNotification
 };
 
 /* === MANEJO DE ERRORES GLOBAL === */
