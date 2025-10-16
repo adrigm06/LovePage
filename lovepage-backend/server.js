@@ -222,6 +222,11 @@ app.post('/messages', async (req, res) => {
   }
 });
 
-// Iniciar el servidor en el puerto 4000
-const PORT = 4000;
+// Cargar variables de entorno si no se ha hecho ya
+if (!process.env.DB_HOST) {
+  require('dotenv').config();
+}
+
+// Iniciar el servidor en el puerto especificado en .env o 4000 por defecto
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Backend escuchando en puerto ${PORT}`));

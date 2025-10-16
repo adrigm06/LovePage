@@ -6,4 +6,3 @@ package-lock.json
 *.log
 Thumbs.db
 .DS_Store
-dbConfig.js
