@@ -77,7 +77,7 @@ app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
     const conn = await mysql.createConnection(dbConfig);
-    const [rows] = await conn.execute('SELECT * FROM users WHERE username = ? AND password = ?', [username, password]);
+    const [rows] = await conn.execute('SELECT id, username, DATE_FORMAT(special_date, "%Y-%m-%d") as special_date, spotify_playlist FROM users WHERE username = ? AND password = ?', [username, password]);
     await conn.end();
     if (rows.length) {
       req.session.user = { id: rows[0].id, username: rows[0].username, special_date: rows[0].special_date, spotify_playlist: rows[0].spotify_playlist };
@@ -93,7 +93,7 @@ app.post('/login', async (req, res) => {
 app.get('/session', async (req, res) => {
   if (req.session.user) {
     const conn = await mysql.createConnection(dbConfig);
-    const [rows] = await conn.execute('SELECT special_date, spotify_playlist FROM users WHERE id = ?', [req.session.user.id]);
+    const [rows] = await conn.execute('SELECT DATE_FORMAT(special_date, "%Y-%m-%d") as special_date, spotify_playlist FROM users WHERE id = ?', [req.session.user.id]);
     await conn.end();
     if (rows.length) {
       req.session.user.special_date = rows[0].special_date;
@@ -108,9 +108,9 @@ app.get('/session', async (req, res) => {
 app.get('/special-date', async (req, res) => {
   if (!req.session.user) return res.status(401).json({ error: "No logueado" });
   const conn = await mysql.createConnection(dbConfig);
-  const [rows] = await conn.execute('SELECT special_date FROM users WHERE id = ?', [req.session.user.id]);
+  const [rows] = await conn.execute('SELECT DATE_FORMAT(special_date, "%Y-%m-%d") as special_date FROM users WHERE id = ?', [req.session.user.id]);
   await conn.end();
-  if (rows.length) {
+  if (rows.length && rows[0].special_date) {
     res.json({ special_date: rows[0].special_date });
   } else {
     res.json({ special_date: null });
