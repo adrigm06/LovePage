@@ -1,40 +1,44 @@
-function showLoginMessage(msg, success=false) {
-  loginMessage.textContent = msg;
-  loginMessage.classList.add('show');
-  loginMessage.classList.toggle('success', success);
-}
-function clearLoginMessage() {
-  loginMessage.textContent = "";
-  loginMessage.classList.remove('show', 'success');
-}
-function showRegisterMessage(msg, success=false) {
-  registerMessage.textContent = msg;
-  registerMessage.classList.add('show');
-  registerMessage.classList.toggle('success', success);
-}
-function clearRegisterMessage() {
-  registerMessage.textContent = "";
-  registerMessage.classList.remove('show', 'success');
+/* ============================================
+	LOGIN.JS - Sistema de autenticación y usuario
+	Contenido: Login, registro, sesión, ajustes de usuario
+   ============================================ */
+
+/* === FUNCIONES DE MENSAJES GENÉRICAS === */
+function showMessage(element, msg, success = false) {
+	element.textContent = msg;
+	element.classList.add('show');
+	element.classList.toggle('success', success);
 }
 
-// Elementos principales
+function clearMessage(element) {
+	element.textContent = "";
+	element.classList.remove('show', 'success');
+}
+
+/* === ELEMENTOS DEL DOM === */
+
+/* Elementos de login */
 const loginBtn = document.getElementById('loginBtn');
 const loginModal = document.getElementById('loginModal');
 const closeLogin = document.getElementById('closeLogin');
 const loginForm = document.getElementById('loginForm');
 const loginMessage = document.getElementById('login-message');
+
+/* Elementos de registro */
 const showRegister = document.getElementById('showRegister');
 const registerModal = document.getElementById('registerModal');
 const closeRegister = document.getElementById('closeRegister');
 const registerForm = document.getElementById('registerForm');
 const registerMessage = document.getElementById('register-message');
+
+/* Elementos de usuario */
 const userArea = document.getElementById('userArea');
 const userWelcome = document.getElementById('userWelcome');
 const logoutBtn = document.getElementById('logoutBtn');
 const logoutMenu = document.getElementById('logoutMenu');
 const loginHeader = document.getElementById('loginHeader');
 
-// Ajustes
+/* Elementos de ajustes */
 const settingsBtn = document.getElementById('settingsBtn');
 const settingsModal = document.getElementById('settingsModal');
 const closeSettings = document.getElementById('closeSettings');
@@ -43,188 +47,214 @@ const settingsMessage = document.getElementById('settings-message');
 const specialDateInput = document.getElementById('specialDate');
 const specialDateText = document.getElementById('specialDateText');
 
-// Abrir/cerrar modals
+/* === ABRIR/CERRAR MODALS === */
+
+/* Abrir modal de login */
 loginBtn.onclick = function() {
-  loginModal.style.display = 'block';
-  loginForm.username.focus();
+	loginModal.style.display = 'block';
+	loginForm.username.focus();
 };
+
+/* Cerrar modal de login */
 closeLogin.onclick = function() {
-  loginModal.style.display = 'none';
-  clearLoginMessage();
+	loginModal.style.display = 'none';
+	clearMessage(loginMessage);
 };
+
+/* Cambiar a modal de registro */
 showRegister.onclick = function() {
-  loginModal.style.display = 'none';
-  registerModal.style.display = 'block';
-  registerForm.regUsername.focus();
+	loginModal.style.display = 'none';
+	registerModal.style.display = 'block';
+	registerForm.regUsername.focus();
 };
+
+/* Cerrar modal de registro */
 closeRegister.onclick = function() {
-  registerModal.style.display = 'none';
-  clearRegisterMessage();
+	registerModal.style.display = 'none';
+	clearMessage(registerMessage);
 };
-// Sustituido window.onclick único por listener no destructivo
+
+/* Cerrar modals al hacer clic fuera */
 document.addEventListener('click', function(event) {
-  if (event.target === loginModal) {
-    loginModal.style.display = 'none';
-    clearLoginMessage();
-  }
-  if (event.target === registerModal) {
-    registerModal.style.display = 'none';
-    clearRegisterMessage();
-  }
-  if (event.target === settingsModal) {
-    settingsModal.style.display = 'none';
-    settingsMessage.textContent = "";
-  }
+	if (event.target === loginModal) {
+		loginModal.style.display = 'none';
+		clearMessage(loginMessage);
+	}
+	if (event.target === registerModal) {
+		registerModal.style.display = 'none';
+		clearMessage(registerMessage);
+	}
+	if (event.target === settingsModal) {
+		settingsModal.style.display = 'none';
+		settingsMessage.textContent = "";
+	}
 });
+
+/* Cerrar modals con tecla ESC */
 window.addEventListener('keydown', function(e){
-  if(e.key==="Escape") {
-    loginModal.style.display = 'none';
-    clearLoginMessage();
-    registerModal.style.display = 'none';
-    clearRegisterMessage();
-    settingsModal.style.display = 'none';
-    settingsMessage.textContent = "";
-  }
+	if(e.key==="Escape") {
+		loginModal.style.display = 'none';
+		clearMessage(loginMessage);
+		registerModal.style.display = 'none';
+		clearMessage(registerMessage);
+		settingsModal.style.display = 'none';
+		settingsMessage.textContent = "";
+	}
 });
 
-// Registro
-registerForm.onsubmit = function(e) {
-  e.preventDefault();
-  const user = registerForm.regUsername.value.trim();
-  const pass = registerForm.regPassword.value;
-  clearRegisterMessage();
+/* === REGISTRO DE USUARIO === */
+	registerForm.onsubmit = function(e) {
+		e.preventDefault();
+		var regUser = registerForm.regUsername.value.trim();
+		var regPass = registerForm.regPassword.value;
+		clearMessage(registerMessage);
 
-  fetch('http://localhost:4000/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: user, password: pass })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      showRegisterMessage("¡Registro exitoso! Ahora inicia sesión.", true);
-      setTimeout(() => {
-        registerModal.style.display = 'none';
-        loginModal.style.display = 'block';
-        registerForm.reset();
-        clearRegisterMessage();
-      }, 1300);
-    } else {
-      showRegisterMessage(data.error || "Error en el registro.");
-    }
-  }).catch(() => {
-    showRegisterMessage("Servidor no disponible. Intenta más tarde.");
-  });
-};
+		fetch('http://localhost:4000/register', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ username: regUser, password: regPass })
+		})
+		.then(res => res.json())
+		.then(data => {
+			if (data.success) {
+				showMessage(registerMessage, "¡Registro exitoso! Ahora inicia sesión.", true);
+				// Redirigir a login después de un momento
+				setTimeout(() => {
+					registerModal.style.display = 'none';
+					loginModal.style.display = 'block';
+					registerForm.reset();
+					clearMessage(registerMessage);
+				}, 1300);
+			} else {
+				showMessage(registerMessage, data.error || "Error en el registro.");
+			}
+		}).catch(() => {
+			showMessage(registerMessage, "Servidor no disponible. Intenta más tarde.");
+		});
+	};
 
-// Login
-loginForm.onsubmit = function(e) {
-  e.preventDefault();
-  const user = loginForm.username.value.trim();
-  const pass = loginForm.password.value;
-  clearLoginMessage();
+/* === LOGIN DE USUARIO === */
+	loginForm.onsubmit = function(e) {
+		e.preventDefault();
+		var loginUser = loginForm.username.value.trim();
+		var loginPass = loginForm.password.value;
+		clearMessage(loginMessage);
 
-  fetch('http://localhost:4000/login', {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: user, password: pass })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      showLoginMessage("¡Login exitoso! Bienvenido, " + user, true);
-      setTimeout(() => {
-        loginModal.style.display = 'none';
-        loginForm.reset();
-        clearLoginMessage();
-        cargarUsuario();
-      }, 1000);
-    } else {
-      showLoginMessage(data.error || "Usuario o contraseña incorrectos 💔");
-    }
-  }).catch(() => {
-    showLoginMessage("Servidor no disponible. Intenta más tarde.");
-  });
-};
+		fetch('http://localhost:4000/login', {
+			method: 'POST',
+			credentials: 'include',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ username: loginUser, password: loginPass })
+		})
+		.then(res => res.json())
+		.then(data => {
+			if (data.success) {
+				showMessage(loginMessage, "¡Login exitoso! Bienvenido, " + loginUser, true);
+				// Cerrar modal y cargar datos del usuario
+				setTimeout(() => {
+					loginModal.style.display = 'none';
+					loginForm.reset();
+					clearMessage(loginMessage);
+					cargarUsuario();
+				}, 1000);
+			} else {
+				showMessage(loginMessage, data.error || "Usuario o contraseña incorrectos 💔");
+			}
+		}).catch(() => {
+			showMessage(loginMessage, "Servidor no disponible. Intenta más tarde.");
+		});
+	};
 
-// Mostrar usuario logueado arriba derecha y actualizar fecha y badges
+/* === CARGAR USUARIO Y DATOS === */
+// Muestra usuario logueado arriba derecha y actualiza fecha, badges y mensajes
 async function cargarUsuario() {
-  try {
-    const res = await fetch('http://localhost:4000/session', {
-      credentials: 'include'
-    });
-    const data = await res.json();
-    
-    if (data.logged && data.user) {
-      userArea.style.display = 'flex';
-      userWelcome.textContent = `${data.user.username}`;
-      loginHeader.style.display = 'none';
-      logoutMenu.style.display = 'none';
-      window.userSpecialDate = data.user.special_date ? data.user.special_date.split("T")[0] : null;
-      if (specialDateText) specialDateText.textContent = '';
-      actualizarContadorDias();
-      
-      // Cargar mensajes del usuario cuando inicia sesión
-      if (window.MessagesModule && window.MessagesModule.Messages) {
-        await window.MessagesModule.Messages.loadUserMessages();
-      }
-    } else {
-      userArea.style.display = 'none';
-      loginHeader.style.display = '';
-      logoutMenu.style.display = 'none';
-      window.userSpecialDate = null;
-      if (specialDateText) specialDateText.textContent = '';
-      actualizarContadorDias();
-      
-      // Si no hay usuario logueado, usar mensajes por defecto
-      if (window.MessagesModule && window.MessagesModule.Messages) {
-        window.MessagesModule.Messages.list = [...window.MessagesModule.DEFAULT_MESSAGES];
-        window.MessagesModule.Messages.reset();
-      }
-    }
-  } catch (error) {
-    console.error('Error al cargar usuario:', error);
-  }
+	try {
+		const res = await fetch('http://localhost:4000/session', {
+			credentials: 'include'
+		});
+		const data = await res.json();
+		
+		if (data.logged && data.user) {
+			// Usuario logueado - Mostrar información
+			userArea.style.display = 'flex';
+			userWelcome.textContent = `${data.user.username}`;
+			loginHeader.style.display = 'none';
+			logoutMenu.style.display = 'none';
+			
+			// Actualizar fecha especial y contador (ya viene en formato YYYY-MM-DD)
+			window.userSpecialDate = data.user.special_date || null;
+			if (specialDateText) specialDateText.textContent = '';
+			actualizarContadorDias();
+			
+			// Cargar mensajes personalizados del usuario
+			if (window.MessagesModule && window.MessagesModule.Messages) {
+				await window.MessagesModule.Messages.loadUserMessages();
+			}
+		} else {
+			// No hay usuario - Mostrar vista pública
+			userArea.style.display = 'none';
+			loginHeader.style.display = '';
+			logoutMenu.style.display = 'none';
+			window.userSpecialDate = null;
+			if (specialDateText) specialDateText.textContent = '';
+			actualizarContadorDias();
+			
+			// Usar mensajes por defecto
+			if (window.MessagesModule && window.MessagesModule.Messages) {
+				window.MessagesModule.Messages.list = [...window.MessagesModule.DEFAULT_MESSAGES];
+				window.MessagesModule.Messages.reset();
+			}
+		}
+	} catch (error) {
+		console.error('Error al cargar usuario:', error);
+	}
 }
 
-// Menú de logout/ajustes
+/* === MENÚ DE USUARIO (LOGOUT/AJUSTES) === */
+
+/* Toggle del menú al hacer clic en el nombre de usuario */
 userWelcome.onclick = function() {
-  logoutMenu.style.display = (logoutMenu.style.display === 'none' || logoutMenu.style.display === '') ? 'block' : 'none';
+	logoutMenu.style.display = (logoutMenu.style.display === 'none' || logoutMenu.style.display === '') ? 'block' : 'none';
 };
+
+/* Accesibilidad: permitir abrir con teclado */
 userWelcome.onkeydown = function(e) {
-  if (e.key === 'Enter' || e.key === ' ') userWelcome.click();
+	if (e.key === 'Enter' || e.key === ' ') userWelcome.click();
 };
+
+/* Cerrar menú al hacer clic fuera */
 document.addEventListener('click', function(e) {
-  if (!userWelcome.contains(e.target) && !logoutMenu.contains(e.target)) {
-    logoutMenu.style.display = 'none';
-  }
+	if (!userWelcome.contains(e.target) && !logoutMenu.contains(e.target)) {
+		logoutMenu.style.display = 'none';
+	}
 });
 
-// Botón ajustes
+/* === BOTÓN DE AJUSTES === */
 settingsBtn.onclick = function() {
-  logoutMenu.style.display = 'none';
-  settingsModal.style.display = 'block';
-  cargarFechaEspecial();
+	logoutMenu.style.display = 'none';
+	settingsModal.style.display = 'block';
+	cargarFechaEspecial();
 };
 
-// Cerrar ajustes
+/* === CERRAR MODAL DE AJUSTES === */
 closeSettings.onclick = function() {
-  settingsModal.style.display = 'none';
-  settingsMessage.textContent = "";
+	settingsModal.style.display = 'none';
+	settingsMessage.textContent = "";
 };
 
-// Cargar fecha especial al abrir ajustes
+/* === CARGAR FECHA ESPECIAL === */
+// Se ejecuta al abrir el modal de ajustes
 function cargarFechaEspecial() {
-  fetch('http://localhost:4000/special-date', { credentials: 'include' })
-    .then(res => res.json())
-    .then(data => {
-      if (data.special_date) {
-        specialDateInput.value = data.special_date.split('T')[0];
-      } else {
-        specialDateInput.value = "";
-      }
-    });
+	fetch('http://localhost:4000/special-date', { credentials: 'include' })
+		.then(res => res.json())
+		.then(data => {
+			if (data.special_date) {
+				// La fecha ya viene en formato YYYY-MM-DD desde el backend
+				specialDateInput.value = data.special_date;
+			} else {
+				specialDateInput.value = "";
+			}
+		});
 }
 
 // Guardar fecha especial y actualizar contador y badges
