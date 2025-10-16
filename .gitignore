@@ -1,2 +1,9 @@
 test-modules.js
 Mejoras.md
+node_modules/
+package-lock.json
+.env
+*.log
+Thumbs.db
+.DS_Store
+dbConfig.js
