@@ -1,3 +1,11 @@
+/* ============================================
+    Backend - LovePage
+    Contenido: Configuración y rutas del backend
+   ============================================ */
+
+// - Configura Express, sesiones y CORS
+// - Define rutas de autenticación, gestión de fecha especial, playlist y mensajes
+// - Importa el router de recordatorios (reminders-backend.js)
 const express = require('express');
 const mysql = require('mysql2/promise');
 const bodyParser = require('body-parser');
@@ -6,6 +14,7 @@ const session = require('express-session');
 const remindersRouter = require('./reminders-backend.js');
 const app = express();
 
+// Configuración CORS: permitir peticiones desde el frontend (en desarrollo usa Live Server en 5500)
 app.use(cors({
   origin: 'http://localhost:5500',
   credentials: true,
@@ -13,18 +22,23 @@ app.use(cors({
 }));
 app.options('*', cors());
 
+// Middlewares: parseo JSON y gestión de sesiones en memoria (no para producción)
 app.use(bodyParser.json());
 app.use(session({
+  // En producción cambiar secret y usar store persistente (redis, database, etc.)
   secret: 'lovepage_secret',
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false }
+  saveUninitialized: false,
+  cookie: { secure: true } // En producción usar true si es HTTPS
 }));
 
+// Monta el router que gestiona los recordatorios personalizados
 app.use(remindersRouter);
 
+// Configuración de conexión a la base de datos (archivo con host, user, password, database)
 const dbConfig = require('./dbConfig');
 
+// Crear tablas si no existen (usuarios, recordatorios, mensajes)
 async function createTables() {
   const conn = await mysql.createConnection(dbConfig);
   await conn.execute(`
@@ -61,6 +75,7 @@ async function createTables() {
 }
 createTables();
 
+// Post /register - Registrar nuevo usuario
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -73,6 +88,7 @@ app.post('/register', async (req, res) => {
   }
 });
 
+// Post /login - Autenticar usuario y crear sesión
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -90,6 +106,7 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// Get /session - Verificar si hay sesión activa
 app.get('/session', async (req, res) => {
   if (req.session.user) {
     const conn = await mysql.createConnection(dbConfig);
@@ -105,6 +122,7 @@ app.get('/session', async (req, res) => {
   }
 });
 
+// Get /special-date - Devuelve fecha especial personalizada
 app.get('/special-date', async (req, res) => {
   if (!req.session.user) return res.status(401).json({ error: "No logueado" });
   const conn = await mysql.createConnection(dbConfig);
@@ -117,6 +135,7 @@ app.get('/special-date', async (req, res) => {
   }
 });
 
+// Post /special-date - Guardar fecha especial personalizada
 app.post('/special-date', async (req, res) => {
   if (!req.session.user) return res.status(401).json({ error: "No logueado" });
   const { special_date } = req.body;
@@ -127,7 +146,7 @@ app.post('/special-date', async (req, res) => {
   res.json({ success: true, special_date });
 });
 
-// Guardar y obtener playlist personalizada
+// Post /spotify-playlist - Guardar playlist personalizada
 app.post('/spotify-playlist', async (req, res) => {
   if (!req.session.user) return res.status(401).json({ error: "No logueado" });
   const { playlist } = req.body;
@@ -138,6 +157,7 @@ app.post('/spotify-playlist', async (req, res) => {
   res.json({ success: true, playlist });
 });
 
+// Get /spotify-playlist - Obtener playlist personalizada
 app.get('/spotify-playlist', async (req, res) => {
   if (!req.session.user) return res.status(401).json({ error: "No logueado" });
   const conn = await mysql.createConnection(dbConfig);
@@ -150,12 +170,13 @@ app.get('/spotify-playlist', async (req, res) => {
   }
 });
 
+// Post /logout - Cerrar sesión
 app.post('/logout', (req, res) => {
   req.session.destroy();
   res.json({ success: true });
 });
 
-// Obtener mensajes del usuario
+// Get /messages - Obtener mensajes del usuario
 app.get('/messages', async (req, res) => {
   if (!req.session.user) return res.status(401).json({ error: "No logueado" });
   const conn = await mysql.createConnection(dbConfig);
@@ -168,7 +189,7 @@ app.get('/messages', async (req, res) => {
   res.json({ messages });
 });
 
-// Guardar mensajes del usuario (reemplaza todos los mensajes existentes)
+// Post /messages - Guardar mensajes del usuario (reemplaza todos los mensajes existentes)
 app.post('/messages', async (req, res) => {
   if (!req.session.user) return res.status(401).json({ error: "No logueado" });
   const { messages } = req.body;
@@ -201,5 +222,6 @@ app.post('/messages', async (req, res) => {
   }
 });
 
+// Iniciar el servidor en el puerto 4000
 const PORT = 4000;
 app.listen(PORT, () => console.log(`Backend escuchando en puerto ${PORT}`));
