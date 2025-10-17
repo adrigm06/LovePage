@@ -1,0 +1,32 @@
+/* ============================================
+    Contiene: Estilos específicos para la página de recordatorios
+    Usa: forms-modal.css para estilos compartidos de modales y formularios
+   ============================================ */
+
+/* === BOTÓN DE EDICIÓN === */
+/* Botón de editar recordatorio */
+.edit-reminder-btn {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  z-index: 10;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: transform .2s;
+  font-size: 1.35em;
+  color: var(--pink-light);
+  opacity: .82;
+  display: flex;
+  align-items: center;
+}
+
+/* Efecto hover en botón editar */
+.edit-reminder-btn:hover {
+  transform: scale(1.11) rotate(-12deg);
+  color: var(--pink-coral);
+  opacity: 1;
+}

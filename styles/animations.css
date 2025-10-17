@@ -1,0 +1,211 @@
+/* ============================================
+    Contiene: burbujas, estrellas y todas las animaciones
+   ============================================ */
+
+/* === BURBUJAS FLOTANTES === */
+/* Base de burbujas para evitar que afecten al layout en modo noche */
+.bubble {
+  position: fixed;
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Burbujas flotantes con movimiento más rápido */
+body:not(.night-mode) .bubble {
+  animation: floatBubble 20s infinite ease-in-out;
+  pointer-events: none;
+  opacity: 0.8;
+  filter: blur(1px);
+}
+
+/* Efecto de burbuja */
+body:not(.night-mode) .bubble::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    var(--white-90) 0%,
+    var(--white-85) 50%,
+    var(--white-30) 70%,
+    transparent 100%
+  );
+  box-shadow: 
+    inset -5px -5px 15px var(--white-30),
+    inset 5px 5px 15px var(--white-30),
+    0 0 25px var(--white-30);
+}
+
+/* Reflejo de luz */
+body:not(.night-mode) .bubble::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 20%;
+  height: 20%;
+  border-radius: 50%;
+  background: var(--white-95);
+  filter: blur(5px);
+}
+
+/* Animación de burbujas */
+@keyframes floatBubble {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(7vw, -8vh) rotate(3deg);
+  }
+  50% {
+    transform: translate(-5vw, 6vh) rotate(-3deg);
+  }
+  75% {
+    transform: translate(8vw, 4vh) rotate(5deg);
+  }
+}
+
+/* === ESTRELLAS (MODO NOCTURNO) === */
+/* Estrellas */
+.star {
+    position: fixed;
+    background-color: var(--white);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    animation: twinkle var(--duration) infinite ease-in-out;
+    opacity: 0;
+  will-change: opacity;
+  backface-visibility: hidden;
+  contain: paint;
+}
+
+/* Animacion de parpadeo */
+@keyframes twinkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: var(--opacity); }
+}
+
+/* Contenedor de estrellas para evitar que afecten al layout */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: layout paint style;
+}
+
+/* Respetar usuarios con reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .star {
+    animation: none !important;
+    opacity: var(--opacity) !important;
+  }
+}
+
+/* === ANIMACIONES GENERALES === */
+/* Animación de latido del cursor */
+@keyframes heartBeat {
+  from { transform: translate(-50%, -50%) scale(0.9); }
+  to { transform: translate(-50%, -50%) scale(1.3); }
+}
+
+/* Animación de corazones flotantes */
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1) rotate(45deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-250px) scale(1.8) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+/* Animación de pulso */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 0 10px var(--shadow);
+  }
+  50% {
+    transform: scale(1.03);
+    text-shadow: 0 0 20px var(--shadow-btn);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 10px var(--shadow);
+  }
+}
+
+/* Animación de gradiente de fondo */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animación de brillo */
+@keyframes shine {
+  0% { background-position: 100% 50%; }
+  100% { background-position: -100% 50%; }
+}
+
+/* Animación de pulso verde (Spotify) */
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 var(--shadow-green-30); }
+  70% { box-shadow: 0 0 0 10px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* Animación de pulso verde oscuro (GitHub) */
+@keyframes pulse-green-dark {
+  0% { box-shadow: 0 0 0 0 var(--shadow-green-dark); }
+  70% { box-shadow: 0 0 0 10px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* Animación de resaltado con pulso */
+@keyframes pulseHighlight {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 var(--shadow-pink-dark); }
+  70% { transform: scale(1.02); box-shadow: 0 0 0 10px transparent; }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 transparent; }
+}
+
+/* Animación de heartbeat */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.02); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.01); }
+  100% { transform: scale(1); }
+}
+
+/* Animación de mandarina (insignias) */
+@keyframes mandarinaPulse {
+  0% { transform: scale(1.1); }
+  100% { transform: scale(1.15); }
+}
+
+/* Animación de explosión */
+@keyframes mandarinaPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.2); }
+  100% { transform: scale(1.1); opacity: 1; }
+}
+
+/* Animación de brillo mandarina */
+@keyframes mandarinaGlowDark {
+  0% { filter: grayscale(0%) brightness(1) drop-shadow(0 0 5px var(--shadow-orange-badge)); }
+  100% { filter: grayscale(0%) brightness(1.1) drop-shadow(0 0 15px var(--shadow-orange-badge-glow)); }
+}

@@ -4,95 +4,178 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestras Fechas Importantes</title>
+
+    <!-- Hoja de fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;500;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/themes.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/forms-modal.css">
+    <link rel="stylesheet" href="styles/recordatorios.css">
 </head>
 <body>
+    <!-- Botón de regreso -->
     <div class="back-btn-container">
         <a href="index.html" class="back-btn">
         <i class="fas fa-arrow-left"></i> Volver
         </a>
     </div>
 
-    <div class="header">
+    <!-- Encabezado -->
+    <header class="header">
         <h1>📅 Fechas para Recordar</h1>
-    <div class="subtitle"></div>
-    </div>
+        <div class="subtitle"></div>
+    </header>
 
+    <!-- Contenedor de fechas -->
     <div class="dates-container">
-        <div class="date-card">
+        <div class="date-card" data-id="primer_dia">
             <div class="date-icon">🤍</div>
             <div class="date-content">
                 <h3>Nuestro Primer Día</h3>
                 <div class="date">18 de Julio</div>
                 <div class="days-counter" data-date="2025-07-18" data-type="monthly"></div>
             </div>
+            <button class="edit-reminder-btn" title="Editar recordatorio">
+                <i class="fa-solid fa-pencil"></i>
+            </button>
         </div>
 
-    <div class="date-group">
-        <div class="date-card">
-            <div class="date-icon">🍊</div>
-            <div class="date-content">
-                <h3>Tu Cumpleaños</h3>
-                <div class="date">12 de Marzo</div>
-                <div class="days-counter" data-date="2025-03-12"></div>
+        <!-- Grupo de fechas -->
+        <div class="date-group">
+            <div class="date-card" data-id="cumple_tu">
+                <div class="date-icon">🍊</div>
+                <div class="date-content">
+                    <h3>Tu Cumpleaños</h3>
+                    <div class="date">12 de Marzo</div>
+                    <div class="days-counter" data-date="2025-03-12"></div>
+                </div>
+                <button class="edit-reminder-btn" title="Editar recordatorio">
+                    <i class="fa-solid fa-pencil"></i>
+                </button>
+            </div>
+
+            <div class="date-card" data-id="cumple_mi">
+                <div class="date-icon">👻</div>
+                <div class="date-content">
+                    <h3>Mi Cumpleaños</h3>
+                    <div class="date">21 de Abril</div>
+                    <div class="days-counter" data-date="2025-04-21"></div>
+                </div>
+                <button class="edit-reminder-btn" title="Editar recordatorio">
+                    <i class="fa-solid fa-pencil"></i>
+                </button>
             </div>
         </div>
 
-        <div class="date-card">
-            <div class="date-icon">👻</div>
+        <div class="date-card" data-id="san_valentin">
+            <div class="date-icon">💕</div>
             <div class="date-content">
-                <h3>Mi Cumpleaños</h3>
-                <div class="date">21 de Abril</div>
-                <div class="days-counter" data-date="2025-04-21"></div>
+                <h3>San Valentin</h3>
+                <div class="date">14 de Febrero</div>
+                <div class="days-counter" data-date="2025-02-14"></div>
             </div>
+            <button class="edit-reminder-btn" title="Editar recordatorio">
+                <i class="fa-solid fa-pencil"></i>
+            </button>
         </div>
-    </div>
 
-    <div class="date-card">
-        <div class="date-icon">💕</div>
-        <div class="date-content">
-            <h3>San Valentin</h3>
-            <div class="date">14 de Febrero</div>
-            <div class="days-counter" data-date="2025-02-14"></div>
-        </div>
-    </div>
-
-    <div class="date-group">
-        <div class="date-card">
-            <div class="date-icon">🥰</div>
-            <div class="date-content">
-                <h3>Dia de la novia</h3>
-                <div class="date">01 de Agosto</div>
-                <div class="days-counter" data-date="2025-08-01"></div>
+        <div class="date-group">
+            <div class="date-card" data-id="dia_novia">
+                <div class="date-icon">🥰</div>
+                <div class="date-content">
+                    <h3>Dia de la novia</h3>
+                    <div class="date">01 de Agosto</div>
+                    <div class="days-counter" data-date="2025-08-01"></div>
+                </div>
+                <button class="edit-reminder-btn" title="Editar recordatorio">
+                    <i class="fa-solid fa-pencil"></i>
+                </button>
             </div>
-        </div>
 
-        <div class="date-card">
-            <div class="date-icon">😾</div>
+            <div class="date-card" data-id="dia_novio">
+                <div class="date-icon">😾</div>
                 <div class="date-content">
                     <h3>Dia del novio</h3>
                     <div class="date">03 de Octubre</div>
                     <div class="days-counter" data-date="2025-10-03"></div>
                 </div>
+                <button class="edit-reminder-btn" title="Editar recordatorio">
+                    <i class="fa-solid fa-pencil"></i>
+                </button>
             </div>
         </div>
-        <div class="date-card">
+        <div class="date-card" data-id="fecha_especial">
             <div class="date-icon">😘</div>
             <div class="date-content">
                 <h3>Fecha</h3>
                 <div class="date">1 de Enero</div>
                 <div class="days-counter" data-date="2025-01-01"></div>
             </div>
+            <button class="edit-reminder-btn" title="Editar recordatorio">
+                <i class="fa-solid fa-pencil"></i>
+            </button>
         </div>
-
     </div>
-    <script src="script.js"></script>
-    <svg class="svg-hearts" width="0" height="0" style="position: absolute;">
-    <symbol id="heart-svg" viewBox="0 0 24 24">
-        <path fill="#E91E63" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-    </symbol>
-</svg>
+
+    <!-- Modal para editar recordatorio -->
+    <div id="editReminderModal" class="modal">
+        <div class="modal-content">
+            <span id="closeEditModal" class="close">&times;</span>
+            <h3>Editar Recordatorio</h3>
+            <form id="editReminderForm">
+                <label for="editReminderName">Nombre</label>
+                <input type="text" id="editReminderName" required>
+
+                <label for="editReminderDate">Fecha</label>
+                <input type="date" id="editReminderDate" required>
+                
+                <label for="editReminderIcon">Icono</label>
+                <select id="editReminderIcon">
+                    <option value="🎉">🎉</option>
+                    <option value="🐶">🐶</option>
+                    <option value="❤️">❤️</option>
+                    <option value="🌸">🌸</option>
+                    <option value="🎂">🎂</option>
+                    <option value="⭐">⭐</option>
+                    <option value="🤍">🤍</option>
+                    <option value="🍊">🍊</option>
+                    <option value="👻">👻</option>
+                    <option value="💕">💕</option>
+                    <option value="🥰">🥰</option>
+                    <option value="😾">😾</option>
+                    <option value="😘">😘</option>
+                    <option value="😈">😈</option>
+                    <option value="😊">😊</option>
+                    <option value="🤔">🤔</option>
+                    <option value="😭">😭</option>
+                    <option value="😎">😎</option>
+                    <option value="🤗">🤗</option>
+                    <option value="🤑">🤑</option>
+                    <option value="😶">😶</option>
+                    <option value="🌹">🌹</option>
+                    <option value="🍕">🍕</option>
+                    <option value="💘">💘</option>
+                </select>
+                <button type="submit" class="save-edit-btn">Guardar cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts de configuración -->
+    <script src="scripts/config.js"></script>
+    
+    <!-- Scripts modulares -->
+    <script src="scripts/animations.js"></script>
+    <script src="scripts/theme.js"></script>
+    <script src="scripts/counter.js"></script>
+    
+    <!-- Scripts específicos de página -->
+    <script src="scripts/recordatorios.js"></script>
+    <script src="scripts/main.js"></script>
 </body>
 </html>

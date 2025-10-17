@@ -1,0 +1,113 @@
+/* ============================================
+    CSS Variables - Sistema de Variables del Tema LovePage
+    Contiene: Colores principales, paletas, sombras y transparencias
+   ============================================ */
+
+:root {
+  /* ===== COLORES PRINCIPALES ===== */
+  --accent: #E91E63;      /* Rosa principal - Usado en títulos, enlaces */
+  --secondary: #9C27B0;   /* Morado - Usado en subtítulos, contador */
+  --tertiary: #C2185B;    /* Rosa oscuro - Usado en detalles */
+  
+  /* ===== PALETA ROSA ===== */
+  --pink-light: #f06292;    /* Rosa claro - Botones, bordes */
+  --pink-soft: #FF6B8B;     /* Rosa suave - Modo noche, bordes */
+  --pink-coral: #e57373;    /* Coral - Labels, texto modales */
+  --pink-dark: #c62828;     /* Rosa oscuro - Focus, hover */
+  --pink-bg: #fffafc;       /* Fondo rosa claro - Modales */
+  --pink-shadow: #f8bbd0;   /* Sombra rosa - Efectos de sombra */
+  
+  /* ===== ESCALA DE GRISES ===== */
+  --white: #fff;            /* Blanco puro */
+  --black: #333;            /* Negro suave - Texto principal */
+  --grey: #888;             /* Gris medio - Footer, textos secundarios */
+  --grey-light: #d1d1d1;    /* Gris claro - Bordes, modo noche */
+  --grey-mid: #999;         /* Gris medio - Insignias no completadas */
+  --grey-dark: #555;        /* Gris oscuro - Texto comillas, números */
+  
+  /* ===== COLORES DE ACENTO ===== */
+  --purple: #673AB7;        /* Morado - Contador de días */
+  --green: #4CAF50;         /* Verde - Spotify, mensajes éxito */
+  --green-dark: #43a047;    /* Verde oscuro - Hover Spotify */
+  --orange: #FF8E53;        /* Naranja - Insignias, gradientes */
+  --orange-light: #FFDEE9;  /* Naranja claro - Fondo gradiente */
+  --blue-light: #B5FFFC;    /* Azul claro - Fondo gradiente */
+  
+  /* ===== MODO NOCTURNO ===== */
+  --night-bg1: #0f2027;     /* Fondo oscuro 1 - Base */
+  --night-bg2: #203a43;     /* Fondo oscuro 2 - Gradiente medio */
+  --night-bg3: #2c5364;     /* Fondo oscuro 3 - Gradiente claro */
+  --night-accent: #FF9A8B;  /* Acento nocturno - Títulos, enlaces */
+  --night-red: #FF6B6B;     /* Rojo nocturno - Subtítulos, botones */
+  --night-text: #f0f0f0;    /* Texto nocturno - Texto principal */
+  
+  /* ===== TRANSPARENCIAS - BLANCO ===== */
+  --white-95: rgba(255, 255, 255, 0.95);  /* Contenedores, tarjetas */
+  --white-90: rgba(255, 255, 255, 0.9);   /* Botones, Spotify */
+  --white-85: rgba(255, 255, 255, 0.85);  /* Contador, burbujas */
+  --white-30: rgba(255, 255, 255, 0.3);   /* Efectos de brillo */
+  --white-20: rgba(255, 255, 255, 0.2);   /* Toggle tema */
+  --white-15: rgba(255, 255, 255, 0.15);  /* Fondos sutiles */
+  --white-08: rgba(255, 255, 255, 0.08);  /* Hover GitHub noche */
+  --white-06: rgba(255, 255, 255, 0.06);  /* Bordes inputs noche */
+  
+  /* ===== TRANSPARENCIAS - NEGRO ===== */
+  --black-70: rgba(0, 0, 0, 0.7);   /* Captions (no usado actualmente) */
+  --black-30: rgba(0, 0, 0, 0.3);   /* Sombras de texto */
+  --black-15: rgba(0, 0, 0, 0.15);  /* Sombras Spotify */
+  --black-10: rgba(0, 0, 0, 0.1);   /* Sombras suaves, bordes */
+  --black-05: rgba(0, 0, 0, 0.05);  /* Hover GitHub día, bordes sutiles */
+  
+  /* ===== SOMBRAS - ROSA ===== */
+  --shadow-pink: rgba(233, 30, 99, 0.2);        /* Sombra general */
+  --shadow-pink-light: rgba(233, 30, 99, 0.09); /* Sombra muy suave (NO USADA) */
+  --shadow-pink-dark: rgba(233, 30, 99, 0.3);   /* Sombra oscura - Corazones, hover */
+  --shadow-pink-btn: rgba(233, 30, 99, 0.4);    /* Sombra botones (NO USADA) */
+  --shadow-pink-hover: rgba(233, 30, 99, 0.5);  /* Sombra hover (NO USADA) */
+  --shadow-pink-10: rgba(233, 30, 99, 0.1);     /* Sombra sutil - Fondos, bordes */
+  
+  /* ===== SOMBRAS - MORADO ===== */
+  --shadow-purple: rgba(156, 39, 176, 0.3);     /* Sombra morada - Spotify before (comentado) */
+  
+  /* ===== SOMBRAS - VERDE ===== */
+  --shadow-green-30: rgba(76, 175, 80, 0.3);    /* Sombra verde - Animación pulse-green */
+  --shadow-green-dark: rgba(67, 160, 71, 0.5);  /* Sombra verde oscura - Animación modo noche */
+  --shadow-spotify: rgba(29, 185, 84, 0.3);     /* Sombra Spotify hover */
+  
+  /* ===== SOMBRAS - NARANJA ===== */
+  --shadow-orange-50: rgba(255, 165, 0, 0.5);   /* Sombra naranja - Insignias */
+  --shadow-orange-30: rgba(255, 165, 0, 0.3);   /* Sombra naranja suave - Insignias */
+  --shadow-orange-badge: rgba(255, 142, 83, 0.5);     /* Sombra insignias */
+  --shadow-orange-badge-glow: rgba(255, 142, 83, 0.9);/* Brillo insignias */
+  
+  /* ===== TRANSPARENCIAS MODO NOCTURNO ===== */
+  --night-overlay: rgba(44, 83, 100, 0.85);     /* Overlay modales noche */
+  --night-bg-95: rgba(15, 32, 39, 0.95);        /* Fondo contenedores noche */
+  --night-bg-90: rgba(15, 32, 39, 0.9);         /* Fondo botones noche */
+  --night-bg-85: rgba(15, 32, 39, 0.85);        /* Fondo contador noche */
+  --night-accent-20: rgba(255, 154, 139, 0.2);  /* Bordes sutiles noche */
+  --night-accent-10: rgba(255, 154, 139, 0.1);  /* Fondos muy sutiles noche */
+  --night-shadow: rgba(44, 83, 100, 0.66);      /* Sombras principales noche */
+  --night-shadow-30: rgba(44, 83, 100, 0.3);    /* Sombras suaves noche */
+  --night-red-40: rgba(255, 106, 107, 0.4);     /* Sombra botones noche */
+  --night-red-30: rgba(255, 107, 107, 0.3);     /* Sombra inputs focus noche */
+  --night-red-15: rgba(255, 107, 107, 0.15);    /* Fondo info mensajes noche */
+  --night-text-shadow: rgba(255, 154, 139, 0.5);/* Sombra texto títulos noche */
+  --night-text-shadow-red: rgba(255, 106, 107, 0.3); /* Sombra texto badges noche */
+  
+  /* ===== COMPONENTES ESPECÍFICOS ===== */
+  --overlay: rgba(233, 30, 99, 0.35);         /* Overlay modales día */
+  --modal-shadow: rgba(229, 115, 115, 0.66);  /* Sombra modales */
+  --glow-soft: rgba(198, 40, 40, 0.12);       /* Brillo suave inputs focus */
+  --placeholder-night: rgba(240, 240, 240, 0.6); /* Color placeholder modo noche */
+  
+  /* ===== SOMBRAS COMPLEJAS ===== */
+  /* Sombra dual para hover del sobre de mensajes */
+  --shadow-dual:
+    -5px -6px 10px -3px var(--accent),      /* Sombra rosa superior izquierda */
+    5px 8px 8px -3px var(--secondary),      /* Sombra morada inferior derecha */
+    -7px -7px 10px -5px transparent,        /* Transparente izquierda */
+    7px 7px 10px -5px transparent,          /* Transparente derecha */
+    0 0 5px 0px var(--black-30),            /* Sombra central */
+    0 25px 25px -20px var(--black);         /* Sombra inferior profunda */
+}

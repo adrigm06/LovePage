@@ -1,0 +1,391 @@
+/* ============================================
+    Contiene: Estilos compartidos para modales y formularios
+    Usado en: login.html, index.html y recordatorios.html
+   ============================================ */
+
+/* === MODAL BASE === */
+/* Overlay del modal - Clases nuevas y retrocompatibles */
+.modal-overlay,
+.modal,
+.login-modal,
+.settings-modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background: var(--overlay);
+    backdrop-filter: blur(2px);
+    transition: background 0.3s;
+}
+
+/* Overlay en modo noche */
+body.night-mode .modal-overlay,
+body.night-mode .modal,
+body.night-mode .login-modal,
+body.night-mode .settings-modal {
+    background: var(--night-overlay);
+}
+
+/* Contenedor del contenido del modal - Clases nuevas y retrocompatibles */
+.modal-container,
+.modal-content,
+.login-modal-content,
+.settings-modal-content {
+    background: var(--pink-bg);
+    margin: 6% auto;
+    padding: 40px 30px 30px;
+    border: 2px solid var(--pink-light);
+    border-radius: 20px;
+    width: 350px;
+    max-width: 94vw;
+    box-shadow: 0 6px 24px var(--modal-shadow);
+    text-align: center;
+    font-family: 'Segoe Script', cursive, Arial, sans-serif;
+    position: relative;
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+/* Contenedor del modal en modo noche */
+body.night-mode .modal-container,
+body.night-mode .modal-content,
+body.night-mode .login-modal-content,
+body.night-mode .settings-modal-content {
+    background: linear-gradient(135deg, var(--night-bg2) 0%, var(--night-bg3) 100%);
+    border-color: var(--pink-soft);
+    color: var(--night-text);
+    box-shadow: 0 6px 24px var(--night-shadow);
+}
+
+/* === BOTÓN DE CERRAR === */
+/* Botón X para cerrar modal - Clases nuevas y retrocompatibles */
+.modal-close,
+.close {
+    color: var(--pink-coral);
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    font-size: 1.8em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color .18s;
+}
+
+/* Efecto hover y focus en botón cerrar */
+.modal-close:hover,
+.modal-close:focus,
+.close:hover,
+.close:focus {
+    color: var(--pink-light);
+    outline: none;
+}
+
+/* Botón cerrar en modo noche */
+body.night-mode .modal-close,
+body.night-mode .close {
+    color: var(--pink-soft);
+}
+
+/* === TÍTULOS Y LABELS === */
+/* Títulos de modal */
+.modal-container h2,
+.modal-content h2,
+.login-modal-content h2,
+.settings-modal-content h2 {
+    color: var(--pink-coral);
+    transition: color 0.3s;
+}
+
+/* Títulos en modo noche */
+body.night-mode .modal-container h2,
+body.night-mode .modal-content h2,
+body.night-mode .login-modal-content h2,
+body.night-mode .settings-modal-content h2 {
+    color: var(--night-accent);
+}
+
+/* Labels de formulario - Clases nuevas y retrocompatibles */
+.form-label,
+.modal-content label,
+.login-modal-content label,
+.settings-modal-content label {
+    display: block;
+    margin: 15px 0 6px 12px;
+    font-weight: bold;
+    text-align: left;
+    color: var(--pink-coral);
+    transition: color 0.3s;
+}
+
+/* Labels en modo noche */
+body.night-mode .form-label,
+body.night-mode .modal-content label,
+body.night-mode .login-modal-content label,
+body.night-mode .settings-modal-content label {
+    color: var(--pink-soft);
+}
+
+/* === INPUTS === */
+/* Inputs de texto, contraseña, fecha y select - Clases nuevas y retrocompatibles */
+.form-input,
+.modal-content input[type="text"],
+.modal-content input[type="date"],
+.modal-content select,
+.login-modal-content input,
+.login-modal-content input[type="text"],
+.login-modal-content input[type="password"],
+.login-modal-content input[type="date"],
+.settings-modal-content input[type="text"],
+.settings-modal-content input[type="date"] {
+    width: 88%;
+    padding: 9px;
+    margin-bottom: 10px;
+    border: 1.5px solid var(--pink-light);
+    border-radius: 15px;
+    font-size: 1em;
+    background: var(--white);
+    color: var(--black);
+    transition: border 0.2s, background 0.3s, color 0.3s;
+}
+
+/* Efecto focus en inputs */
+.form-input:focus,
+.modal-content input[type="text"]:focus,
+.modal-content input[type="date"]:focus,
+.modal-content select:focus,
+.login-modal-content input:focus,
+.settings-modal-content input[type="text"]:focus,
+.settings-modal-content input[type="date"]:focus {
+    border: 2px solid var(--pink-dark);
+    outline: none;
+}
+
+/* Inputs en modo noche */
+body.night-mode .form-input,
+body.night-mode .modal-content input[type="text"],
+body.night-mode .modal-content input[type="date"],
+body.night-mode .modal-content select,
+body.night-mode .login-modal-content input,
+body.night-mode .settings-modal-content input[type="text"],
+body.night-mode .settings-modal-content input[type="date"] {
+    background: var(--night-bg3);
+    color: var(--night-text);
+    border: 2px solid var(--white-06);
+}
+
+/* Focus en inputs modo noche */
+body.night-mode .form-input:focus,
+body.night-mode .modal-content input[type="text"]:focus,
+body.night-mode .modal-content input[type="date"]:focus,
+body.night-mode .modal-content select:focus,
+body.night-mode .login-modal-content input:focus,
+body.night-mode .settings-modal-content input[type="text"]:focus,
+body.night-mode .settings-modal-content input[type="date"]:focus {
+    border: 2px solid var(--pink-dark);
+    box-shadow: 0 6px 18px var(--glow-soft);
+}
+
+/* Placeholder en modo noche */
+body.night-mode .form-input::placeholder,
+body.night-mode .modal-content input::placeholder,
+body.night-mode .login-modal-content input::placeholder,
+body.night-mode .settings-modal-content input::placeholder {
+    color: var(--placeholder-night);
+}
+
+/* === TEXTAREA === */
+/* Área de texto - Clases nuevas y retrocompatibles */
+.form-textarea,
+.settings-modal-content textarea {
+    width: 88%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1.5px solid var(--pink-light);
+    border-radius: 15px;
+    font-size: 0.95em;
+    font-family: 'Raleway', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    transition: border 0.2s, background 0.3s, color 0.3s;
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+    overflow-y: auto;
+}
+
+/* Focus en textarea */
+.form-textarea:focus,
+.settings-modal-content textarea:focus {
+    border: 2px solid var(--pink-dark);
+    outline: none;
+    box-shadow: 0 8px 28px var(--glow-soft);
+}
+
+/* Textarea en modo noche */
+body.night-mode .form-textarea,
+body.night-mode .settings-modal-content textarea {
+    background: var(--night-bg3);
+    color: var(--night-text);
+    border: 1.5px solid var(--night-accent);
+}
+
+/* Focus en textarea modo noche */
+body.night-mode .form-textarea:focus,
+body.night-mode .settings-modal-content textarea:focus {
+    border-color: var(--pink-soft);
+    box-shadow: 0 0 8px var(--night-red-30);
+}
+
+/* Scrollbar personalizado para textarea */
+.form-textarea::-webkit-scrollbar,
+.settings-modal-content textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+.form-textarea::-webkit-scrollbar-track,
+.settings-modal-content textarea::-webkit-scrollbar-track {
+    background: var(--shadow-pink-10);
+    border-radius: 10px;
+}
+
+.form-textarea::-webkit-scrollbar-thumb,
+.settings-modal-content textarea::-webkit-scrollbar-thumb {
+    background: var(--pink-light);
+    border-radius: 10px;
+}
+
+.form-textarea::-webkit-scrollbar-thumb:hover,
+.settings-modal-content textarea::-webkit-scrollbar-thumb:hover {
+    background: var(--pink-coral);
+}
+
+body.night-mode .form-textarea::-webkit-scrollbar-track,
+body.night-mode .settings-modal-content textarea::-webkit-scrollbar-track {
+    background: var(--night-shadow-30);
+}
+
+body.night-mode .form-textarea::-webkit-scrollbar-thumb,
+body.night-mode .settings-modal-content textarea::-webkit-scrollbar-thumb {
+    background: var(--night-accent);
+}
+
+/* === BOTONES === */
+/* Botón principal (submit, guardar, etc) - Clases nuevas y retrocompatibles */
+.btn-primary,
+.login-submit,
+.register-toggle,
+.save-edit-btn,
+.login-button,
+.settings-button {
+    background: linear-gradient(90deg, var(--pink-coral), var(--pink-light));
+    color: var(--white);
+    border: none;
+    padding: 10px 28px;
+    font-size: 1.08em;
+    border-radius: 25px;
+    box-shadow: 0 2px 10px var(--pink-shadow);
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+/* Efecto hover en botones principales */
+.btn-primary:hover,
+.login-submit:hover,
+.register-toggle:hover,
+.save-edit-btn:hover,
+.login-button:hover,
+.settings-button:hover {
+    background: linear-gradient(90deg, var(--pink-light), var(--pink-coral));
+    transform: scale(1.08);
+}
+
+/* Botones principales en modo noche */
+body.night-mode .btn-primary,
+body.night-mode .login-submit,
+body.night-mode .register-toggle,
+body.night-mode .save-edit-btn,
+body.night-mode .login-button,
+body.night-mode .settings-button {
+    background: linear-gradient(90deg, var(--night-red), var(--night-accent));
+    color: var(--night-bg3);
+}
+
+/* === MENSAJES DE ESTADO === */
+/* Mensajes de feedback - Clases nuevas y retrocompatibles */
+.form-message,
+.login-message {
+    margin-top: 16px;
+    font-size: 1em;
+    min-height: 1.3em;
+    color: var(--pink-coral);
+    opacity: 0;
+    transition: opacity .44s, color 0.3s;
+}
+
+/* Mostrar mensaje */
+.form-message.show,
+.login-message.show {
+    opacity: 1;
+    animation: pop-message .7s cubic-bezier(.6,2.1,.6,.8);
+}
+
+/* Animación para mensajes */
+@keyframes pop-message {
+    0% { opacity: 0; transform: scale(.9); }
+    55% { opacity: 1; transform: scale(1.04); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Mensaje en modo noche */
+body.night-mode .form-message,
+body.night-mode .login-message {
+    color: var(--night-accent);
+}
+
+/* Mensaje de éxito */
+.form-message.success,
+.login-message.success {
+    color: var(--green-dark);
+}
+
+/* Mensaje de éxito en modo noche */
+body.night-mode .form-message.success,
+body.night-mode .login-message.success {
+    color: var(--green);
+}
+
+/* === INFO BOX === */
+/* Caja de información - Clases nuevas y retrocompatibles */
+.info-box,
+.messages-info {
+    text-align: left;
+    margin: 5px 0 15px 12px;
+    padding: 8px 12px;
+    background: var(--shadow-pink-10);
+    border-left: 3px solid var(--pink-light);
+    border-radius: 5px;
+}
+
+.info-box small,
+.messages-info small {
+    color: var(--pink-coral);
+    font-size: 0.85em;
+    line-height: 1.4;
+    display: block;
+}
+
+/* Info box en modo noche */
+body.night-mode .info-box,
+body.night-mode .messages-info {
+    background: var(--night-red-15);
+    border-left-color: var(--night-accent);
+}
+
+body.night-mode .info-box small,
+body.night-mode .messages-info small {
+    color: var(--pink-soft);
+}

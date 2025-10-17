@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Login LovePage</title>
+
+  <!-- Hojas de estilo -->
+  <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="styles/forms-modal.css">
+  <link rel="stylesheet" href="styles/login.css">
+  <link rel="stylesheet" href="styles/themes.css">
+  <link rel="stylesheet" href="styles/animations.css">
+
+  <!-- Hojas de fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;500;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Botón de inicio de sesión arriba derecha -->
+  <div class="login-header" id="loginHeader">
+    <button id="loginBtn" class="login-button" aria-label="Iniciar sesión">Iniciar sesión</button>
+  </div>
+
+  <!-- Área de usuario y logout -->
+  <div class="user-area-container">
+    <div id="userArea" class="user-area">
+      <span id="userWelcome" class="user-name" tabindex="0" aria-label="Usuario logueado"></span>
+      <div id="logoutMenu" class="logout-menu">
+        <button id="settingsBtn" class="logout-button menu-btn">Ajustes</button>
+        <button id="logoutBtn" class="logout-button menu-btn">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de login -->
+  <div id="loginModal" class="login-modal" aria-hidden="true">
+    <div class="login-modal-content" role="dialog" aria-modal="true" aria-labelledby="login-title">
+      <span id="closeLogin" class="close" aria-label="Cerrar">&times;</span>
+      <h2 id="login-title">Bienvenido a LovePage</h2>
+      <form id="loginForm" autocomplete="off">
+        <label for="username">Usuario</label>
+        <input type="text" id="username" name="username" required autocomplete="username" />
+
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password" />
+
+        <button type="submit" class="login-submit">Entrar</button>
+        <div id="login-message" class="login-message" role="alert"></div>
+      </form>
+        <hr>
+      <div>
+        <span>¿No tienes cuenta?</span>
+        <button id="showRegister" class="register-toggle">Registrarse</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de registro -->
+  <div id="registerModal" class="login-modal">
+    <div class="login-modal-content">
+      <span id="closeRegister" class="close">&times;</span>
+      <h2>Registro en LovePage</h2>
+      <form id="registerForm" autocomplete="off">
+        <label for="regUsername">Usuario</label>
+        <input type="text" id="regUsername" name="regUsername" required />
+
+        <label for="regPassword">Contraseña</label>
+        <input type="password" id="regPassword" name="regPassword" required />
+
+        <button type="submit" class="login-submit">Crear cuenta</button>
+        <div id="register-message" class="login-message"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Ajustes Usuario -->
+  <div id="settingsModal" class="settings-modal" aria-hidden="true">
+    <div class="settings-modal-content" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <span id="closeSettings" class="close" aria-label="Cerrar">&times;</span>
+      <h2 id="settings-title">Ajustes de usuario</h2>
+      <form id="settingsForm" autocomplete="off">
+        <label for="specialDate">Cambiar fecha recordatorio</label>
+        <input type="date" id="specialDate" name="specialDate" />
+        <div id="settings-message" class="login-message" role="alert"></div>
+        <button type="submit" class="login-submit">Guardar cambios</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts de configuración -->
+  <script src="scripts/config.js"></script>
+  
+  <!-- Scripts modulares -->
+  <script src="scripts/animations.js"></script>
+  <script src="scripts/theme.js"></script>
+  <script src="scripts/counter.js"></script>
+  
+  <!-- Scripts específicos de página -->
+  <script src="scripts/login.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>
