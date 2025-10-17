@@ -10,7 +10,7 @@ function loadSpotifyPlaylist() {
 	const iframe = document.querySelector('.spotify-container iframe');
 	if (!iframe) return;
 	
-	fetch(`${API_URL}/spotify-playlist`, { 
+	fetch(`${window.APP_CONFIG.API_URL}/spotify-playlist`, { 
 		credentials: 'include' 
 	})
 		.then(res => {

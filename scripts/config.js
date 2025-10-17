@@ -4,7 +4,10 @@
    ============================================ */
 
 /* === CONFIGURACIÓN PRINCIPAL === */
-// Fecha inicial de la relación / inicio de conteo
 window.APP_CONFIG = Object.freeze({
-	START_DATE: '2025-07-18'
+	// Fecha inicial de la relación / inicio de conteo
+	START_DATE: '2025-07-18',
+	
+	// URL del backend desplegado en Render
+	API_URL: 'https://lovepage-egy4.onrender.com'
 });

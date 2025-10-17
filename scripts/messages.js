@@ -49,9 +49,7 @@ const Messages = {
 	// Cargar mensajes personalizados del usuario
 	async loadUserMessages() {
 		try {
-			const response = await fetch('http://localhost:4000/messages', {
-				credentials: 'include'
-			});
+			const response = await fetch(`${window.APP_CONFIG.API_URL}/messages`, { credentials: 'include' });
 			
 			if (!response.ok) {
 				// Si no está autenticado o hay error, usar mensajes por defecto

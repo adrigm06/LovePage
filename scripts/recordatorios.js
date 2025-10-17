@@ -61,7 +61,7 @@ let editingReminderCode = null;
 
 /* === VERIFICAR SESIÓN Y CARGAR RECORDATORIOS === */
 function checkSessionAndLoadReminders() {
-	fetch(`${API_URL}/session`, { credentials: 'include' })
+	fetch(`${window.APP_CONFIG.API_URL}/session`, { credentials: 'include' })
 		.then(res => res.json())
 		.then(data => {
 			if (data.logged) {
@@ -75,7 +75,7 @@ function checkSessionAndLoadReminders() {
 
 /* === CARGAR RECORDATORIOS DEL USUARIO === */
 function loadUserReminders() {
-	fetch(`${API_URL}/reminders`, { credentials: 'include' })
+	fetch(`${window.APP_CONFIG.API_URL}/reminders`, { credentials: 'include' })
 		.then(res => res.json())
 		.then(data => {
 			// Crear mapa de recordatorios del usuario
@@ -141,7 +141,7 @@ editReminderForm.onsubmit = function(e) {
 	const date = editReminderDate.value;
 	const icon = editReminderIcon.value;
 	
-	fetch(`${API_URL}/reminders`, {
+	fetch(`${window.APP_CONFIG.API_URL}/reminders`, {
 		method: 'POST',
 		credentials: 'include',
 		headers: { 'Content-Type': 'application/json' },
