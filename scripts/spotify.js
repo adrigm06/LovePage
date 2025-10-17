@@ -3,12 +3,14 @@
 	Contenido: Carga dinámica de playlist del usuario
    ============================================ */
 
+const API_URL = 'https://lovepage-egy4.onrender.com'; // O la URL de tu backend en Render
+
 /* === CARGAR PLAYLIST DE SPOTIFY === */
 function loadSpotifyPlaylist() {
 	const iframe = document.querySelector('.spotify-container iframe');
 	if (!iframe) return;
 	
-	fetch('http://localhost:4000/spotify-playlist', { 
+	fetch(`${API_URL}/spotify-playlist`, { 
 		credentials: 'include' 
 	})
 		.then(res => {
