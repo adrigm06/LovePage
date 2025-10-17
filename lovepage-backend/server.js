@@ -29,7 +29,7 @@ app.use(session({
   secret: 'lovepage_secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true } // En producción usar true si es HTTPS
+  cookie: { secure: false } // En producción usar true si es HTTPS
 }));
 
 // Monta el router que gestiona los recordatorios personalizados

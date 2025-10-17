@@ -110,47 +110,93 @@ Los scripts han sido modularizados para mejorar la mantenibilidad, escalabilidad
 
 ---
 
-### 🔄 **photos-rotation.js**
+
+### 🌀 **photos-rotation.js**
 **Propósito:** Rotación dinámica de fotos basada en fechas
 - Sistema de rotación automática
-- Modo debug con controles
 - Carga desde `photos.json`
 
 **Características:**
 - Cambio automático cada día
-- Barra de debug con `?debug=1`
 - Integración con galería
 
 ---
 
 ### 🔐 **login.js**
-**Propósito:** Sistema de autenticación y usuario
-- Login/Registro
-- Gestión de sesión
-- Configuración de usuario
-- Ajustes personalizados
+**Propósito:** Sistema de autenticación y gestión de usuario
+- Login/Registro con backend
+- Gestión de sesión (verificación, cierre)
+- Modal de configuración de usuario
+- Ajustes personalizados (fecha especial, playlist, mensajes)
+- Interfaz de usuario (menú dropdown)
 
 **Funciones principales:**
-- `cargarUsuario()` - Carga datos del usuario
-- Modal de login/registro
-- Ajustes de fecha especial y playlist
+- `checkSession()` - Verifica sesión activa al cargar
+- `cargarUsuario(user)` - Carga datos del usuario
+- `showLoginModal()` - Muestra modal de login
+- `showRegisterModal()` - Muestra modal de registro
+- `showSettingsModal()` - Modal de ajustes
+- `loadUserSettings()` - Carga configuración guardada
+- `saveUserSettings()` - Guarda fecha, playlist y mensajes
 
-**Dependencias:** counter.js (llama a `actualizarContadorDias`)
+**API Endpoints utilizados:**
+- `POST /login` - Autenticación
+- `POST /register` - Registro de usuario
+- `GET /session` - Verificar sesión
+- `POST /logout` - Cerrar sesión
+- `GET /special-date` - Obtener fecha especial
+- `POST /special-date` - Guardar fecha especial
+- `GET /spotify-playlist` - Obtener playlist
+- `POST /spotify-playlist` - Guardar playlist
+- `GET /messages` - Obtener mensajes
+- `POST /messages` - Guardar mensajes
+
+**Dependencias:** 
+- counter.js (llama a `actualizarContadorDias()` y `actualizarBadges()`)
+- Backend en ejecución
+- Tablas `users` y `messages` en base de datos
+
+**Eventos:**
+- Clicks en botones de login, registro, logout, ajustes
+- Submit de formularios
+- Apertura/cierre de modales
 
 ---
 
 ### 📅 **recordatorios.js**
-**Propósito:** Gestión de fechas importantes
-- Carga de recordatorios del usuario
-- Edición de recordatorios
-- Cálculo de días hasta eventos
+**Propósito:** Gestión de fechas importantes (usado en recordatorios.html)
+- Carga de recordatorios del usuario desde backend
+- Edición inline de recordatorios (nombre, fecha, icono)
+- Cálculo de días hasta/desde eventos
+- Guardado automático en base de datos
 
 **Funciones principales:**
-- `loadUserReminders()` - Carga recordatorios
-- `calculateDaysTo()` - Calcula días hasta fecha
-- Edición inline de recordatorios
+- `loadUserReminders()` - Carga recordatorios desde API
+- `calculateDaysTo(date)` - Calcula días hasta/desde fecha
+- `showDaysRemaining(date)` - Muestra contador formateado
+- `editReminder(id)` - Modo edición inline
+- `saveReminder(id)` - Guarda cambios en backend
+- `updateReminder(reminderData)` - Actualiza en DB vía API
 
-**Dependencias:** Requiere sesión activa
+**API Endpoints utilizados:**
+- `GET /reminders` - Obtener recordatorios del usuario
+- `POST /reminders` - Crear/actualizar recordatorio
+
+**Dependencias:** 
+- Requiere sesión activa
+- Backend en ejecución
+- Tabla `reminders` en base de datos
+
+**Estructura de recordatorio:**
+```javascript
+{
+  id: 1,
+  reminder_code: "cumpleanos",
+  name: "Cumpleaños 🎂",
+  date: "2025-05-15",
+  icon: "🎂"
+}
+```
 
 ---
 
@@ -284,6 +330,57 @@ window.MiModulo = {
 - Los módulos son independientes pero pueden cooperar
 
 ---
+## 🔄 Flujo de Datos
 
-**Última actualización:** Octubre 2025  
-**Versión:** 2.0 - Arquitectura Modular
+### Ciclo de Autenticación
+```
+1. Usuario → login.js (submit formulario)
+2. login.js → Backend (POST /login)
+3. Backend → Base de datos (validar credenciales)
+4. Backend → login.js (respuesta con datos de usuario)
+5. login.js → counter.js (actualizar fecha especial)
+6. login.js → spotify.js (cargar playlist)
+7. login.js → messages.js (cargar mensajes personalizados)
+```
+
+### Ciclo de Configuración
+```
+1. Usuario → Ajustes (modal de settings)
+2. login.js → Backend (GET datos actuales)
+3. Usuario → Modifica valores
+4. login.js → Backend (POST /special-date, /spotify-playlist, /messages)
+5. Backend → Base de datos (UPDATE)
+6. counter.js/spotify.js/messages.js → Actualizar UI
+```
+
+### Ciclo de Recordatorios
+```
+1. Usuario → recordatorios.html
+2. recordatorios.js → Backend (GET /reminders)
+3. Backend → Base de datos (SELECT reminders)
+4. recordatorios.js → Renderizar en UI
+5. Usuario → Editar recordatorio
+6. recordatorios.js → Backend (POST /reminders)
+7. Backend → Base de datos (INSERT/UPDATE)
+```
+
+## 🗄️ Integración con Base de Datos
+
+### Tablas Utilizadas
+```sql
+-- Usuarios y configuraciones
+users (id, username, password, special_date, spotify_playlist)
+
+-- Mensajes personalizados por usuario
+messages (id, user_id, message_text, display_order)
+
+-- Recordatorios/fechas importantes por usuario
+reminders (id, user_id, reminder_code, name, date, icon)
+```
+
+### Relaciones
+```
+users (1) ─────── (*) messages
+  │
+  └─────────────── (*) reminders
+```
