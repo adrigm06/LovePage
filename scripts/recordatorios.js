@@ -2,6 +2,7 @@
 	RECORDATORIOS.JS - Gestión de fechas importantes
 	Contenido: Carga, edición y cálculo de recordatorios personalizados
    ============================================ */
+const API_URL = 'https://lovepage-egy4.onrender.com'; // O la URL de tu backend en Render
 
 /* === UTILIDAD PARA FORMATEAR FECHAS === */
 function formatDateText(dateStr) {
@@ -60,7 +61,7 @@ let editingReminderCode = null;
 
 /* === VERIFICAR SESIÓN Y CARGAR RECORDATORIOS === */
 function checkSessionAndLoadReminders() {
-	fetch('http://localhost:4000/session', { credentials: 'include' })
+	fetch(`${API_URL}/session`, { credentials: 'include' })
 		.then(res => res.json())
 		.then(data => {
 			if (data.logged) {
@@ -74,7 +75,7 @@ function checkSessionAndLoadReminders() {
 
 /* === CARGAR RECORDATORIOS DEL USUARIO === */
 function loadUserReminders() {
-	fetch('http://localhost:4000/reminders', { credentials: 'include' })
+	fetch(`${API_URL}/reminders`, { credentials: 'include' })
 		.then(res => res.json())
 		.then(data => {
 			// Crear mapa de recordatorios del usuario
@@ -140,7 +141,7 @@ editReminderForm.onsubmit = function(e) {
 	const date = editReminderDate.value;
 	const icon = editReminderIcon.value;
 	
-	fetch('http://localhost:4000/reminders', {
+	fetch(`${API_URL}/reminders`, {
 		method: 'POST',
 		credentials: 'include',
 		headers: { 'Content-Type': 'application/json' },

@@ -3,6 +3,8 @@
 	Contenido: Login, registro, sesión, ajustes de usuario
    ============================================ */
 
+const API_URL = 'https://lovepage-egy4.onrender.com'; // O la URL de tu backend en Render
+
 /* === FUNCIONES DE MENSAJES GENÉRICAS === */
 function showMessage(element, msg, success = false) {
 	element.textContent = msg;
@@ -107,7 +109,7 @@ registerForm.onsubmit = function(e) {
 	var regPass = registerForm.regPassword.value;
 	clearMessage(registerMessage);
 
-	fetch('http://localhost:4000/register', {
+	fetch(`${API_URL}/register`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ username: regUser, password: regPass })
@@ -138,7 +140,7 @@ loginForm.onsubmit = function(e) {
 	var loginPass = loginForm.password.value;
 	clearMessage(loginMessage);
 
-	fetch('http://localhost:4000/login', {
+	fetch(`${API_URL}/login`, {
 		method: 'POST',
 		credentials: 'include',
 		headers: { 'Content-Type': 'application/json' },
@@ -167,7 +169,7 @@ loginForm.onsubmit = function(e) {
 // Muestra usuario logueado arriba derecha y actualiza fecha, badges y mensajes
 async function cargarUsuario() {
 	try {
-		const res = await fetch('http://localhost:4000/session', {
+		const res = await fetch(`${API_URL}/session`, {
 			credentials: 'include'
 		});
 		const data = await res.json();
@@ -242,7 +244,7 @@ closeSettings.onclick = function() {
 /* === CARGAR FECHA ESPECIAL === */
 // Se ejecuta al abrir el modal de ajustes
 function cargarFechaEspecial() {
-	fetch('http://localhost:4000/special-date', { credentials: 'include' })
+	fetch(`${API_URL}/special-date`, { credentials: 'include' })
 		.then(res => res.json())
 		.then(data => {
 			if (data.special_date) {
@@ -258,7 +260,7 @@ function cargarFechaEspecial() {
 settingsForm.onsubmit = function(e) {
 	e.preventDefault();
 	const date = specialDateInput.value;
-	fetch('http://localhost:4000/special-date', {
+	fetch(`${API_URL}/special-date`, {
 		method: 'POST',
 		credentials: 'include',
 		headers: { 'Content-Type': 'application/json' },
@@ -289,14 +291,14 @@ settingsForm.onsubmit = function(e) {
 // Al abrir modal de ajustes, carga el playlist del usuario y los mensajes
 document.getElementById('settingsBtn').addEventListener('click', function() {
 	// Cargar playlist
-	fetch('http://localhost:4000/spotify-playlist', { credentials: 'include' })
+	fetch(`${API_URL}/spotify-playlist`, { credentials: 'include' })
 		.then(res => res.json())
 		.then(data => {
 			document.getElementById('spotifyPlaylist').value = data.playlist || '';
 		});
 
 	// Cargar mensajes
-	fetch('http://localhost:4000/messages', { credentials: 'include' })
+	fetch(`${API_URL}/messages`, { credentials: 'include' })
 		.then(res => res.json())
 		.then(data => {
 			const messagesTextarea = document.getElementById('userMessages');
@@ -330,7 +332,7 @@ document.getElementById('settingsForm').addEventListener('submit', async functio
 
 	try {
 		// Guardar playlist
-		await fetch('http://localhost:4000/spotify-playlist', {
+		await fetch(`${API_URL}/spotify-playlist`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: { 'Content-Type': 'application/json' },
@@ -338,7 +340,7 @@ document.getElementById('settingsForm').addEventListener('submit', async functio
 		});
 
 		// Guardar mensajes
-		await fetch('http://localhost:4000/messages', {
+		await fetch(`${API_URL}/messages`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: { 'Content-Type': 'application/json' },
@@ -382,7 +384,7 @@ document.getElementById('settingsForm').addEventListener('submit', async functio
 
 // Logout
 logoutBtn.onclick = function() {
-	fetch('http://localhost:4000/logout', {
+	fetch(`${API_URL}/logout`, {
 		method: 'POST',
 		credentials: 'include'
 	}).then(() => {

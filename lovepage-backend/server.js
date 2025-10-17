@@ -14,13 +14,27 @@ const session = require('express-session');
 const remindersRouter = require('./reminders-backend.js');
 const app = express();
 
-// Configuración CORS: permitir peticiones desde el frontend (en desarrollo usa Live Server en 5500)
+// Lista de orígenes permitidos
+const allowedOrigins = [
+  'http://localhost:5500', // Para desarrollo local
+  'https://adrigm06.github.io' // Tu futura URL de GitHub Pages
+];
+
+// Configuración CORS
 app.use(cors({
-  origin: 'http://localhost:5500',
+  origin: function (origin, callback) {
+    // Permitir peticiones si no tienen origen (como Postman) o si están en la lista
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('No permitido por CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'OPTIONS']
 }));
 app.options('*', cors());
+
 
 // Middlewares: parseo JSON y gestión de sesiones en memoria (no para producción)
 app.use(bodyParser.json());
