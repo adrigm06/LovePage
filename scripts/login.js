@@ -132,6 +132,7 @@ registerForm.onsubmit = function(e) {
 };
 
 /* === LOGIN DE USUARIO === */
+// La lógica de 'onsubmit' ha sido modificada para usar la respuesta directa del login
 loginForm.onsubmit = function(e) {
 	e.preventDefault();
 	var loginUser = loginForm.username.value.trim();
@@ -144,28 +145,114 @@ loginForm.onsubmit = function(e) {
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ username: loginUser, password: loginPass })
 	})
-	.then(res => res.json())
+	.then(res => {
+        // Manejo de errores mejorado para obtener el mensaje del servidor
+        if (!res.ok) {
+            return res.json().then(errData => {
+                throw new Error(errData.error || `Error ${res.status}`);
+            });
+        }
+        return res.json();
+    })
 	.then(data => {
-		if (data.success) {
-			showMessage(loginMessage, "¡Login exitoso! Bienvenido, " + loginUser, true);
+		if (data.success && data.user) {
+			showMessage(loginMessage, "¡Login exitoso! Bienvenido, " + data.user.username, true);
+
+			/* En lugar de llamar a cargarUsuario(), usamos los datos que el backend
+			ya nos dio en la respuesta del login. */
+			updateUIForLoggedInUser(data.user);
+			
 			// Cerrar modal y cargar datos del usuario
 			setTimeout(() => {
 				loginModal.style.display = 'none';
 				loginForm.reset();
 				clearMessage(loginMessage);
-				cargarUsuario();
+				// La llamada a cargarUsuario() se ha eliminado de aquí.
 			}, 1000);
 		} else {
-			showMessage(loginMessage, data.error || "Usuario o contraseña incorrectos 💔");
+			// Si data.success no es true o no viene data.user
+            throw new Error(data.error || "Respuesta inesperada del servidor.");
 		}
-	}).catch(() => {
-		showMessage(loginMessage, "Servidor no disponible. Intenta más tarde.");
+	}).catch((err) => {
+		showMessage(loginMessage, err.message || "Usuario o contraseña incorrectos 💔");
 	});
 };
 
+
+/* === FUNCIÓN PARA ACTUALIZAR UI AL LOGUEARSE === */
+async function updateUIForLoggedInUser(user) {
+	// Usuario logueado - Mostrar información
+	userArea.style.display = 'flex';
+	userWelcome.textContent = `${user.username}`;
+	loginHeader.style.display = 'none';
+	logoutMenu.style.display = 'none';
+
+	// Actualizar fecha especial y contador
+	window.userSpecialDate = user.special_date || null;
+	if (specialDateText) specialDateText.textContent = '';
+	
+	// Asegurarse de que el módulo counter exista antes de llamarlo
+	if (typeof window.actualizarContadorDias === 'function') {
+		window.actualizarContadorDias();
+	}
+
+	// Cargar mensajes personalizados del usuario
+	if (window.MessagesModule && window.MessagesModule.Messages) {
+		await window.MessagesModule.Messages.loadUserMessages();
+	}
+	
+	// Cargar playlist personalizada
+    if (window.SpotifyModule && typeof window.SpotifyModule.loadSpotifyPlaylist === 'function') {
+        window.SpotifyModule.loadSpotifyPlaylist();
+    }
+}
+
+/* === FUNCIÓN PARA ACTUALIZAR UI AL DESLOGUEARSE === */
+// Esta función centraliza la lógica para mostrar el estado "no logueado".
+function updateUIForLoggedOutUser() {
+	// No hay usuario - Mostrar vista pública
+	userArea.style.display = 'none';
+	loginHeader.style.display = '';
+	logoutMenu.style.display = 'none';
+	window.userSpecialDate = null;
+	if (specialDateText) specialDateText.textContent = '';
+	
+	// Asegurarse de que el módulo counter exista antes de llamarlo
+	if (typeof window.actualizarContadorDias === 'function') {
+		window.actualizarContadorDias(); // Esto usará la fecha por defecto
+	}
+
+	// Usar mensajes por defecto
+	if (window.MessagesModule && window.MessagesModule.Messages) {
+		window.MessagesModule.Messages.list = [...window.MessagesModule.DEFAULT_MESSAGES];
+		window.MessagesModule.Messages.reset();
+
+      	// Resetear la UI de mensajes
+		const messageBox = document.getElementById('randomMessage');
+		if (messageBox) {
+			messageBox.textContent = 'Haz clic en el botón para descubrir algo que amo de ti ❤️';
+		}
+		const showBtn = document.getElementById('showBtn');
+		if (showBtn && showBtn.classList.contains('btn-disabled')) {
+			showBtn.disabled = false;
+			showBtn.classList.remove('btn-disabled');
+			showBtn.innerHTML = '<i id="heartIcon" class="fas fa-heart" style="margin-right: 10px;"></i>Descubrir más 🦭';
+		}
+	}
+	
+	// Cargar playlist por defecto (o simplemente recargar)
+    if (window.SpotifyModule && typeof window.SpotifyModule.loadSpotifyPlaylist === 'function') {
+        // Aquí podrías tener una función que cargue una playlist por defecto
+        // Por ahora, solo recargamos (lo que probablemente cargue la por defecto)
+        window.SpotifyModule.loadSpotifyPlaylist();
+    }
+}
+
+
 /* === CARGAR USUARIO Y DATOS === */
-// Muestra usuario logueado arriba derecha y actualiza fecha, badges y mensajes
-async function cargarUsuario() {
+// Esta función ahora solo se usa al cargar la página para verificar si ya hay una sesión.
+// Ha sido renombrada de 'cargarUsuario' a 'checkSessionOnLoad' para ser más clara.
+async function checkSessionOnLoad() {
 	try {
 		const res = await fetch(`${window.APP_CONFIG.API_URL}/session`, {
 			credentials: 'include'
@@ -173,38 +260,15 @@ async function cargarUsuario() {
 		const data = await res.json();
 
 		if (data.logged && data.user) {
-			// Usuario logueado - Mostrar información
-			userArea.style.display = 'flex';
-			userWelcome.textContent = `${data.user.username}`;
-			loginHeader.style.display = 'none';
-			logoutMenu.style.display = 'none';
-
-			// Actualizar fecha especial y contador (ya viene en formato YYYY-MM-DD)
-			window.userSpecialDate = data.user.special_date || null;
-			if (specialDateText) specialDateText.textContent = '';
-			actualizarContadorDias();
-
-			// Cargar mensajes personalizados del usuario
-			if (window.MessagesModule && window.MessagesModule.Messages) {
-				await window.MessagesModule.Messages.loadUserMessages();
-			}
+			// Sesión activa encontrada, actualizar UI
+			updateUIForLoggedInUser(data.user);
 		} else {
-			// No hay usuario - Mostrar vista pública
-			userArea.style.display = 'none';
-			loginHeader.style.display = '';
-			logoutMenu.style.display = 'none';
-			window.userSpecialDate = null;
-			if (specialDateText) specialDateText.textContent = '';
-			actualizarContadorDias();
-
-			// Usar mensajes por defecto
-			if (window.MessagesModule && window.MessagesModule.Messages) {
-				window.MessagesModule.Messages.list = [...window.MessagesModule.DEFAULT_MESSAGES];
-				window.MessagesModule.Messages.reset();
-			}
+			// No hay sesión, mostrar UI de "no logueado"
+			updateUIForLoggedOutUser();
 		}
 	} catch (error) {
-		console.error('Error al cargar usuario:', error);
+		console.error('Error al verificar sesión:', error);
+		updateUIForLoggedOutUser(); // Asumir no logueado si hay error
 	}
 }
 
@@ -221,7 +285,8 @@ userWelcome.onkeydown = function(e) {
 
 /* Cerrar menú al hacer clic fuera */
 document.addEventListener('click', function(e) {
-	if (!userWelcome.contains(e.target) && !logoutMenu.contains(e.target)) {
+    // Añadidas comprobaciones para evitar errores si los elementos no existen
+	if (userWelcome && !userWelcome.contains(e.target) && logoutMenu && !logoutMenu.contains(e.target)) {
 		logoutMenu.style.display = 'none';
 	}
 });
@@ -230,7 +295,37 @@ document.addEventListener('click', function(e) {
 settingsBtn.onclick = function() {
 	logoutMenu.style.display = 'none';
 	settingsModal.style.display = 'block';
-	cargarFechaEspecial();
+	
+	// Cargar datos actuales en el modal de ajustes
+    // Usamos /session para obtener los datos más frescos del usuario logueado
+    fetch(`${window.APP_CONFIG.API_URL}/session`, { credentials: 'include' })
+    .then(res => res.json())
+    .then(data => {
+        if(data.logged && data.user){
+            document.getElementById('specialDate').value = data.user.special_date || '';
+            document.getElementById('spotifyPlaylist').value = data.user.spotify_playlist || '';
+             // Cargar mensajes
+            return fetch(`${window.APP_CONFIG.API_URL}/messages`, { credentials: 'include' });
+        }
+        throw new Error("No hay sesión para cargar ajustes.");
+    })
+    .then(resMsg => resMsg.json())
+    .then(dataMsg => {
+        const messagesTextarea = document.getElementById('userMessages');
+        if (dataMsg.messages && dataMsg.messages.length > 0) {
+            messagesTextarea.value = dataMsg.messages.join('\n');
+        } else {
+            messagesTextarea.value = (window.MessagesModule && window.MessagesModule.DEFAULT_MESSAGES) ? window.MessagesModule.DEFAULT_MESSAGES.join('\n') : '';
+        }
+    })
+    .catch(err => {
+        console.warn("Error al cargar ajustes:", err.message);
+        // Poblar con mensajes por defecto si falla la carga
+        const messagesTextarea = document.getElementById('userMessages');
+        if (messagesTextarea && window.MessagesModule && window.MessagesModule.DEFAULT_MESSAGES) {
+            messagesTextarea.value = window.MessagesModule.DEFAULT_MESSAGES.join('\n');
+        }
+    });
 };
 
 /* === CERRAR MODAL DE AJUSTES === */
@@ -240,13 +335,13 @@ closeSettings.onclick = function() {
 };
 
 /* === CARGAR FECHA ESPECIAL === */
-// Se ejecuta al abrir el modal de ajustes
+// Esta función ya no se usa, la lógica se movió a 'settingsBtn.onclick'
 function cargarFechaEspecial() {
+	// (Código obsoleto mantenido por si acaso, pero no es llamado)
 	fetch(`${window.APP_CONFIG.API_URL}/special-date`, { credentials: 'include' })
 		.then(res => res.json())
 		.then(data => {
 			if (data.special_date) {
-				// La fecha ya viene en formato YYYY-MM-DD desde el backend
 				specialDateInput.value = data.special_date;
 			} else {
 				specialDateInput.value = "";
@@ -255,72 +350,13 @@ function cargarFechaEspecial() {
 }
 
 // Guardar fecha especial y actualizar contador y badges
-settingsForm.onsubmit = function(e) {
+// Este formulario ahora guarda TODO (fecha, playlist y mensajes)
+settingsForm.onsubmit = async function(e) {
 	e.preventDefault();
+	clearMessage(settingsMessage);
+	
+	// Recolectar todos los datos del formulario
 	const date = specialDateInput.value;
-	fetch(`${window.APP_CONFIG.API_URL}/special-date`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ special_date: date })
-	})
-	.then(res => res.json())
-	.then(data => {
-		if (data.success) {
-			settingsMessage.textContent = "¡Ajustes Actualizados!";
-			settingsMessage.classList.add('show', 'success');
-			window.userSpecialDate = date;
-			actualizarContadorDias();
-			setTimeout(() => {
-				settingsModal.style.display = 'none';
-				settingsMessage.textContent = "";
-				cargarUsuario();
-			}, 1000);
-		} else {
-			settingsMessage.textContent = "Error al guardar.";
-			settingsMessage.classList.add('show');
-		}
-	}).catch(() => {
-		settingsMessage.textContent = "Servidor no disponible.";
-		settingsMessage.classList.add('show');
-	});
-};
-
-// Al abrir modal de ajustes, carga el playlist del usuario y los mensajes
-document.getElementById('settingsBtn').addEventListener('click', function() {
-	// Cargar playlist
-	fetch(`${window.APP_CONFIG.API_URL}/spotify-playlist`, { credentials: 'include' })
-		.then(res => res.json())
-		.then(data => {
-			document.getElementById('spotifyPlaylist').value = data.playlist || '';
-		});
-
-	// Cargar mensajes
-	fetch(`${window.APP_CONFIG.API_URL}/messages`, { credentials: 'include' })
-		.then(res => res.json())
-		.then(data => {
-			const messagesTextarea = document.getElementById('userMessages');
-			if (data.messages && data.messages.length > 0) {
-				messagesTextarea.value = data.messages.join('\n');
-			} else {
-				// Si no hay mensajes personalizados, mostrar los por defecto
-				if (window.MessagesModule && window.MessagesModule.DEFAULT_MESSAGES) {
-					messagesTextarea.value = window.MessagesModule.DEFAULT_MESSAGES.join('\n');
-				}
-			}
-		})
-		.catch(() => {
-			// En caso de error, mostrar mensajes por defecto
-			if (window.MessagesModule && window.MessagesModule.DEFAULT_MESSAGES) {
-				document.getElementById('userMessages').value = window.MessagesModule.DEFAULT_MESSAGES.join('\n');
-			}
-		});
-});
-
-// Al guardar ajustes, también guarda la playlist y los mensajes
-document.getElementById('settingsForm').addEventListener('submit', async function(e) {
-	e.preventDefault();
-
 	const playlist = document.getElementById('spotifyPlaylist').value.trim();
 	const messagesText = document.getElementById('userMessages').value;
 	const messagesArray = messagesText
@@ -329,6 +365,12 @@ document.getElementById('settingsForm').addEventListener('submit', async functio
 		.filter(msg => msg.length > 0); // Eliminar líneas vacías
 
 	try {
+		// Guardar fecha especial
+        await fetch(`${window.APP_CONFIG.API_URL}/special-date`, {
+            method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ special_date: date })
+        });
+		
 		// Guardar playlist
 		await fetch(`${window.APP_CONFIG.API_URL}/spotify-playlist`, {
 			method: 'POST',
@@ -344,75 +386,60 @@ document.getElementById('settingsForm').addEventListener('submit', async functio
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ messages: messagesArray })
 		});
-
-		// Recargar mensajes en la página
+		
+		// Todo salió bien, mostrar mensaje de éxito
+		showMessage(settingsMessage, "¡Todos los ajustes guardados correctamente!", true);
+		
+		// Actualizar la UI inmediatamente
+		window.userSpecialDate = date;
+		if (typeof window.actualizarContadorDias === 'function') {
+			window.actualizarContadorDias();
+		}
 		if (window.MessagesModule && window.MessagesModule.Messages) {
 			await window.MessagesModule.Messages.loadUserMessages();
 			window.MessagesModule.Messages.reset();
-
-			// Actualizar el texto del mensaje visible
-			const messageBox = document.getElementById('randomMessage');
-			if (messageBox) {
-				messageBox.textContent = 'Haz clic en el botón para descubrir algo que amo de ti ❤️';
-			}
-
-			// Rehabilitar el botón si estaba deshabilitado
-			const showBtn = document.getElementById('showBtn');
-			if (showBtn && showBtn.classList.contains('btn-disabled')) {
-				showBtn.disabled = false;
-				showBtn.classList.remove('btn-disabled');
-				showBtn.innerHTML = '<i id="heartIcon" class="fas fa-heart" style="margin-right: 10px;"></i>Descubrir más 🦭';
-			}
+			// (La lógica para resetear el botón de mensajes ya no está aquí, está en updateUIForLoggedOutUser)
 		}
-
-		settingsMessage.textContent = "¡Todos los ajustes guardados correctamente!";
-		settingsMessage.classList.add('show', 'success');
+		if (window.SpotifyModule && typeof window.SpotifyModule.loadSpotifyPlaylist === 'function') {
+			window.SpotifyModule.loadSpotifyPlaylist();
+		}
 
 		setTimeout(() => {
 			settingsModal.style.display = 'none';
-			settingsMessage.textContent = "";
-			settingsMessage.classList.remove('show', 'success');
+			clearMessage(settingsMessage);
 		}, 1500);
 
 	} catch (error) {
-		settingsMessage.textContent = "Error al guardar los ajustes.";
-		settingsMessage.classList.add('show');
+		console.error("Error guardando ajustes:", error);
+		showMessage(settingsMessage, "Error al guardar los ajustes.");
 	}
-});
+};
+
+// Al guardar ajustes, carga el playlist del usuario y los mensajes
+// La lógica de este listener se movió a 'settingsBtn.onclick'
+
+// La lógica de este listener se movió a 'settingsForm.onsubmit'
 
 // Logout
 logoutBtn.onclick = function() {
 	fetch(`${window.APP_CONFIG.API_URL}/logout`, {
 		method: 'POST',
 		credentials: 'include'
-	}).then(() => {
-    userArea.style.display = 'none';
-    loginHeader.style.display = '';
-    logoutMenu.style.display = 'none';
-    window.userSpecialDate = null;
-    if (specialDateText) specialDateText.textContent = '';
-    actualizarContadorDias();
-    
-    // Resetear mensajes a los por defecto
-    if (window.MessagesModule && window.MessagesModule.Messages) {
-		window.MessagesModule.Messages.list = [...window.MessagesModule.DEFAULT_MESSAGES];
-		window.MessagesModule.Messages.reset();
-
-      	// Resetear la UI de mensajes
-		const messageBox = document.getElementById('randomMessage');
-		if (messageBox) {
-			messageBox.textContent = 'Haz clic en el botón para descubrir algo que amo de ti ❤️';
+	})
+	.then(res => res.json())
+	.then(data => {
+		if (data.success) {
+			// Llamar a la función centralizada de reseteo
+			updateUIForLoggedOutUser();
 		}
-
-		const showBtn = document.getElementById('showBtn');
-		if (showBtn && showBtn.classList.contains('btn-disabled')) {
-			showBtn.disabled = false;
-			showBtn.classList.remove('btn-disabled');
-			showBtn.innerHTML = '<i id="heartIcon" class="fas fa-heart" style="margin-right: 10px;"></i>Descubrir más 🦭';
-		}
-    }
+	})
+	.catch(err => {
+		console.error("Error en logout:", err);
+		// Forzar logout en el frontend aunque falle la petición
+		updateUIForLoggedOutUser();
 	});
 };
 
 // Al cargar la página, mostrar usuario y contador si está logueado
-document.addEventListener('DOMContentLoaded', cargarUsuario);
+// Llama a la nueva función de verificación de sesión
+document.addEventListener('DOMContentLoaded', checkSessionOnLoad);
