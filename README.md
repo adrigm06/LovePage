@@ -4,7 +4,8 @@ Un proyecto web personal y especial, creado con mucho cariño para expresar afec
 
 ## 🌐 Demo en Vivo
 Puedes ver el proyecto funcionando aquí:
-👉 https://adrigm06.github.io/LovePage/index.html
+Nota: Puede tardar unos minutos en que arranque el backend
+👉 adrigm06.github.io/LovePage/
 
 ## ✨ Características Principales
 
